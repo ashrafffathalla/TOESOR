@@ -5,11 +5,12 @@ import 'package:toesor/test.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
-  ));
+  ),
+  );
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {

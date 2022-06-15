@@ -285,29 +285,34 @@ class _TestState extends State<TimeScreen> {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: size.height*0.02,
+                                            height: size.height*0.03,
                                           ),
                                           /// Resta AND ESCI
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              Container(
-                                                width: size.width*0.3,
-                                                height: size.height*0.044,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius: BorderRadius.circular(30),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'RESTA',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily: 'Comfortaa',
-                                                      fontSize: 21.sp,
+                                              GestureDetector(
+                                                child: Container(
+                                                  width: size.width*0.3,
+                                                  height: size.height*0.044,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    borderRadius: BorderRadius.circular(30),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'RESTA',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily: 'Comfortaa',
+                                                        fontSize: 21.sp,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
+                                                onTap: (){
+                                                  Navigator.pop(context);
+                                                },
                                               ),
                                               Container(
                                                 width: size.width*0.3,
@@ -349,7 +354,7 @@ class _TestState extends State<TimeScreen> {
                               'Aiuto 1 + 10 minuti',
                                 style: TextStyle(
                                   fontFamily: 'Comfortaa',
-                                  fontSize: 19.sp,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -368,11 +373,11 @@ class _TestState extends State<TimeScreen> {
                         height: size.height*0.06,
                         child:Center(
                           child: Text(
-                            'Aiuto 1 + 20 minuti',
+                            'Aiuto 2 + 20 minuti',
                               style: TextStyle(
                                 color: Color(0xffDFCFAC),
                                 fontFamily: 'Comfortaa',
-                                fontSize: 19.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -390,11 +395,11 @@ class _TestState extends State<TimeScreen> {
                         height: size.height*0.06,
                         child:Center(
                           child: Text(
-                            'Aiuto 1 + 30 minuti',
+                            'Soluzione + 30 minuti',
                               style: TextStyle(
                                 color: Color(0xffDFCFAC),
                                 fontFamily: 'Comfortaa',
-                                fontSize: 19.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                             ),
                           ),

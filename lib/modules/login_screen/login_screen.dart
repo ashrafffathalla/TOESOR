@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
             )),
             Positioned(
                 child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
             )),
             Positioned(
               child: Padding(
-                padding:EdgeInsets.symmetric(horizontal: size.width*0.07),
+                padding:EdgeInsets.symmetric(horizontal: size.width*0.15),
                 child: SingleChildScrollView(
                   physics:const BouncingScrollPhysics(),
                   child: Column(
@@ -55,21 +55,22 @@ class LoginScreen extends StatelessWidget {
                       sizeBoxStart(context),
                       Center(
                         child: SizedBox(
-                          width: size.width * 0.5,
+                          width: size.width * 0.6,
                           child: Image.asset(
                             'assets/images/login_logo.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: size.height*0.05,
+                        height: size.height*0.04,
                       ),
                       Row(
                         children: [
                           Text(
                               'LOGIN',
                             style: TextStyle(
-                              fontSize: 25.sp,
+                              fontSize: 20.sp,
                               fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.bold,
                             ),
@@ -77,14 +78,14 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: size.height*0.03,
+                        height: size.height*0.05,
                       ),
                       Row(
                         children: [
                           Text(
                               'Email :',
                             style: TextStyle(
-                              fontSize: 20.sp,
+                              fontSize: 18.sp,
                               fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.w400,
                             ),
@@ -92,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: size.height*0.02,
+                        height: size.height*0.03,
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -109,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: 'Email',
+                            label: '',
 
                         ),
                       ),
@@ -119,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                           Text(
                             'Password :',
                             style: TextStyle(
-                              fontSize: 20.sp,
+                              fontSize: 18.sp,
                               fontFamily: 'Comfortaa',
                               fontWeight: FontWeight.w400,
                             ),
@@ -145,11 +146,11 @@ class LoginScreen extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: 'Password',
+                            label: '',
                         ),
                       ),
                       SizedBox(
-                        height: size.height*0.05,
+                        height: size.height*0.04,
                       ),
                       defaultButton(
                           context,

@@ -25,6 +25,7 @@ Widget defaultFormField(
   final VoidCallback? onSubmit,
 }) =>
     TextFormField(
+
       style: const TextStyle(color: Colors.black),
       controller: controller,
       cursorColor: Colors.black,
@@ -48,7 +49,15 @@ Widget defaultFormField(
           horizontal: MediaQuery.of(context).size.width * 0.03,
           vertical: MediaQuery.of(context).size.height * 0.02,
         ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+        ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+                width: 2, color:kPrimaryColor
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
       ),
     );
 
@@ -77,7 +86,7 @@ Widget defaultButton(
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Comfortaa',
-            fontSize: 23.sp,
+            fontSize: 22.sp,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -127,7 +136,7 @@ Widget myDividerTwo(BuildContext context) => Padding(
 );
 Widget brownDivider(BuildContext context) => Container(
   width: double.infinity,
-  height: 2.8.sp,
+  height: 1.8.sp,
   color: const Color(0xff6A331D),
 );
 //EndDivider
@@ -166,9 +175,7 @@ Widget buildSecondTab(context)=>Container(
   color: Colors.white,
   child: Padding(
     padding: EdgeInsets.only(
-      top:MediaQuery.of(context).size.height*0.05,
-
-
+      top:MediaQuery.of(context).size.height*0.02,
     ),
     child: Column(
       children: [

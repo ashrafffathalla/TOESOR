@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/components/navigationbar/navigation_items.dart';
-import 'package:toesor/shared/style/colors.dart';
 
 class NavigationDrawerScreen extends StatelessWidget {
   const NavigationDrawerScreen({Key? key}) : super(key: key);
@@ -18,38 +17,41 @@ class NavigationDrawerScreen extends StatelessWidget {
       child: Drawer(
         child: Material(
           color:Colors.white,
-          child: Column(
-            children: [
-              headerWidget(context),
-              SizedBox(height: size.height*0.03,),
-              DrawerItems(
-                  name: 'PROFILO',
-                  icon: SvgPicture.asset('assets/icons/progile_circle.svg'),
-                  onPressed: ()=>onItemPressed(context, index:0)
-              ),
-              myDivider(context),
-              SizedBox(height: size.height*0.03,),
-              DrawerItems(
-                  name: 'GIOCA',
-                  icon: SvgPicture.asset('assets/icons/location.svg'),
-                  onPressed: ()=>onItemPressed(context, index:1)
-              ),
-              myDivider(context),
-              SizedBox(height: size.height*0.03,),
-              DrawerItems(
-                  name: 'TUA CLASSIFICA',
-                  icon: SvgPicture.asset('assets/icons/kas.svg'),
-                  onPressed: ()=>onItemPressed(context, index:2)
-              ),
-              myDivider(context),
-              SizedBox(height: size.height*0.03,),
-              DrawerItems(
-                  name: 'IMPOSTAZIONI',
-                  icon: SvgPicture.asset('assets/icons/setting.svg'),
-                  onPressed: ()=>onItemPressed(context, index:2)
-              ),
-              myDivider(context),
-            ],
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                headerWidget(context),
+                SizedBox(height: size.height*0.03,),
+                DrawerItems(
+                    name: 'PROFILO',
+                    icon: SvgPicture.asset('assets/icons/progile_circle.svg'),
+                    onPressed: ()=>onItemPressed(context, index:0)
+                ),
+                myDivider(context),
+                SizedBox(height: size.height*0.03,),
+                DrawerItems(
+                    name: 'GIOCA',
+                    icon: SvgPicture.asset('assets/icons/location.svg'),
+                    onPressed: ()=>onItemPressed(context, index:1)
+                ),
+                myDivider(context),
+                SizedBox(height: size.height*0.03,),
+                DrawerItems(
+                    name: 'TUA CLASSIFICA',
+                    icon: SvgPicture.asset('assets/icons/kas.svg'),
+                    onPressed: ()=>onItemPressed(context, index:2)
+                ),
+                myDivider(context),
+                SizedBox(height: size.height*0.03,),
+                DrawerItems(
+                    name: 'IMPOSTAZIONI',
+                    icon: SvgPicture.asset('assets/icons/setting.svg'),
+                    onPressed: ()=>onItemPressed(context, index:2)
+                ),
+                myDivider(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -75,7 +77,7 @@ class NavigationDrawerScreen extends StatelessWidget {
       child: Padding(
         padding:  EdgeInsets.only(
             left:MediaQuery.of(context).size.width*0.03,
-          top: MediaQuery.of(context).size.height*0.07,
+          top: MediaQuery.of(context).size.height*0.01,
         ),
         child: Column(
           children: [

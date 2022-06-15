@@ -11,10 +11,10 @@ class SidebarScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      key: scaffoldKey,
-      drawer:const NavigationDrawerScreen(),
+      primary: true,
       backgroundColor:kPrimaryColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor:kAppbarColor,
         title: Center(
@@ -41,12 +41,16 @@ class SidebarScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Positioned(
+      body: Scaffold(
+        key: scaffoldKey,
+        backgroundColor:kPrimaryColor,
+        drawer:const NavigationDrawerScreen(),
+        body: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Positioned(
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -57,9 +61,11 @@ class SidebarScreen extends StatelessWidget {
                         ),
                         fit: BoxFit.cover,
                       )),
-                )),
-          ],
+                ),
+              ),
+            ],
 
+          ),
         ),
       ),
     );
