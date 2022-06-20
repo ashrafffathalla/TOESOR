@@ -105,13 +105,13 @@ class ClassificaScreen extends StatelessWidget {
                 child: Text(
                   '1',
                   style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
                       fontFamily: 'Comfortaa'
                   ),
                 ),
               ),
-              color: kPopColor,
+              color:const Color(0xffedddbb),
               width: size.width*0.1,
               height: size.width*0.2,
             ),
@@ -128,7 +128,7 @@ class ClassificaScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              color:const Color(0xffD8C194),
+              color:const Color(0xFFd8c195),
             ),
             Container(
               //width: size.width,

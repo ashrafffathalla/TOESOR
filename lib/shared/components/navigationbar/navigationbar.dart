@@ -84,9 +84,10 @@ class NavigationDrawerScreen extends StatelessWidget {
             Row(
               children: [
                  CircleAvatar(
+                   backgroundColor: Colors.brown,
                   radius: 40.sp,
                   child: ClipRRect(
-                    child: Image.asset('assets/images/profile_navigator.png'),
+                    child: Image.asset('assets/images/circle-women.png'),
                   ),
                 ),
                  SizedBox(

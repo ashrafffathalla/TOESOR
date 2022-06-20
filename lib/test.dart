@@ -50,7 +50,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const LoginScreen());
+                navigateTo(context, LoginScreen());
               },
               child: ClipPath(
                 clipper: SideCutClipper(),

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.toesor">
    <application
-        android:label="toesor"
+        android:label="TreSor"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
