@@ -1,97 +1,48 @@
-
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:toesor/modules/login_screen/cubit/cubit.dart';
-import 'package:toesor/modules/login_screen/cubit/states.dart';
-import 'package:toesor/modules/profile_screen/profile_screen.dart';
-import 'package:toesor/modules/sign_up/sign_up_screen.dart';
-import 'package:toesor/shared/components/components.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:toesor/shared/constance/constant.dart';
-import 'package:toesor/shared/network/local/sharedprefrance.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:toesor/modules/login_screen/login_screen.dart';
+import 'package:toesor/modules/sign_up/cubit/cubit.dart';
+import 'package:toesor/modules/sign_up/cubit/states.dart';
+
+import '../../shared/components/components.dart';
 import '../../shared/components/custom_snackpar.dart';
 import '../../shared/style/colors.dart';
 import '../resete_password/enter_email/enter_email.dart';
 
-class LoginScreen extends StatelessWidget {
-  var emailController=TextEditingController();
-  var passwordController=TextEditingController();
+class SignUpScreen extends StatelessWidget {
+
+   SignUpScreen({Key? key}) : super(key: key);
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    return BlocProvider<LoginCubit>(
-      create:  (BuildContext context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit,LoginStates>(
+    return BlocProvider(
+      create: (context)=>SignUpCubit(),
+      child: BlocConsumer<SignUpCubit,SignUpStates>(
         listener: (context, state) {
-          if (state is SuccessLoginState){
-           if(state.loginModel.code=='422'){
+          if(state is SuccessSignUpState){
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
-                message: 'Password Errata',
-                title: 'Errore',
-                type: ContentType.failure,
+                message: 'Now You Are Login',
+                title: 'Success',
+                type: ContentType.success,
               ),
 
             );
           }
-           if(state.loginModel.code=='432'){
-             ScaffoldMessenger.of(context)
-                 .showSnackBar(
-               customSnackBar(
-                 message: 'Account non trovato',
-                 title: 'Errore',
-                 type: ContentType.failure,
-               ),
-
-             );
-           }
-
-            if(state.loginModel.user?.status =='TRUE'){
-              CacheHelper.saveData(
-                key: 'token',
-                value: state.loginModel.token.toString(),
-              );
-              sharedToken = state.loginModel.token.toString();
-              //print(sharedToken.toString());
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(
-                customSnackBar(
-                  message: 'Welcome Back',
-                  title: 'Success!',
-                  type: ContentType.success,
-                ),
-
-              );
-              navigateAndFinish(context,const ProfileScreen());
-              clearController();
-
-            }else if(state.loginModel.user?.status =='FALSE'){
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(
-                customSnackBar(
-                  message: 'Il tuo account è stato bloccato',
-                  title: 'Errore',
-                  type: ContentType.failure,
-                ),
-
-              );
-            }
-          }
-
         },
-        builder: (context,state){
-          LoginCubit cubit = LoginCubit.get(context);
-          return Form(
+        builder: (context, state) {
+          SignUpCubit cubit = SignUpCubit.get(context);
+          return  Form(
             key: formKey,
             child: Scaffold(
               backgroundColor: kPrimaryColor,
@@ -146,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    'LOGIN',
+                                    'SIGN UP',
                                     style: TextStyle(
                                       fontSize: 20.sp,
                                       fontFamily: 'Comfortaa',
@@ -158,6 +109,76 @@ class LoginScreen extends StatelessWidget {
                               SizedBox(
                                 height: size.height*0.05,
                               ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'First Name :',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color:const Color(0xffFAF5EA),
+                                    borderRadius: BorderRadius.circular(35)
+                                ),
+                                child: defaultFormField(
+                                  context,
+                                  controller: firstNameController,
+                                  type: TextInputType.text,
+                                  validate: (value){
+                                    if (value!.isEmpty) {
+                                      return 'Pleas enter your first name';
+                                    }
+                                    return null;
+                                  },
+                                  label: '',
+
+                                ),
+                              ),
+                              SizedBox(height: size.height*0.03,),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Last Name :',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color:const Color(0xffFAF5EA),
+                                    borderRadius: BorderRadius.circular(35)
+                                ),
+                                child: defaultFormField(
+                                  context,
+                                  controller: lastNameController,
+                                  type: TextInputType.text,
+                                  validate: (value){
+                                    if (value!.isEmpty) {
+                                      return 'Pleas enter your last name';
+                                    }
+                                    return null;
+                                  },
+                                  label: '',
+
+                                ),
+                              ),
+                              SizedBox(height: size.height*0.03,),
                               Row(
                                 children: [
                                   Text(
@@ -233,66 +254,50 @@ class LoginScreen extends StatelessWidget {
                                 height: size.height*0.04,
                               ),
                               ConditionalBuilder(
-                                condition: state is ! LoadingLoginState,
+                                condition: state is ! LoadingSignUpState,
                                 builder: (context)=>defaultButton(
                                   context,
                                   background:const Color(0xff6A331D),
                                   function: (){
                                     FocusManager.instance.primaryFocus?.unfocus();
                                     if(formKey.currentState!.validate()){
-                                      cubit.loginUser(
+                                      cubit.signUp(
+                                        name: firstNameController.text.toString(),
+                                        lastName: lastNameController.text.toString(),
                                         email: emailController.text.toString(),
                                         password: passwordController.text.toString(),
                                       );
                                     }
                                   },
-                                  text: 'Login',
+                                  text: 'sign up',
                                   rounder: BorderRadius.circular(35),
                                 ),
-                                fallback: (context)=>const Center(child: CircularProgressIndicator(color: Colors.orangeAccent,)),
-                              ),
-                              SvgPicture.asset('assets/icons/o.svg'),
-                              GestureDetector(
-                                onTap: (){
-                                  ///DO something
-                                },
-                                child: Image.asset('assets/images/facebook.png'),
-                              ),
-                              SizedBox(height: size.height*0.02,),
-                              GestureDetector(
-                                onTap: (){
-                                  ///DO something
-                                },
-                                child: Image.asset(
-                                  'assets/images/googel.png',
-
+                                fallback: (context)=>const Center(
+                                  child: CircularProgressIndicator(color: Colors.orangeAccent,),
                                 ),
                               ),
+
                               SizedBox(height: size.height*0.01,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  GestureDetector(
-                                    onTap: (){
-                                      navigateTo(context, ResetPassword());
-                                    },
-                                    child: Text(
-                                      'reset Password',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontFamily: 'Comfortaa',
-                                      ),
+                                  Text(
+                                    'you have an account?',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontFamily: 'Comfortaa',
                                     ),
                                   ),
                                   GestureDetector(
                                     onTap: (){
-
-                                      navigateTo(context, SignUpScreen());
+                                      navigateAndFinish(context, LoginScreen());
                                     },
                                     child: Text(
-                                      'Sign Up ?',
+                                      'Login',
                                       style: TextStyle(
                                         fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: kPrimaryColor,
                                         fontFamily: 'Comfortaa',
                                       ),
                                     ),
@@ -322,9 +327,5 @@ class LoginScreen extends StatelessWidget {
         },
       ),
     );
-  }
-  void clearController(){
-    emailController.clear();
-    passwordController.clear();
   }
 }

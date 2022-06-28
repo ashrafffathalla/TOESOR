@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.toesor">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="TreSor"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="719734365983134"/>
+       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="TreSor"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

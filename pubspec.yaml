@@ -41,9 +41,12 @@ dependencies:
   path: ^1.8.0
   flutter_bloc: ^8.0.1
   bloc: ^8.0.3
+  shared_preferences: ^2.0.13
   dio: ^4.0.6
   awesome_snackbar_content: ^0.0.5
   pin_code_fields: ^7.4.0
+  conditional_builder_null_safety: ^0.0.6
+  flutter_facebook_auth: ^4.3.4+2
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toesor/shared/constance/logout.dart';
 import 'package:toesor/shared/style/colors.dart';
 import '../../shared/components/components.dart';
 class ProfileScreen extends StatefulWidget {
@@ -138,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       defaultButton(
                         context,
                         function: () {
-
+                          signOut(context);
                           ///TODO
                         },
 
