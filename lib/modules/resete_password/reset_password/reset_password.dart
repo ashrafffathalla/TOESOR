@@ -207,7 +207,6 @@ class ResetPasswordScreen extends StatelessWidget {
                                           ),
                                         );
                                       }
-
                                     }
                                   },
                                   text: 'Submit',
