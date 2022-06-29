@@ -1,11 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
+import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
+import 'package:toesor/modules/resete_password/enter_email/enter_email.dart';
+import 'package:toesor/modules/resete_password/reset_password/reset_password.dart';
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
@@ -50,10 +54,16 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context,widget)
       {
-        return  MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(),
-          home:EnterCodeScreen(),
+        return  MultiBlocProvider(
+          providers: [
+            BlocProvider(
+            create: (BuildContext context) => EnterEmailCubit()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(),
+            home: ResetPasswordScreen(),
+          ),
         );
       }
     );

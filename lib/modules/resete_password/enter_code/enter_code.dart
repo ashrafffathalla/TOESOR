@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/modules/resete_password/enter_code/cubit/cubit.dart';
 import 'package:toesor/modules/resete_password/enter_code/cubit/states.dart';
+import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
+import 'package:toesor/shared/constance/pin_code.dart';
 import 'package:toesor/shared/style/colors.dart';
 import '../../../shared/components/components.dart';
 import '../../../shared/components/custom_snackpar.dart';
@@ -21,27 +23,26 @@ class EnterCodeScreen extends StatelessWidget {
       child: BlocConsumer<EnterCodeCubit,EnterCodeStates>(
         listener: (context, state) {
           if(state is SuccessEnterCodeState){
-            if(state.enterCodeModel.code == '200'){
+            if(state.enterCodeModel.code == 200){
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
-                message:'',
-                title: 'Success!',
+                message:' Green icon',
+                title: ' Green icon!',
                 type: ContentType.success,
               ),
             );
             navigateAndFinish(context, LoginScreen());
+            EnterEmailCubit.get(context).code = codeController.text.toString();
             codeController.clear();
-            }
-            if(state.enterCodeModel.code=='422'){
+            }else{
               ScaffoldMessenger.of(context)
                   .showSnackBar(
                 customSnackBar(
-                  message: '',
+                  message: 'Codice non è valido',
                   title: 'Errore',
                   type: ContentType.failure,
                 ),
-
               );
             }
           }
@@ -95,44 +96,21 @@ class EnterCodeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: size.height*0.02,),
-                              Row(
-                                children: [
-                                  Text(
-                                    ' Code :',
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
+                              Padding(
+                                padding:  EdgeInsets.symmetric(
+                                  horizontal: size.width*0.1
+                                ),
+                                child: Row(
+                                  children:  [
+                                    PinCode()
+                                  ],
+                                ),
                               ),
                               SizedBox(
                                 height: size.height*0.01,
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color:const Color(0xffFAF5EA),
-                                    borderRadius: BorderRadius.circular(35)
-                                ),
-                                child: defaultFormField(
-                                  context,
-                                  isPassword: true,
-                                  controller: codeController,
-                                  type: TextInputType.text,
-                                  validate: (value){
-                                    if (value!.isEmpty) {
-                                      return 'Pleas enter code';
-                                    }
-                                    return null;
-                                  },
-                                  label: '',
 
-                                ),
-                              ),
                               SizedBox(height: size.height*0.02,),
-                              ///password
-
                               SizedBox(
                                 height: size.height * 0.03,
                               ),
@@ -142,24 +120,9 @@ class EnterCodeScreen extends StatelessWidget {
                                   context,
                                   function: (){
                                     if(formKey.currentState!.validate()){
-                                      // if(passwordController.text == confirmPasswordController.text){
-                                      //   //cubit.resetPassword(
-                                      //   // email:  EnterEmailCubit.get(context).email.toString(),
-                                      //   // password: passwordController.text.toString(),
-                                      //   // token:  EnterEmailCubit.get(context).code.toString(),
-                                      //
-                                      //   // );
-                                      // } else {
-                                      //   ScaffoldMessenger.of(context)
-                                      //       .showSnackBar(
-                                      //     customSnackBar(
-                                      //       message: 'The password is not matching',
-                                      //       title: 'Error!',
-                                      //       type: ContentType.warning,
-                                      //     ),
-                                      //   );
-                                      // }
-
+                                      cubit.enterCode(
+                                          token: codeController.text.toString(),
+                                      );
                                     }
                                   },
                                   text: 'Submit',

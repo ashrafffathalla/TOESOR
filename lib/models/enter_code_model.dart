@@ -1,6 +1,6 @@
 class EnterCodeModel {
   String? message;
-  dynamic code;
+  int? code;
 
   EnterCodeModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];

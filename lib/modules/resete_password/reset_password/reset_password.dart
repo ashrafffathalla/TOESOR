@@ -24,16 +24,28 @@ class ResetPasswordScreen extends StatelessWidget {
       child: BlocConsumer<ResetPasswordCubit,ResetPasswordStates>(
         listener: (context, state) {
           if(state is SuccessResetPasswordState){
-            ScaffoldMessenger.of(context)
-                .showSnackBar(
-              customSnackBar(
-                message: state.resetPasswordModel.message!,
-                title: 'Success!',
-                type: ContentType.success,
-              ),
-            );
-            navigateAndFinish(context, LoginScreen());
-            clearController();
+            if(state.resetPasswordModel.code == 200){
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(
+                customSnackBar(
+                  message: state.resetPasswordModel.message!,
+                  title: 'Success!',
+                  type: ContentType.success,
+                ),
+              );
+              navigateAndFinish(context, LoginScreen());
+              clearController();
+            } else {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(
+                customSnackBar(
+                  message: '',
+                  title: 'Error!',
+                  type: ContentType.failure,
+                ),
+              );
+            }
+
           }else if(state is ErrorResetPasswordState){
             ScaffoldMessenger.of(context)
                 .showSnackBar(
@@ -176,12 +188,15 @@ class ResetPasswordScreen extends StatelessWidget {
                                   function: (){
                                     if(formKey.currentState!.validate()){
                                       if(passwordController.text == confirmPasswordController.text){
-                                        //cubit.resetPassword(
-                                         // email:  EnterEmailCubit.get(context).email.toString(),
-                                         // password: passwordController.text.toString(),
-                                         // token:  EnterEmailCubit.get(context).code.toString(),
-
-                                       // );
+                                        cubit.resetPassword(
+                                         email:
+                                         //'geniusdeveloper2000@gmail.com' ,
+                                         EnterEmailCubit.get(context).email.toString(),
+                                         password: passwordController.text.toString(),
+                                         token:
+                                         //'174971',
+                                         EnterEmailCubit.get(context).code.toString(),
+                                       );
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
