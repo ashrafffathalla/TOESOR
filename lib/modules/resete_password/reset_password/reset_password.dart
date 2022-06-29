@@ -176,12 +176,12 @@ class ResetPasswordScreen extends StatelessWidget {
                                   function: (){
                                     if(formKey.currentState!.validate()){
                                       if(passwordController.text == confirmPasswordController.text){
-                                        cubit.resetPassword(
-                                          email:  EnterEmailCubit.get(context).email.toString(),
-                                          password: passwordController.text.toString(),
-                                          token:  EnterEmailCubit.get(context).code.toString(),
+                                        //cubit.resetPassword(
+                                         // email:  EnterEmailCubit.get(context).email.toString(),
+                                         // password: passwordController.text.toString(),
+                                         // token:  EnterEmailCubit.get(context).code.toString(),
 
-                                        );
+                                       // );
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(

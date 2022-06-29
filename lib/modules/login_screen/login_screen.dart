@@ -17,6 +17,7 @@ import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import '../../shared/components/custom_snackpar.dart';
 import '../../shared/style/colors.dart';
 import '../resete_password/enter_email/enter_email.dart';
+import '../resete_password/reset_password/reset_password.dart';
 
 class LoginScreen extends StatelessWidget {
   var emailController=TextEditingController();
@@ -274,7 +275,7 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      navigateTo(context, ResetPassword());
+                                      navigateTo(context, ResetPasswordScreen());
                                     },
                                     child: Text(
                                       'reset Password',
