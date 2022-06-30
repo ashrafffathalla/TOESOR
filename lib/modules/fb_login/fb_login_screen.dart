@@ -19,7 +19,8 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
           Image.network(userOpj["picture"]["data"]["url"]),
           Text(userOpj["name"]),
           Text(userOpj["email"]),
-          TextButton(onPressed: (){}, child: ElevatedButton(
+          TextButton(
+            onPressed: (){}, child: ElevatedButton(
             onPressed: ()async{
               await FacebookAuth.i.logOut().then((value){
                 setState((){
@@ -28,8 +29,9 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
                 });
               });
             },
-            child: Text('Log Out'),
-          ),)
+            child: const Text('Log Out'),
+          ),
+          ),
         ],
       ):Center(
         child: ElevatedButton(

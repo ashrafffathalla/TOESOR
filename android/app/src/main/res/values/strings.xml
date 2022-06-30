@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="facebook_app_id">719734365983134</string>
-    <string name="TreSor"></string>
+    <string name="app_name">TreSor</string>
+    <string name="fb_login_protocol_scheme">fb719734365983134</string>
+    <string name= "facebook_client_token" >815bea4c432867ce76ae9d3e961917fc</string>
 </resources>
