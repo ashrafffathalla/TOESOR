@@ -11,18 +11,22 @@ class FaceBookLoginScreen  extends StatefulWidget {
 class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
   bool isLoggedIn = false;
   Map userOpj = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoggedIn?Column(
+      body: isLoggedIn ? Column(
         children: [
           Image.network(userOpj["picture"]["data"]["url"]),
-          Text(userOpj["name"]),
+          Text(userOpj["name"].toString()),
+          Text(userOpj["name"].toString().split(" ")[0]),
+          Text(userOpj["name"].toString().split(" ")[1]),
+          Text(userOpj["id"].toString()),
+
           Text(userOpj["email"]),
           TextButton(
-            onPressed: (){}, child: ElevatedButton(
-            onPressed: ()async{
-              await FacebookAuth.i.logOut().then((value){
+            onPressed: (){
+               FacebookAuth.i.logOut().then((value){
                 setState((){
                   isLoggedIn = false;
                   userOpj = {};
@@ -31,14 +35,13 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
             },
             child: const Text('Log Out'),
           ),
-          ),
         ],
       ):Center(
         child: ElevatedButton(
             onPressed: ()async
             {
-              await FacebookAuth.instance.login(
-                permissions: ['email', 'public_profile']
+               FacebookAuth.instance.login(
+                permissions: ["public_profile","email"]
               ).then((value){
                  FacebookAuth.instance.getUserData().then((value){
                   setState((){
@@ -49,7 +52,7 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
               });
 
             },
-            child: Text('Login With Face book'),
+            child: Text('Login With Facebook'),
         ),
       ),
     );
@@ -57,3 +60,4 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
 }
 //keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | C:\Users\ashra\Downloads\openssl-1.0.2j-fips-x86_64\OpenSSL\bin\openssl.exe" sha1 -binary | "C:\Users\ashra\Downloads\openssl-1.0.2j-fips-x86_64\OpenSSL\bin\openssl.exe" base64
 
+//iykOMMFeFtCkerI1Mc28z + s7UfI =

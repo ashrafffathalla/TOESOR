@@ -13,7 +13,6 @@ import 'package:toesor/modules/resete_password/reset_password/reset_password.dar
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'shared/obsarvable_bloc.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +61,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(),
-            home: FaceBookLoginScreen(),
+            home:const FaceBookLoginScreen(),
           ),
         );
       }
