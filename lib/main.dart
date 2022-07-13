@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
+import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
@@ -13,6 +14,8 @@ import 'package:toesor/modules/resete_password/reset_password/reset_password.dar
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
+import 'package:toesor/test_map.dart';
+import 'modules/mapScreen/map_screen.dart';
 import 'shared/obsarvable_bloc.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +64,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(),
-            home:const FaceBookLoginScreen(),
+            home: MapSample(),
           ),
         );
       }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "872582948159",
+    "project_id": "tresor-e249d",
+    "storage_bucket": "tresor-e249d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872582948159:android:a55b964f80067e47fc5f8a",
+        "android_client_info": {
+          "package_name": "com.example.toesor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872582948159-oug7mum8666ll2jnd2dap1nnk1mp37pt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.toesor",
+            "certificate_hash": "5f61c36b247f5dc882d6b2f17ec9745da6c5438b"
+          }
+        },
+        {
+          "client_id": "872582948159-8q3cv1hoo6pcvn05qvr7ia2d1u09d34a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASFJOil-FG2DSAXuMG9AkkeiYCsLR7HVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872582948159-8q3cv1hoo6pcvn05qvr7ia2d1u09d34a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

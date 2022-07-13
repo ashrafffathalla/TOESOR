@@ -22,8 +22,8 @@ class _FaceBookLoginScreenState extends State<FaceBookLoginScreen> {
           Text(userOpj["name"].toString().split(" ")[0]),
           Text(userOpj["name"].toString().split(" ")[1]),
           Text(userOpj["id"].toString()),
-
           Text(userOpj["email"]),
+
           TextButton(
             onPressed: (){
                FacebookAuth.i.logOut().then((value){
