@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:toesor/modules/fb_login/cubti/states.dart';
+import 'package:toesor/modules/fb_login/fb_login_screen.dart';
+import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/login_screen/cubit/states.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
@@ -16,6 +20,7 @@ import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import '../../shared/components/custom_snackpar.dart';
 import '../../shared/style/colors.dart';
+import '../fb_login/cubti/cubit.dart';
 import '../resete_password/enter_email/enter_email.dart';
 import '../resete_password/reset_password/reset_password.dart';
 
@@ -253,20 +258,39 @@ class LoginScreen extends StatelessWidget {
                                 fallback: (context)=>const Center(child: CircularProgressIndicator(color: Colors.orangeAccent,)),
                               ),
                               SvgPicture.asset('assets/icons/o.svg'),
-                              GestureDetector(
-                                onTap: (){
-                                  ///DO something
+                              BlocConsumer<FacebookLoginCubit,FacebookStates>(
+                                listener: (context,state){
+                                  FacebookLoginCubit facebookCubit = FacebookLoginCubit.get(context);
+                                  if(state is SuccessFacebookState){
+                                    facebookCubit.facebookLogin(
+                                      token: facebookCubit.endToken.toString(),
+                                        name: facebookCubit.userOpj["name"].toString(),
+                                        email: facebookCubit.userOpj["email"].toString(),
+                                        firstName: facebookCubit.userOpj["name"].toString().split(' ')[0],
+                                        lastName: facebookCubit.userOpj["name"].toString().split(' ')[1],
+                                        picture: facebookCubit.userOpj["picture"]["data"]["url"]);
+                                  }
                                 },
-                                child: Image.asset('assets/images/facebook.png'),
+                                builder: (context,state){
+                                  FacebookLoginCubit facebookCubit = FacebookLoginCubit.get(context);
+                                  return GestureDetector(
+                                    onTap: (){
+                                      facebookCubit.login();
+                                      ///DO something
+                                      //navigateTo(context, FaceBookLoginScreen());
+                                    },
+                                    child: Image.asset('assets/images/facebook.png'),
+                                  );
+                                },
                               ),
                               SizedBox(height: size.height*0.02,),
                               GestureDetector(
                                 onTap: (){
                                   ///DO something
+                                  navigateTo(context, GoogleLoginScreen());
                                 },
                                 child: Image.asset(
                                   'assets/images/googel.png',
-
                                 ),
                               ),
                               SizedBox(height: size.height*0.01,),

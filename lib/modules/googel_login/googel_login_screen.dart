@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/shared/components/components.dart';
+
+import '../mapScreen/map_screen.dart';
 class GoogleLoginScreen extends StatefulWidget {
   const GoogleLoginScreen({Key? key}) : super(key: key);
 
@@ -23,6 +25,8 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
             Image.network(userObj!.photoUrl.toString()),
             Text(userObj!.email),
             Text(userObj!.id),
+            Text(userObj!.displayName!.split(" ")[0].toString()),
+            Text(userObj!.displayName!.split(" ")[1].toString()),
             Text(userObj!.displayName.toString()),
             TextButton(
                 onPressed: (){
@@ -44,12 +48,13 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
                   setState((){
                     isLoggedIn = true;
                     userObj = value;
+                   navigateTo(context, MapScreen());
                   });
                 }).catchError((error){
                   print(error.toString());
                 });
               },
-              child:const Text('Login With Google'),
+              child:const Text('Continua su Google'),
 
           ),
         ),

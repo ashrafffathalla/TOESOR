@@ -15,6 +15,7 @@ import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
 import 'package:toesor/test_map.dart';
+import 'modules/fb_login/cubti/cubit.dart';
 import 'modules/mapScreen/map_screen.dart';
 import 'shared/obsarvable_bloc.dart';
 void main()async {
@@ -60,11 +61,13 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
             create: (BuildContext context) => EnterEmailCubit()),
+            BlocProvider(
+            create: (BuildContext context) => FacebookLoginCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(),
-            home: MapSample(),
+            home: start,
           ),
         );
       }
