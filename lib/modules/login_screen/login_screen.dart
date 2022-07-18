@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:toesor/modules/fb_login/cubti/states.dart';
-import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/login_screen/cubit/states.dart';
+import 'package:toesor/modules/mapScreen/map_screen.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/modules/sign_up/sign_up_screen.dart';
 import 'package:toesor/shared/components/components.dart';
@@ -263,12 +262,14 @@ class LoginScreen extends StatelessWidget {
                                   FacebookLoginCubit facebookCubit = FacebookLoginCubit.get(context);
                                   if(state is SuccessFacebookState){
                                     facebookCubit.facebookLogin(
-                                      token: facebookCubit.endToken.toString(),
+                                        token: facebookCubit.endToken.toString(),
                                         name: facebookCubit.userOpj["name"].toString(),
                                         email: facebookCubit.userOpj["email"].toString(),
-                                        firstName: facebookCubit.userOpj["name"].toString().split(' ')[0],
-                                        lastName: facebookCubit.userOpj["name"].toString().split(' ')[1],
-                                        picture: facebookCubit.userOpj["picture"]["data"]["url"]);
+                                        firstName: facebookCubit.firstName.toString(),
+                                        lastName: facebookCubit.lastName.toString(),
+                                        picture: facebookCubit.userOpj["picture"]["data"]["url"]).then((value) {
+                                          navigateAndFinish(context, MapScreen());
+                                    });
                                   }
                                 },
                                 builder: (context,state){

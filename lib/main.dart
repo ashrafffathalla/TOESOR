@@ -6,16 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
-import 'package:toesor/modules/profile_screen/profile_screen.dart';
-import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
 import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
-import 'package:toesor/modules/resete_password/enter_email/enter_email.dart';
-import 'package:toesor/modules/resete_password/reset_password/reset_password.dart';
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
-import 'package:toesor/test_map.dart';
 import 'modules/fb_login/cubti/cubit.dart';
+import 'modules/mapScreen/cubit/cubit.dart';
 import 'modules/mapScreen/map_screen.dart';
 import 'shared/obsarvable_bloc.dart';
 void main()async {
@@ -33,7 +29,7 @@ void main()async {
   Widget ? startWidget;
   sharedToken = CacheHelper.getData(key: 'token');
   if (sharedToken != null) {
-    startWidget =  const ProfileScreen();
+    startWidget =  const MapScreen();
   } else {
     startWidget = LoginScreen();
   }
@@ -63,6 +59,8 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => EnterEmailCubit()),
             BlocProvider(
             create: (BuildContext context) => FacebookLoginCubit()),
+            BlocProvider(
+                create: (BuildContext context) => MapScreenCubit()..getAllRotes()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

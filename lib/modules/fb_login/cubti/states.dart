@@ -1,4 +1,6 @@
 
+import 'package:toesor/models/facbook_model.dart';
+
 abstract class FacebookStates{}
 
 class InitialFacebookState extends FacebookStates{}
@@ -11,7 +13,10 @@ class ErrorFacebookState extends FacebookStates{
 }
 
 class LoadingFacebookAPIState extends FacebookStates{}
-class SuccessFacebookAPIState extends FacebookStates{}
+class SuccessFacebookAPIState extends FacebookStates{
+  FaceBookModel faceBookModel;
+  SuccessFacebookAPIState(this.faceBookModel);
+}
 class ErrorFacebookAPIState extends FacebookStates{
   final String? error;
   ErrorFacebookAPIState(this.error);

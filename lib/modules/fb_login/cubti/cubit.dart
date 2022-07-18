@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:toesor/models/facbook_model.dart';
 import 'package:toesor/modules/fb_login/cubti/states.dart';
+import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/end_points.dart';
+import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import '../../../shared/network/remote/dio_helper.dart';
 
 class FacebookLoginCubit extends Cubit<FacebookStates> {
@@ -11,8 +14,9 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
 
   bool isLoggedIn = false;
   Map userOpj = {};
+  String ? firstName;
+  String ? lastName;
   AccessToken? token;
-
   String ? endToken;
 
   void changeLogin(bool value) {
@@ -39,19 +43,20 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
       FacebookAuth.instance.getUserData().then((value) {
         changeLogin(true);
         changeUserObject(value);
-        getAccessToken();
-
         emit(SuccessFacebookState());
         //navigateTo(context, MapScreen());
-      }).catchError((error) {
-        print(error.toString());
-        emit(ErrorFacebookState(error.toString()));
       });
+    }).then((value) {
+      getAccessToken();
+      firstName = userOpj['name'].toString().split(' ')[0];
+      lastName = userOpj['name'].toString().split(' ')[1];
+    }).catchError((error){
+      emit(ErrorFacebookState(error.toString()));
     });
   }
   void changeToken(String token){
     endToken = token;
-    print('end token is : ${endToken}');
+    print('end token is : $endToken');
     emit(ChangeEndTokenState());
   }
 
@@ -61,6 +66,7 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
 
     return null;
   }
+  FaceBookModel ? faceBookModel;
 
   Future<void> facebookLogin({
     required String token,
@@ -71,8 +77,9 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
     required String picture,
   }) async {
     emit(LoadingFacebookAPIState());
-    if(state is ! LoadingFacebookAPIState)
-    DioHelper.getData(methodUrl: FB_LOGIN, query: {
+      await DioHelper.getData(
+          methodUrl: FB_LOGIN,
+          query: {
       "name": name,
       "UserPic": picture,
       "first_name": firstName,
@@ -80,12 +87,18 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
       "email": email,
       "access_token": token
     }).then((value) {
-      print('**************');
-      emit(SuccessFacebookAPIState());
+        faceBookModel = FaceBookModel.fromJson(value.data);
+        print(faceBookModel!.success);
+        print(faceBookModel!.token);
+        sharedToken = faceBookModel!.token;
+        CacheHelper.saveData(key: 'token', value: faceBookModel!.token);
+      emit(SuccessFacebookAPIState(faceBookModel!));
     }).catchError((error) {
-      print(error.toString());
+        print('**************');
+        print(error.toString());
       emit(ErrorFacebookAPIState(error));
     });
+
   }
 
 

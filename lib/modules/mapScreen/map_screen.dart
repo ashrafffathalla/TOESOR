@@ -1,12 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../shared/components/components.dart';
+import 'package:toesor/models/get_all_routes_model.dart';
+import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
+import 'package:toesor/modules/mapScreen/cubit/states.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
+import '../../shared/constance/logout.dart';
 import '../../shared/network/remote/location_helper.dart';
 import '../../shared/style/colors.dart';
 
@@ -23,20 +25,17 @@ class _MapScreenState extends State<MapScreen> {
   @override
   initState() {
     getMyCurrentLocation();
-
     super.initState();
-
   }
+
   Future<void> getMyCurrentLocation() async {
     position = await LocationHelper.getCurrentLocation().whenComplete(() {
-      setState(()
-      {
-
-      });
+      setState(() {});
     });
   }
+
   static Position? position;
-  Set<Marker> markers ={};
+  Set<Marker> markers = {};
   final Completer<GoogleMapController> _mapController = Completer();
   static final CameraPosition _myCurrentLocationCameraPosition = CameraPosition(
     bearing: 0.0,
@@ -44,6 +43,7 @@ class _MapScreenState extends State<MapScreen> {
     tilt: 0.0,
     zoom: 17.0,
   );
+
   Future<void> _goToMyCurrentLocation() async {
     final GoogleMapController controller = await _mapController.future;
     controller.animateCamera(
@@ -54,24 +54,23 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
-    if(position != null) print(' lat: ${position!.latitude} , long: ${position!.longitude}');
-    if(position != null) {
-
+    if (position != null)
+      print(' lat: ${position!.latitude} , long: ${position!.longitude}');
+    if (position != null) {
       markers.add(Marker(
-        position: LatLng(position!.latitude,position!.longitude),
+        position: LatLng(position!.latitude, position!.longitude),
         markerId: const MarkerId('1'),
-        onTap: (){},
-        infoWindow: const InfoWindow(
-            title: "Your Current Location"
-        ),
+        onTap: () {},
+        infoWindow: const InfoWindow(title: "Your Current Location"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       ));
     }
-    void addMarkerToMarkersAndUpdateUI(Marker marker){
-      setState((){
+    void addMarkerToMarkersAndUpdateUI(Marker marker) {
+      setState(() {
         markers.add(marker);
       });
     }
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -81,10 +80,15 @@ class _MapScreenState extends State<MapScreen> {
           actions: [
             Padding(
               padding: EdgeInsets.only(right: size.width * 0.01),
-              child: Icon(
-                Icons.logout,
-                size: 33.sp,
-                color: const Color(0xffEEDEBA),
+              child: IconButton(
+                onPressed: () {
+                  signOut(context);
+                },
+                icon: Icon(
+                  Icons.logout,
+                  size: 33.sp,
+                  color: const Color(0xffEEDEBA),
+                ),
               ),
             ),
           ],
@@ -162,27 +166,42 @@ class _MapScreenState extends State<MapScreen> {
                   physics: const BouncingScrollPhysics(),
                   children: [
                     ///First Tab
-                    Stack(
-                        children: [
+                    Stack(children: [
                       position != null
                           ? GoogleMap(
                               markers: markers,
                               initialCameraPosition:
                                   _myCurrentLocationCameraPosition)
-                          : Center(
-                              child: CircularProgressIndicator(),
+                          : const Center(
+                              child: CircularProgressIndicator(
+                                color: kPrimaryColor,
+
+                              ),
                             ),
                     ]),
 
                     ///second Tab
-                    ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => buildSecondTab(context),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 0,
-                      ),
-                      itemCount: 10,
+                    BlocConsumer<MapScreenCubit,MapScreenStates>(
+                      listener: (context, state) {
+                      },
+                     builder: (context ,state){
+                        MapScreenCubit cubit = MapScreenCubit.get(context);
+                        return  ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) => buildSecondTabMAP(
+                              context,
+                               cubit.data,
+                            index,
+                            index%2 ==0 ? true : false
+
+                          ),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 0,
+                          ),
+                           itemCount: MapScreenCubit.get(context).data.length,
+                        );
+                     },
                     ),
                   ],
                 ),
@@ -193,4 +212,52 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
   }
+  ///buildSecondTab Screen in tab bar
+  Widget buildSecondTabMAP(context,List<DataModel> data,int index, bool isEven)=>Container(
+    color: isEven ? Colors.white : Color(0xffD8C194),
+    child: Padding(
+      padding: EdgeInsets.only(
+        top:MediaQuery.of(context).size.height*0.02,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding:  EdgeInsets.only( left:MediaQuery.of(context).size.width*0.03,),
+            child: Row(
+              children: [
+                Text(
+                     '${data[index].length} mt',
+                  style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Comfortaa'
+                  ),
+                ),
+                Text(
+                  data[index].descr.toString(),
+                  style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Comfortaa'
+                  ),
+                ),
+                Text(
+                  '- Le torri ',
+                  style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Comfortaa'
+                  ),
+                ),
+              ],
+
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height*0.02,
+          ),
+        ],
+      ),
+    ),
+  );
 }
