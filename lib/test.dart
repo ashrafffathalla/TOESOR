@@ -158,7 +158,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const CornetoMedievaleScreen());
+                navigateTo(context, CornetoMedievaleScreen());
               },
               child: CustomPaint(
                 child: Container(

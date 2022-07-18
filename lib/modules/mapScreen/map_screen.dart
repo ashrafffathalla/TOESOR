@@ -179,10 +179,16 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                             ),
                     ]),
-
                     ///second Tab
                     BlocConsumer<MapScreenCubit,MapScreenStates>(
                       listener: (context, state) {
+                        if(state is  LoadingTabTwoMapScreenState){
+                          Center(
+                            child: const CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                          );
+                        }
                       },
                      builder: (context ,state){
                         MapScreenCubit cubit = MapScreenCubit.get(context);
@@ -193,7 +199,7 @@ class _MapScreenState extends State<MapScreen> {
                               context,
                                cubit.data,
                             index,
-                            index%2 ==0 ? true : false
+                            index %2 ==0 ? true : false
 
                           ),
                           separatorBuilder: (context, index) => const SizedBox(
@@ -213,50 +219,48 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
   ///buildSecondTab Screen in tab bar
-  Widget buildSecondTabMAP(context,List<DataModel> data,int index, bool isEven)=>Container(
-    color: isEven ? Colors.white : Color(0xffD8C194),
-    child: Padding(
-      padding: EdgeInsets.only(
-        top:MediaQuery.of(context).size.height*0.02,
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding:  EdgeInsets.only( left:MediaQuery.of(context).size.width*0.03,),
-            child: Row(
-              children: [
-                Text(
-                     '${data[index].length} mt',
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Comfortaa'
+  Widget buildSecondTabMAP(context,List<DataModel> data,int index, bool isEven)=>GestureDetector(
+    onTap: (){
+      ///DO SomTHING
+    },
+    child: Container(
+      color: isEven ? Colors.white : Color(0xffD8C194),
+      child: Padding(
+        padding: EdgeInsets.only(
+          top:MediaQuery.of(context).size.height*0.02,
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding:  EdgeInsets.only( left:MediaQuery.of(context).size.width*0.03,),
+              child: Row(
+                children: [
+                  Text(
+                       '${data[index].length} mt - ',
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Comfortaa'
+                    ),
                   ),
-                ),
-                Text(
-                  data[index].descr.toString(),
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Comfortaa'
+                  Text(
+                    data[index].descr.toString(),
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Comfortaa'
+                    ),
                   ),
-                ),
-                Text(
-                  '- Le torri ',
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Comfortaa'
-                  ),
-                ),
-              ],
 
+                ],
+
+              ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height*0.02,
-          ),
-        ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height*0.02,
+            ),
+          ],
+        ),
       ),
     ),
   );

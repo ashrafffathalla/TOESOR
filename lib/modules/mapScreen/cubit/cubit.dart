@@ -13,7 +13,6 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
   bool? success;
   String? message;
 
-
   Future<void> getAllRotes() async {
     emit(LoadingTabTwoMapScreenState());
     DioHelper.getData(

@@ -14,6 +14,7 @@ class GoogleLoginScreen extends StatefulWidget {
 class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
   bool isLoggedIn = false;
   GoogleSignInAccount ? userObj ;
+  //final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
   GoogleSignIn googleSignIn = GoogleSignIn();
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
                   setState((){
                     isLoggedIn = true;
                     userObj = value;
-                   navigateTo(context, MapScreen());
+                //   navigateTo(context, MapScreen());
                   });
                 }).catchError((error){
                   print(error.toString());
