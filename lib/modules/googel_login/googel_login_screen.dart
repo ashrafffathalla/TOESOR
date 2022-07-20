@@ -49,7 +49,7 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
                   setState((){
                     isLoggedIn = true;
                     userObj = value;
-                //   navigateTo(context, MapScreen());
+                  navigateTo(context, MapScreen());
                   });
                 }).catchError((error){
                   print(error.toString());
@@ -62,4 +62,5 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
       ),
     );
   }
+
 }

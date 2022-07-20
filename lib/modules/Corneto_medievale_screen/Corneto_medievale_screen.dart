@@ -160,10 +160,12 @@ class CornetoMedievaleScreen extends StatelessWidget {
                 ],
               ),
             ),
-
           ),
     );
   }
+  /*
+  https://www.fluttercampus.com/guide/248/calculate-distance-between-location-google-map-flutter/
+   */
 }
 
 

@@ -15,3 +15,9 @@ class ErrorTabTwoMapScreenState extends MapScreenStates{
    final String?error;
   ErrorTabTwoMapScreenState(this.error);
 }
+
+class ChangePositionLocationMapScreen extends MapScreenStates{}
+
+class GoToMyCurrentLocationState extends MapScreenStates{}
+
+class AddMarkerToSet extends MapScreenStates{}

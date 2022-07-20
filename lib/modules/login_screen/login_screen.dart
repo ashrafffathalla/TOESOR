@@ -28,11 +28,9 @@ class LoginScreen extends StatelessWidget {
   var passwordController=TextEditingController();
   var formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return BlocProvider<LoginCubit>(
       create:  (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit,LoginStates>(

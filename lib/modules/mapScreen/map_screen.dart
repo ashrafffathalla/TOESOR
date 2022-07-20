@@ -1,75 +1,25 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/models/get_all_routes_model.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/constance/logout.dart';
-import '../../shared/network/remote/location_helper.dart';
 import '../../shared/style/colors.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  State<MapScreen> createState() => _MapScreenState();
-}
 
-class _MapScreenState extends State<MapScreen> {
-  @override
-  initState() {
-    getMyCurrentLocation();
-    super.initState();
-  }
-
-  Future<void> getMyCurrentLocation() async {
-    position = await LocationHelper.getCurrentLocation().whenComplete(() {
-      setState(() {});
-    });
-  }
-
-  static Position? position;
-  Set<Marker> markers = {};
-  final Completer<GoogleMapController> _mapController = Completer();
-  static final CameraPosition _myCurrentLocationCameraPosition = CameraPosition(
-    bearing: 0.0,
-    target: LatLng(position!.latitude, position!.longitude),
-    tilt: 0.0,
-    zoom: 17.0,
-  );
-
-  Future<void> _goToMyCurrentLocation() async {
-    final GoogleMapController controller = await _mapController.future;
-    controller.animateCamera(
-        CameraUpdate.newCameraPosition(_myCurrentLocationCameraPosition));
-  }
-
+class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
-    if (position != null)
-      print(' lat: ${position!.latitude} , long: ${position!.longitude}');
-    if (position != null) {
-      markers.add(Marker(
-        position: LatLng(position!.latitude, position!.longitude),
-        markerId: const MarkerId('1'),
-        onTap: () {},
-        infoWindow: const InfoWindow(title: "Your Current Location"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-      ));
+    if (MapScreenCubit.get(context).position != null) {
+      print(' lat: ${MapScreenCubit.get(context).position!.latitude} , long: ${MapScreenCubit.get(context).position!.longitude}');
     }
-    void addMarkerToMarkersAndUpdateUI(Marker marker) {
-      setState(() {
-        markers.add(marker);
-      });
-    }
+
 
     return DefaultTabController(
       length: 2,
@@ -166,19 +116,44 @@ class _MapScreenState extends State<MapScreen> {
                   physics: const BouncingScrollPhysics(),
                   children: [
                     ///First Tab
-                    Stack(children: [
-                      position != null
-                          ? GoogleMap(
-                              markers: markers,
-                              initialCameraPosition:
-                                  _myCurrentLocationCameraPosition)
-                          : const Center(
-                              child: CircularProgressIndicator(
-                                color: kPrimaryColor,
-
+                    BlocConsumer<MapScreenCubit,MapScreenStates>(
+                      listener: (context,state){
+                        if(state is SuccessTabTwoMapScreenState){
+                          if(state.data.isNotEmpty){
+                            MapScreenCubit.get(context).getMarkers();
+                          }
+                        }
+                      },
+                      builder: (context,state){
+                        if (MapScreenCubit.get(context).position != null) {
+                          MapScreenCubit.get(context).myCurrentMarker(context);
+                        }
+                        return Stack(children: [
+                          MapScreenCubit.get(context).position != null
+                              ? GoogleMap(
+                              markers: MapScreenCubit.get(context).markers,
+                              initialCameraPosition: MapScreenCubit.get(context).position != null ?
+                              CameraPosition(
+                                bearing: 0.0,
+                                target: LatLng(MapScreenCubit.get(context).position!.latitude, MapScreenCubit.get(context).position!.longitude),
+                                tilt: 0.0,
+                                zoom: 17.0,
+                              ) : const CameraPosition(
+                                bearing: 0.0,
+                                target: LatLng(30.5234851, 30.532179),
+                                tilt: 0.0,
+                                zoom: 17.0,
                               ),
+                          )
+                              : const Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+
                             ),
-                    ]),
+                          ),
+                        ]);
+                      }
+                    ),
                     ///second Tab
                     BlocConsumer<MapScreenCubit,MapScreenStates>(
                       listener: (context, state) {
@@ -191,6 +166,7 @@ class _MapScreenState extends State<MapScreen> {
                         }
                       },
                      builder: (context ,state){
+
                         MapScreenCubit cubit = MapScreenCubit.get(context);
                         return  ListView.separated(
                           physics: const BouncingScrollPhysics(),

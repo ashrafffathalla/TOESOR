@@ -30,7 +30,7 @@ void main()async {
   Widget ? startWidget;
   sharedToken = CacheHelper.getData(key: 'token');
   if (sharedToken != null) {
-    startWidget =  const MapScreen();
+    startWidget =   MapScreen();
   } else {
     startWidget = LoginScreen();
   }
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
             create: (BuildContext context) => FacebookLoginCubit()),
             BlocProvider(
-                create: (BuildContext context) => MapScreenCubit()..getAllRotes()),
+                create: (BuildContext context) => MapScreenCubit()..getAllRotes()..goToMyCurrentLocation(context)..getMyCurrentLocation()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

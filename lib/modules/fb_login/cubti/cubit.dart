@@ -90,6 +90,7 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
         faceBookModel = FaceBookModel.fromJson(value.data);
         print(faceBookModel!.success);
         print(faceBookModel!.token);
+        print(firstName+" "+ lastName+'******************************');
         sharedToken = faceBookModel!.token;
         CacheHelper.saveData(key: 'token', value: faceBookModel!.token);
       emit(SuccessFacebookAPIState(faceBookModel!));
