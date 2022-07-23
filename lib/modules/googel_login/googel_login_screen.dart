@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
@@ -14,8 +16,8 @@ class GoogleLoginScreen extends StatefulWidget {
 class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
   bool isLoggedIn = false;
   GoogleSignInAccount ? userObj ;
-  //final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
   GoogleSignIn googleSignIn = GoogleSignIn();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +49,12 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
               {
                 googleSignIn.signIn().then((value){
                   setState((){
+                    // value!.authentication.then((googleKey){
+                    //   print(googleKey.accessToken);
+                    // });
                     isLoggedIn = true;
                     userObj = value;
-                  navigateTo(context, MapScreen());
+                  //navigateTo(context, MapScreen());
                   });
                 }).catchError((error){
                   print(error.toString());

@@ -29,6 +29,16 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
     emit(ChangeUserObjectState());
   }
 
+  void changeFirstName(String value) {
+    firstName = value;
+    emit(ChangeFirstNameState());
+  }
+
+  void changeLastName(String value) {
+    lastName = value;
+    emit(ChangeLastNameState());
+  }
+
   Future<void> logOut() async {
     await FacebookAuth.i.logOut().then((value) {
       changeLogin(false);
@@ -44,12 +54,14 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
         changeLogin(true);
         changeUserObject(value);
         emit(SuccessFacebookState());
+        changeFirstName(userOpj['name'].toString().split(' ')[0].toString());
+        changeLastName(userOpj['name'].toString().split(' ')[1].toString());
         //navigateTo(context, MapScreen());
       });
     }).then((value) {
       getAccessToken();
-      firstName = userOpj['name'].toString().split(' ')[0];
-      lastName = userOpj['name'].toString().split(' ')[1];
+      // firstName = userOpj['name'].toString().split(' ')[0];
+      // lastName = userOpj['name'].toString().split(' ')[1];
     }).catchError((error){
       emit(ErrorFacebookState(error.toString()));
     });
@@ -63,7 +75,6 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
   Future<AccessToken?> getAccessToken() async {
     final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
     changeToken(accessToken!.token.toString());
-
     return null;
   }
   FaceBookModel ? faceBookModel;

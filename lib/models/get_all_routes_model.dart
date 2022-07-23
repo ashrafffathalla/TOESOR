@@ -50,6 +50,7 @@ class GetAllRoutesModel {
 
 class DataModel {
   int? routeID;
+  String? Roue_Name;
   String? descr;
   String? length;
   String? duration;
@@ -58,6 +59,7 @@ class DataModel {
 
   DataModel.fromJson(Map<String, dynamic> json) {
     routeID = json['Route_ID'];
+    Roue_Name = json['Roue_Name'];
     descr = json['descr'];
     length = json['length'];
     duration = json['duration'];

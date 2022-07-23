@@ -19,8 +19,6 @@ class MapScreen extends StatelessWidget {
     if (MapScreenCubit.get(context).position != null) {
       print(' lat: ${MapScreenCubit.get(context).position!.latitude} , long: ${MapScreenCubit.get(context).position!.longitude}');
     }
-
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -120,17 +118,21 @@ class MapScreen extends StatelessWidget {
                       listener: (context,state){
                         if(state is SuccessTabTwoMapScreenState){
                           if(state.data.isNotEmpty){
-                            MapScreenCubit.get(context).getMarkers();
+                            MapScreenCubit.get(context).getMarkers(context);
                           }
                         }
+                        if(state is ChangePositionLocationMapScreen){
+                          if (MapScreenCubit.get(context).position != null) {
+                            MapScreenCubit.get(context).myCurrentMarker(context);
+                          }
+                        }
+
                       },
                       builder: (context,state){
-                        if (MapScreenCubit.get(context).position != null) {
-                          MapScreenCubit.get(context).myCurrentMarker(context);
-                        }
                         return Stack(children: [
                           MapScreenCubit.get(context).position != null
                               ? GoogleMap(
+                              mapType: MapType.terrain,
                               markers: MapScreenCubit.get(context).markers,
                               initialCameraPosition: MapScreenCubit.get(context).position != null ?
                               CameraPosition(
@@ -212,19 +214,21 @@ class MapScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                       '${data[index].length} mt - ',
+                       '${data[index].length} Km ',
                     style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Comfortaa'
                     ),
                   ),
-                  Text(
-                    data[index].descr.toString(),
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Comfortaa'
+                  Flexible(
+                    child: Text(
+                      data[index].Roue_Name.toString(),
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Comfortaa'
+                      ),
                     ),
                   ),
 

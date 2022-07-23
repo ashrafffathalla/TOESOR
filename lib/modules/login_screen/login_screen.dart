@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:toesor/modules/fb_login/cubti/states.dart';
+import 'package:toesor/modules/googel_login/cubit/cubit.dart';
+import 'package:toesor/modules/googel_login/cubit/states.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/login_screen/cubit/states.dart';
@@ -75,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                 ),
 
               );
-              navigateAndFinish(context,const ProfileScreen());
+              navigateAndFinish(context, MapScreen());
               clearController();
 
             }else if(state.loginModel.user?.status =='FALSE'){
@@ -283,14 +285,29 @@ class LoginScreen extends StatelessWidget {
                                 },
                               ),
                               SizedBox(height: size.height*0.02,),
-                              GestureDetector(
-                                onTap: (){
-                                  ///DO something
-                                  navigateTo(context, GoogleLoginScreen());
+                              BlocConsumer<GoogleCubit,GoogleStates>(
+                                listener: (context, state) {
+                                  if(state is ChangeEndTokenGoogleState){
+                                    GoogleCubit.get(context).googleLoginAPI(
+                                        token: GoogleCubit.get(context).endToken.toString(),
+                                        name: GoogleCubit.get(context).userOpj!.displayName.toString(),
+                                        email: GoogleCubit.get(context).userOpj!.email.toString(),
+                                        firstName: GoogleCubit.get(context).firstName.toString(),
+                                        lastName: GoogleCubit.get(context).lastName.toString(),
+                                        picture: GoogleCubit.get(context).userOpj!.photoUrl.toString()).then((value) {
+                                      navigateAndFinish(context, MapScreen());
+                                    });
+                                  }
                                 },
-                                child: Image.asset(
-                                  'assets/images/googel.png',
-                                ),
+                                builder: (context, state) {
+                                  return GestureDetector(
+                                    onTap: (){
+                                      ///DO something
+                                    GoogleCubit.get(context).googleLogin();
+                                    },
+                                    child: Image.asset('assets/images/googel.png',),
+                                  );
+                                },
                               ),
                               SizedBox(height: size.height*0.01,),
                               Row(
@@ -301,7 +318,7 @@ class LoginScreen extends StatelessWidget {
                                       navigateTo(context, ResetPasswordScreen());
                                     },
                                     child: Text(
-                                      'reset Password',
+                                      'Resetta la password',
                                       style: TextStyle(
                                         fontSize: 16.sp,
                                         fontFamily: 'Comfortaa',

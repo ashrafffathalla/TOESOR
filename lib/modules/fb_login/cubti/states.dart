@@ -1,4 +1,3 @@
-
 import 'package:toesor/models/facbook_model.dart';
 
 abstract class FacebookStates{}
@@ -26,4 +25,7 @@ class IsLoginFacebookState extends FacebookStates{}
 class ChangeUserObjectState extends FacebookStates{}
 
 class ChangeEndTokenState extends FacebookStates{}
+
+class ChangeFirstNameState extends FacebookStates{}
+class ChangeLastNameState extends FacebookStates{}
 
