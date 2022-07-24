@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:toesor/models/facbook_model.dart';
@@ -16,6 +17,7 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
   Map userOpj = {};
   String ? firstName;
   String ? lastName;
+  String ? email;
   AccessToken? token;
   String ? endToken;
 
@@ -56,7 +58,6 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
         emit(SuccessFacebookState());
         changeFirstName(userOpj['name'].toString().split(' ')[0].toString());
         changeLastName(userOpj['name'].toString().split(' ')[1].toString());
-        //navigateTo(context, MapScreen());
       });
     }).then((value) {
       getAccessToken();
@@ -76,6 +77,11 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
     final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
     changeToken(accessToken!.token.toString());
     return null;
+  }
+   getFacebookIMage(){
+    userOpj["picture"]["data"]["url"].toString();
+    print(userOpj["picture"]["data"]["url"].toString());
+    emit(GetFacebookUserImageState());
   }
   FaceBookModel ? faceBookModel;
 
@@ -102,13 +108,14 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
         print(faceBookModel!.success);
         print(faceBookModel!.token);
         print(firstName+" "+ lastName+'******************************');
+        print(email+'******************************');
         sharedToken = faceBookModel!.token;
         CacheHelper.saveData(key: 'token', value: faceBookModel!.token);
       emit(SuccessFacebookAPIState(faceBookModel!));
     }).catchError((error) {
         print('**************');
         print(error.toString());
-      emit(ErrorFacebookAPIState(error));
+      emit(ErrorFacebookAPIState(error.toString()));
     });
 
   }

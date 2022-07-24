@@ -277,8 +277,6 @@ class LoginScreen extends StatelessWidget {
                                   return GestureDetector(
                                     onTap: (){
                                       facebookCubit.login();
-                                      ///DO something
-                                      //navigateTo(context, FaceBookLoginScreen());
                                     },
                                     child: Image.asset('assets/images/facebook.png'),
                                   );
@@ -315,7 +313,7 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      navigateTo(context, ResetPasswordScreen());
+                                      navigateTo(context, EnterEmailScreen());
                                     },
                                     child: Text(
                                       'Resetta la password',

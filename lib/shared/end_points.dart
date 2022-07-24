@@ -8,4 +8,5 @@ const ENTER_Email='api/Users/ForgetPassword';
 const FB_LOGIN='api/SocialLogin/FBlogin';
 const GOOGLE_LOGIN='api/SocialLogin/Googlelogin';
 const GET_ALLROUTE='api/Route/AllRoute';
+const SEND_LATLONG='api/GeoUsers/StartGeolocation';
 

@@ -1,3 +1,5 @@
+import 'package:toesor/models/send_lat_lon_model.dart';
+
 import '../../../models/get_all_routes_model.dart';
 
 abstract class MapScreenStates{}
@@ -22,3 +24,14 @@ class GoToMyCurrentLocationState extends MapScreenStates{}
 
 class AddMarkerToSet extends MapScreenStates{}
 class AddCurrentMarkerSet extends MapScreenStates{}
+class CalculateDistanceState extends MapScreenStates{}
+//Send Lat LNG States
+class LoadingSendLatLonState extends MapScreenStates{}
+class SuccessSendLatLonState extends MapScreenStates{
+  LatLonModel latLonModel;
+  SuccessSendLatLonState (this.latLonModel);
+}
+class ErrorSendLatLonState extends MapScreenStates{
+  final String? error;
+  ErrorSendLatLonState(this.error);
+}

@@ -8,6 +8,7 @@ import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
+import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
 import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(),
-            home: start,
+            home: EnterCodeScreen(),
           ),
         );
       }

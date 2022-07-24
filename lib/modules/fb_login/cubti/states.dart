@@ -28,4 +28,5 @@ class ChangeEndTokenState extends FacebookStates{}
 
 class ChangeFirstNameState extends FacebookStates{}
 class ChangeLastNameState extends FacebookStates{}
+class GetFacebookUserImageState extends FacebookStates{}
 

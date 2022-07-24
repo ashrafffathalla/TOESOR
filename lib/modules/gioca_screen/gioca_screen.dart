@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../models/get_all_routes_model.dart';
 import '../../shared/components/colors_dots/colors_dots_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
@@ -112,136 +113,7 @@ class GiocaScreen extends StatelessWidget {
                       SizedBox(
                         height: size.height*0.03,
                       ),
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         Column(
-                           children: [
-                             Text(
-                               '3,5',
-                               style: TextStyle(
-
-                                   fontSize: 17.sp,
-                                   fontWeight: FontWeight.bold,
-                                   fontFamily: 'Comfortaa'),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(
-                                 top: size.height * 0.02,
-                               ),
-                               child: Row(
-                                 children: const [
-                                   ColorDot(),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             Text(
-                               'Lunghezza (km)',
-                               style: TextStyle(
-
-                                   fontSize: 12.sp,
-                                   fontWeight: FontWeight.w400,
-                                   fontFamily: 'Comfortaa'),
-                             ),
-                           ],
-                         ),
-                         Column(
-                           children: [
-                             Text(
-                               '45 min',
-                               style: TextStyle(
-
-                                   fontSize: 17.sp,
-                                   fontWeight: FontWeight.bold,
-                                   fontFamily: 'Comfortaa'),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(
-                                 top: size.height * 0.02,
-                               ),
-                               child: Row(
-                                 children: const [
-                                   ColorDot(),
-                                   ColorDot(),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             Text(
-                               'Tempo medio',
-                               style: TextStyle(
-
-                                   fontSize: 12.sp,
-                                   fontWeight: FontWeight.w400,
-                                   fontFamily: 'Comfortaa'),
-                             ),
-                           ],
-                         ),
-                         Column(
-                           children: [
-                             Text(
-                               '3',
-                               style: TextStyle(
-
-                                   fontSize: 17.sp,
-                                   fontWeight: FontWeight.bold,
-                                   fontFamily: 'Comfortaa'),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(
-                                 top: size.height * 0.02,
-                               ),
-                               child: Row(
-                                 children: const [
-                                   ColorDot(),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                   ColorDot(
-                                     isSelected: false,
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             Text(
-                               'Numero tappe',
-                               style: TextStyle(
-
-                                   fontSize: 12.sp,
-                                   fontWeight: FontWeight.w400,
-                                   fontFamily: 'Comfortaa',
-                               ),
-                             ),
-                           ],
-                         ),
-                       ],
-                     ),
+                      buildRowWidget(size),
                       SizedBox(
                         height: size.height*0.01,
                       ),
@@ -367,4 +239,135 @@ class GiocaScreen extends StatelessWidget {
       ),
     );
   }
+  Widget buildRowWidget(size,/*List<DataModel> data*/)=>Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Column(
+        children: [
+          Text(
+            '3,5',
+            style: TextStyle(
+
+                fontSize: 17.sp,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: size.height * 0.02,
+            ),
+            child: Row(
+              children: const [
+                ColorDot(),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+              ],
+            ),
+          ),
+          Text(
+            'Lunghezza (km)',
+            style: TextStyle(
+
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Comfortaa'),
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Text(
+            '45 min',
+            style: TextStyle(
+
+                fontSize: 17.sp,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: size.height * 0.02,
+            ),
+            child: Row(
+              children: const [
+                ColorDot(),
+                ColorDot(),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+              ],
+            ),
+          ),
+          Text(
+            'Tempo medio',
+            style: TextStyle(
+
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Comfortaa'),
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Text(
+            '3',
+            style: TextStyle(
+
+                fontSize: 17.sp,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: size.height * 0.02,
+            ),
+            child: Row(
+              children: const [
+                ColorDot(),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+                ColorDot(
+                  isSelected: false,
+                ),
+              ],
+            ),
+          ),
+          Text(
+            'Numero tappe',
+            style: TextStyle(
+
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Comfortaa',
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+
 }

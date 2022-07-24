@@ -82,54 +82,77 @@ class EnterCodeScreen extends StatelessWidget {
                     Positioned(
                         child:Padding(
                           padding: EdgeInsets.symmetric(horizontal: size.width*0.1),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Enter Code ',
-                                style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 20.sp,
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.w600,
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                sizeBoxStart(context),
+                                Center(
+                                  child: SizedBox(
+                                    width: size.width * 0.6,
+                                    child: Image.asset(
+                                      'assets/images/login_logo.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                sizeBoxStart(context),
+                                sizeBoxStart(context),
+                                sizeBoxStart(context),
+                                Text(
+                                  'inserisci il codice ',
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 20.sp,
+                                    fontFamily: 'Comfortaa',
+                                    fontWeight: FontWeight.w600,
 
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: size.height*0.02,),
-                              Padding(
-                                padding:  EdgeInsets.symmetric(
-                                  horizontal: size.width*0.1
+                                SizedBox(height: size.height*0.03,),
+                                Padding(
+                                  padding:  EdgeInsets.symmetric(
+                                    horizontal: size.width*0.1
+                                  ),
+                                  child: Row(
+                                    children:  [
+                                      PinCode()
+                                    ],
+                                  ),
                                 ),
-                                child: Row(
-                                  children:  [
-                                    PinCode()
-                                  ],
+                                SizedBox(
+                                  height: size.height*0.01,
                                 ),
-                              ),
-                              SizedBox(
-                                height: size.height*0.01,
-                              ),
 
-                              SizedBox(height: size.height*0.02,),
-                              SizedBox(
-                                height: size.height * 0.03,
-                              ),
-                              SizedBox(
-                                width: size.width*0.5,
-                                child: defaultButton(
-                                  context,
-                                  function: (){
-                                    if(formKey.currentState!.validate()){
-                                      cubit.enterCode(
-                                          token: codeController.text.toString(),
-                                      );
-                                    }
-                                  },
-                                  text: 'Submit',
-                                  rounder: BorderRadius.circular(12),
+                                SizedBox(height: size.height*0.02,),
+                                SizedBox(
+                                  height: size.height * 0.03,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: size.width*0.5,
+                                  child: defaultButton(
+                                    context,
+                                    function: (){
+                                      if(formKey.currentState!.validate()){
+                                        cubit.enterCode(
+                                            token: codeController.text.toString(),
+                                        );
+                                      }
+                                    },
+                                    text: 'inviare',
+                                    rounder: BorderRadius.circular(35.sp),
+                                  ),
+                                ),
+                                SizedBox(height: size.height*0.18,),
+                                Center(
+                                  child: Image.asset(
+                                    'assets/images/footer.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                     ),

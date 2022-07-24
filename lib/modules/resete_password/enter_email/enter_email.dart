@@ -80,76 +80,111 @@ class EnterEmailScreen extends StatelessWidget {
                   Positioned(
                       child:Padding(
                         padding: EdgeInsets.symmetric(horizontal: size.width*0.1),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Enter Your Email ',
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 20.sp,
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w600,
-
-                              ),
-                            ),
-                            SizedBox(height: size.height*0.02,),
-                            Row(
-                              children: [
-                                Text(
-                                  ' Email :',
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontFamily: 'Comfortaa',
-                                    fontWeight: FontWeight.w400,
+                        child: SingleChildScrollView(
+                          physics:const BouncingScrollPhysics(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              sizeBoxStart(context),
+                              Center(
+                                child: SizedBox(
+                                  width: size.width * 0.6,
+                                  child: Image.asset(
+                                    'assets/images/login_logo.png',
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height*0.01,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color:const Color(0xffFAF5EA),
-                                  borderRadius: BorderRadius.circular(35)
                               ),
-                              child: defaultFormField(
-                                context,
-                                controller: emailController,
-                                type: TextInputType.text,
-                                validate: (value){
-                                  if (value!.isEmpty) {
-                                    return 'Pleas enter code';
-                                  }
-                                  return null;
-                                },
-                                label: '',
+                              sizeBoxStart(context),
+                              SizedBox(height: size.height*0.05,),
+                              SizedBox(
+                                height: size.height*0.04,
+                              ),
+                              Center(
+                                child: Text(
+                                  'Inserisci il tuo indirizzo email',
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 16.sp,
+                                    fontFamily: 'Comfortaa',
+                                    fontWeight: FontWeight.w700,
 
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(height: size.height*0.02,),
-                            ///password
+                              SizedBox(height: size.height*0.03,),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding:  EdgeInsets.symmetric(
+                                      horizontal: size.width*0.02),                                    child: Text(
+                                      ' E-mail :',
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.symmetric(
+                                  horizontal: size.width*0.02
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color:const Color(0xffFAF5EA),
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: defaultFormField(
+                                    context,
+                                    controller: emailController,
+                                    type: TextInputType.text,
+                                    validate: (value){
+                                      if (value!.isEmpty) {
+                                        return 'Inserisci il tuo indirizzo email';
+                                      }
+                                      return null;
+                                    },
+                                    label: '',
 
-                            SizedBox(
-                              height: size.height * 0.03,
-                            ),
-                            SizedBox(
-                              width: size.width*0.5,
-                              child: defaultButton(
-                                context,
-                                function: (){
-                                  if(formKey.currentState!.validate()){
-                                    cubit.enterEmail(
-                                        email: emailController.text.toString(),
-                                    );
-                                  }
-                                },
-                                text: 'Submit',
-                                rounder: BorderRadius.circular(12),
+                                  ),
+                                ),
                               ),
-                            )
-                          ],
+                              SizedBox(height: size.height*0.02,),
+                              ///password
+
+                              SizedBox(
+                                height: size.height * 0.03,
+                              ),
+                              SizedBox(
+                                width: size.width*0.5,
+                                child: defaultButton(
+                                  context,
+                                  function: (){
+                                    if(formKey.currentState!.validate()){
+                                      cubit.enterEmail(
+                                          email: emailController.text.toString(),
+                                      );
+                                    }
+                                  },
+                                  text: 'inviare',
+                                  rounder: BorderRadius.circular(35),
+                                ),
+                              ),
+                              SizedBox(height: size.height*0.18,),
+                              Center(
+                                child: Image.asset(
+                                  'assets/images/footer.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                   ),

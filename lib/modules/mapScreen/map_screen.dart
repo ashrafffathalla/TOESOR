@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/models/get_all_routes_model.dart';
+import 'package:toesor/modules/gioca_screen/gioca_screen.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
+import '../../shared/components/colors_dots/colors_dots_screen.dart';
+import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/constance/logout.dart';
 import '../../shared/style/colors.dart';
@@ -17,8 +22,10 @@ class MapScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
     if (MapScreenCubit.get(context).position != null) {
+
       print(' lat: ${MapScreenCubit.get(context).position!.latitude} , long: ${MapScreenCubit.get(context).position!.longitude}');
     }
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -124,6 +131,16 @@ class MapScreen extends StatelessWidget {
                         if(state is ChangePositionLocationMapScreen){
                           if (MapScreenCubit.get(context).position != null) {
                             MapScreenCubit.get(context).myCurrentMarker(context);
+                            //Send LATLNG With 2 Secends
+                            Timer.periodic(
+                              const Duration(seconds: 2),
+                                  (timer) => MapScreenCubit.get(context).sendLatLong(
+                                lat: MapScreenCubit.get(context).position!.latitude,
+                                lon: MapScreenCubit.get(context).position!.longitude,
+                              ),
+                            );
+                          }else{
+                            
                           }
                         }
 
@@ -139,7 +156,7 @@ class MapScreen extends StatelessWidget {
                                 bearing: 0.0,
                                 target: LatLng(MapScreenCubit.get(context).position!.latitude, MapScreenCubit.get(context).position!.longitude),
                                 tilt: 0.0,
-                                zoom: 17.0,
+                                zoom: 18.0,
                               ) : const CameraPosition(
                                 bearing: 0.0,
                                 target: LatLng(30.5234851, 30.532179),
@@ -160,8 +177,8 @@ class MapScreen extends StatelessWidget {
                     BlocConsumer<MapScreenCubit,MapScreenStates>(
                       listener: (context, state) {
                         if(state is  LoadingTabTwoMapScreenState){
-                          Center(
-                            child: const CircularProgressIndicator(
+                         const Center(
+                            child:  CircularProgressIndicator(
                               color: kPrimaryColor,
                             ),
                           );
@@ -199,10 +216,227 @@ class MapScreen extends StatelessWidget {
   ///buildSecondTab Screen in tab bar
   Widget buildSecondTabMAP(context,List<DataModel> data,int index, bool isEven)=>GestureDetector(
     onTap: (){
-      ///DO SomTHING
+      bottomSheet(
+        context,
+        Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.27,
+          decoration: const BoxDecoration(
+              color: kPrimaryColor,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30),
+                topLeft: Radius.circular(30),
+              )),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.015,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.07,
+                      ),
+                      Text(
+                        data[index].Roue_Name.toString(),
+                        style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Comfortaa'),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.015,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          data[index].length.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          child: Row(
+                            children: const [
+                              ColorDot(),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Lunghezza (km)',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          data[index].duration.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          child: Row(
+                            children: const [
+                              ColorDot(),
+                              ColorDot(),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Tempo medio',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          '3',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          child: Row(
+                            children: const [
+                              ColorDot(),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                              ColorDot(
+                                isSelected: false,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Numero tappe',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Comfortaa'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.02),
+                  child: Column(
+                    children: [
+                      Text(
+                        'DESCRIZIONE \n${data[index].descr.toString()}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Comfortaa',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.38,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: BoxDecoration(
+                    color: const Color(0XFF5BA57B),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: InkWell(
+                      onTap: (){
+                        navigateTo(context, GiocaScreen());
+                      },
+                      child: Text(
+                        'SCEGLI',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Comfortaa',
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
     },
     child: Container(
-      color: isEven ? Colors.white : Color(0xffD8C194),
+      color: isEven ? Colors.white :const Color(0xffD8C194),
       child: Padding(
         padding: EdgeInsets.only(
           top:MediaQuery.of(context).size.height*0.02,
@@ -213,12 +447,27 @@ class MapScreen extends StatelessWidget {
               padding:  EdgeInsets.only( left:MediaQuery.of(context).size.width*0.03,),
               child: Row(
                 children: [
-                  Text(
-                       '${data[index].length} Km ',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Comfortaa'
+                  BlocProvider(
+                    create: (BuildContext context)=>MapScreenCubit(),
+                    child: BlocConsumer<MapScreenCubit,MapScreenStates>(
+                      listener: (context, state) {},
+                      builder:(context,state){
+                        return Text(
+                          '${data[index].length} Km ',
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Comfortaa'
+                          ),
+                        );
+                        /*
+                          '${MapScreenCubit.get(context).calculateDistance(
+                              MapScreenCubit.get(context).position!.latitude.toString(),
+                              MapScreenCubit.get(context).position!.longitude.toString(),
+                              '${data[index].routeLat}',
+                              '${data[index].routeLng}',
+                         */
+                      },
                     ),
                   ),
                   Flexible(

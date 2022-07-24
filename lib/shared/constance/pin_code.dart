@@ -33,7 +33,7 @@ class PinCode extends StatelessWidget {
           selectedColor:kPrimaryColor.withOpacity(0.2),
           shape: PinCodeFieldShape.box,
           activeColor:kPrimaryColor,
-          inactiveColor: kPrimaryColor,
+          inactiveColor: Colors.brown[300],
           activeFillColor: Colors.white,
           inactiveFillColor: Colors.white,
           selectedFillColor: Colors.white,
