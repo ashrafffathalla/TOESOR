@@ -273,7 +273,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const GiocaScreen());
+                //navigateTo(context,const());
               },
               child: CustomPaint(
                 child: Container(

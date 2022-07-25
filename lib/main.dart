@@ -66,8 +66,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: (BuildContext context) => GoogleCubit()),
             BlocProvider(
-                create: (BuildContext context) => MapScreenCubit()..getAllRotes()..goToMyCurrentLocation(context)..getMyCurrentLocation()
+                create: (BuildContext context) => MapScreenCubit()
+            ),BlocProvider(
+                create: (BuildContext context) => LoginCubit()
             ),
+
 
           ],
           child: MaterialApp(

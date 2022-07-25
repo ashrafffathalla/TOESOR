@@ -28,7 +28,7 @@ LoginModel? loginModel;
       print(loginModel!.user!.UserPic);
        emit(SuccessLoginState(loginModel!));
     }).catchError((error) {
-      emit(ErrorLoginState(error));
+      emit(ErrorLoginState(error.toString()));
      // print(error.toString());
     });
 }

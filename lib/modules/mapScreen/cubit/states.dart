@@ -27,11 +27,9 @@ class AddCurrentMarkerSet extends MapScreenStates{}
 class CalculateDistanceState extends MapScreenStates{}
 //Send Lat LNG States
 class LoadingSendLatLonState extends MapScreenStates{}
-class SuccessSendLatLonState extends MapScreenStates{
-  LatLonModel latLonModel;
-  SuccessSendLatLonState (this.latLonModel);
-}
+class SuccessSendLatLonState extends MapScreenStates{}
 class ErrorSendLatLonState extends MapScreenStates{
   final String? error;
   ErrorSendLatLonState(this.error);
 }
+class ChangeCanILogout extends MapScreenStates{}

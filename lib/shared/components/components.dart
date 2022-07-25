@@ -84,7 +84,7 @@ Widget defaultButton(
       child: MaterialButton(
         onPressed: function,
         child: Text(
-          text.toLowerCase(),
+          text,
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Comfortaa',

@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/models/get_all_routes_model.dart';
 import 'package:toesor/models/send_lat_lon_model.dart';
+import 'package:toesor/modules/gioca_screen/gioca_screen.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
 import 'package:toesor/shared/components/colors_dots/colors_dots_screen.dart';
 import 'package:toesor/shared/components/components.dart';
@@ -22,7 +23,11 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
   List<DataModel> data = <DataModel>[];
   bool? success;
   String? message;
+
+
+
   Future<void> getAllRotes() async {
+    data= [];
     emit(LoadingTabTwoMapScreenState());
     DioHelper.getData(
         methodUrl: GET_ALLROUTE
@@ -32,6 +37,7 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
       data = List<DataModel>.from(value.data['data'].map((element) =>DataModel.fromJson(element)));
       emit(SuccessTabTwoMapScreenState(data));
     }).catchError((error) {
+      print(error.toString());
       emit(ErrorTabTwoMapScreenState(error.toString()));
     });
   }
@@ -68,227 +74,13 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
   }
 
   Set<Marker> markers = {};
+  ScrollController listScrollController = ScrollController();
 
   Set<Marker> myCurrentMarker(context){
     markers.add(Marker(
       position: LatLng(MapScreenCubit.get(context).position!.latitude, MapScreenCubit.get(context).position!.longitude),
       markerId: const MarkerId('1000'),
-      /*// onTap: (){
-      //   bottomSheet(
-      //       context,
-      //       Container(
-      //         width: MediaQuery.of(context).size.width * 0.9,
-      //         height: MediaQuery.of(context).size.height * 0.27,
-      //         decoration: const BoxDecoration(
-      //             color: kPrimaryColor,
-      //             borderRadius: BorderRadius.only(
-      //               topRight: Radius.circular(30),
-      //               topLeft: Radius.circular(30),
-      //             )),
-      //         child: SingleChildScrollView(
-      //           physics: const BouncingScrollPhysics(),
-      //           child: Column(
-      //             children: [
-      //               Padding(
-      //                 padding: EdgeInsets.only(
-      //                   top: MediaQuery.of(context).size.height * 0.015,
-      //                 ),
-      //                 child: Row(
-      //                   children: [
-      //                     SizedBox(
-      //                       width: MediaQuery.of(context).size.width * 0.07,
-      //                     ),
-      //                     Text(
-      //                       'Corneto medievale',
-      //                       style: TextStyle(
-      //                           fontSize: 17.sp,
-      //                           fontWeight: FontWeight.bold,
-      //                           color: Colors.white,
-      //                           fontFamily: 'Comfortaa'),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //               SizedBox(
-      //                 height: MediaQuery.of(context).size.height * 0.015,
-      //               ),
-      //               Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //                 children: [
-      //                   Column(
-      //                     children: [
-      //                       Text(
-      //                         '3,5',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 17.sp,
-      //                             fontWeight: FontWeight.bold,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                       Padding(
-      //                         padding: EdgeInsets.only(
-      //                           top: MediaQuery.of(context).size.height * 0.02,
-      //                         ),
-      //                         child: Row(
-      //                           children: const [
-      //                             ColorDot(),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ),
-      //                       Text(
-      //                         'Lunghezza (km)',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 12.sp,
-      //                             fontWeight: FontWeight.w400,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   Column(
-      //                     children: [
-      //                       Text(
-      //                         '45 min',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 17.sp,
-      //                             fontWeight: FontWeight.bold,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                       Padding(
-      //                         padding: EdgeInsets.only(
-      //                           top: MediaQuery.of(context).size.height * 0.02,
-      //                         ),
-      //                         child: Row(
-      //                           children: const [
-      //                             ColorDot(),
-      //                             ColorDot(),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ),
-      //                       Text(
-      //                         'Tempo medio',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 12.sp,
-      //                             fontWeight: FontWeight.w400,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   Column(
-      //                     children: [
-      //                       Text(
-      //                         '3',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 17.sp,
-      //                             fontWeight: FontWeight.bold,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                       Padding(
-      //                         padding: EdgeInsets.only(
-      //                           top: MediaQuery.of(context).size.height * 0.02,
-      //                         ),
-      //                         child: Row(
-      //                           children: const [
-      //                             ColorDot(),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                             ColorDot(
-      //                               isSelected: false,
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ),
-      //                       Text(
-      //                         'Numero tappe',
-      //                         style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 12.sp,
-      //                             fontWeight: FontWeight.w400,
-      //                             fontFamily: 'Comfortaa'),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //               SizedBox(
-      //                 height: MediaQuery.of(context).size.height * 0.02,
-      //               ),
-      //               Padding(
-      //                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.02),
-      //                 child: Column(
-      //                   children: [
-      //                     Text(
-      //                       "DESCRIZIONE \n luogo di un tempo ormai perso, dal cui punto, puoi scorgere un cielo terso, misteriosa è la sua storia che la città divide, ad una persona è intitolata che mai la vide Una donna di Chiesa assai forte e coraggiosa cha a fianco di Gregorio VII lottò impetuosa",
-      //                       style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontSize: 13.sp,
-      //                         fontWeight: FontWeight.bold,
-      //                         fontFamily: 'Comfortaa',
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //               SizedBox(
-      //                 height: MediaQuery.of(context).size.height * 0.02,
-      //               ),
-      //               Container(
-      //                 width: MediaQuery.of(context).size.width * 0.38,
-      //                 height: MediaQuery.of(context).size.height * 0.05,
-      //                 decoration: BoxDecoration(
-      //                   color: const Color(0XFF5BA57B),
-      //                   borderRadius: BorderRadius.circular(30),
-      //                 ),
-      //                 child: Center(
-      //                   child: Text(
-      //                     'SCEGLI',
-      //                     style: TextStyle(
-      //                       color: Colors.white,
-      //                       fontSize: 18.sp,
-      //                       fontWeight: FontWeight.w400,
-      //                       fontFamily: 'Comfortaa',
-      //                     ),
-      //                   ),
-      //                 ),
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //       )
-      //   );
-      //   ///Display Bottom Sheet AND TAPS FROM API`
-      // },*/
+
       infoWindow: const InfoWindow(title: "La tua posizione attuale"),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
     ));
@@ -296,15 +88,17 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
     return markers;
   }
   Set<Marker> getMarkers(context) {
+    print('*****************************');
+    print(data.length);
     if(data.isNotEmpty){
       for(int item = 0;item < data.length;item++){
         markers.add(Marker(
           position: LatLng(double.parse(data[item].routeLat.toString()),double.parse(data[item].routeLng.toString())),
           markerId: MarkerId('$item'),
           onTap: (){
-            bottomSheet(
-                context,
-             Container(
+            showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+                builder: (BuildContext context) => Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.height * 0.27,
                   decoration: const BoxDecoration(
@@ -316,6 +110,7 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
@@ -327,7 +122,7 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
                                 width: MediaQuery.of(context).size.width * 0.07,
                               ),
                               Text(
-                                  data[item].Roue_Name.toString(),
+                                data[item].Roue_Name.toString(),
                                 style: TextStyle(
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.bold,
@@ -499,13 +294,18 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Center(
-                            child: Text(
-                              'SCEGLI',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Comfortaa',
+                            child: GestureDetector(
+                              onTap: (){
+                                navigateTo(context, GiocaScreen(data: data[item],));
+                              },
+                              child: Text(
+                                'SCEGLI',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Comfortaa',
+                                ),
                               ),
                             ),
                           ),
@@ -514,6 +314,10 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
                     ),
                   ),
                 ),
+              context: context,
+              isScrollControlled: true,
+              isDismissible: true,
+
             );
           },
           infoWindow: InfoWindow(
@@ -534,27 +338,28 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
 ///SEND LAT&LON With 2 Sec
   LatLonModel? latLonModel;
   Future<void> sendLatLong({
+
     double ?lat,
     double ?lon,
 })async{
       emit(LoadingSendLatLonState());
-      DioHelper.postData(
-          methodUrl: SEND_LATLONG,
-          data: {
-            "RealTime_Geo_Lat":lat,
-            "RealTime_Geo_Lng":lon,
-          }).then((value){
-        latLonModel = LatLonModel.fromJson(value.data);
-        print(latLonModel!.message);
-        emit(SuccessSendLatLonState(latLonModel!));
-      }).catchError((error){
-        print(error.toString());
-        emit(ErrorSendLatLonState(error.toString()));
-      });
-   
-
+        Timer.periodic(
+          const Duration(seconds: 2),
+              (timer) => DioHelper.postData(
+                  methodUrl: SEND_LATLONG,
+                  data: {
+                    "RealTime_Geo_Lat":lat,
+                    "RealTime_Geo_Lng":lon,
+                  }).then((value){
+                latLonModel = LatLonModel.fromJson(value.data);
+                //print(latLonModel!.message);
+                emit(SuccessSendLatLonState());
+              }).catchError((error){
+                print('is error here ');
+                print(error.toString());
+                emit(ErrorSendLatLonState(error.toString()));
+              }),
+        );
+        }
   }
-}
-
-
 

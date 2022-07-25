@@ -52,6 +52,7 @@ class GoogleCubit extends Cubit<GoogleStates> {
     emit(LoadingGoogleState());
     googleSignIn.signIn().then((value) {
       changeLogin(true);
+
        getGoogleAccessToken();
       changeUserObject(value!);
       emit(SuccessGoogleState());

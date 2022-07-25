@@ -11,6 +11,7 @@ void signOut(context){
     if(value!){
       sharedToken = null;
       navigateAndFinish(context, LoginScreen ());
+
     }
   });
 }

@@ -57,13 +57,14 @@ class NavigationDrawerScreen extends StatelessWidget {
                                     child: ClipRRect(
                                       child:Image.network(GoogleCubit.get(context).userOpj!.photoUrl.toString(),
                                       ),
-                                    )):const Center(
+                                    )):LoginCubit.get(context).loginModel != null ? CircleAvatar(
+                                  radius: 40,
+                                    child:  Image.network(LoginCubit.get(context).loginModel!.user!.UserPic.toString())):const Center(
                                   child: CircularProgressIndicator(
                                     color: kPrimaryColor,
                                   ),
                                 );
                               },
-
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width*0.03,
@@ -133,14 +134,15 @@ class NavigationDrawerScreen extends StatelessWidget {
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.w400,
                               ),
-                            ):FacebookLoginCubit.get(context).userOpj.isNotEmpty? Text(
+                            ):FacebookLoginCubit.get(context).userOpj.isNotEmpty?
+                            Text(
                               FacebookLoginCubit.get(context).userOpj["name"].toString(),
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.w400,
                               ),
-                            ) :const Center(
+                            ):LoginCubit.get(context).loginModel != null ? Text(LoginCubit.get(context).loginModel!.user!.NickName.toString()): Center(
                                 child: CircularProgressIndicator(color: kPrimaryColor,)
                             ),
                           ],
