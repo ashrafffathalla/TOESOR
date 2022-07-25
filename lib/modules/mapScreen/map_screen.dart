@@ -132,15 +132,7 @@ class MapScreen extends StatelessWidget {
                           if (MapScreenCubit.get(context).position != null) {
                             MapScreenCubit.get(context).myCurrentMarker(context);
                             //Send LATLNG With 2 Secends
-                            Timer.periodic(
-                              const Duration(seconds: 2),
-                                  (timer) => MapScreenCubit.get(context).sendLatLong(
-                                lat: MapScreenCubit.get(context).position!.latitude,
-                                lon: MapScreenCubit.get(context).position!.longitude,
-                              ),
-                            );
-                          }else{
-                            
+
                           }
                         }
 

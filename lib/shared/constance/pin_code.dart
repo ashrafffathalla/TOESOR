@@ -29,7 +29,7 @@ class PinCode extends StatelessWidget {
         pinTheme: PinTheme(
           borderRadius: BorderRadius.circular(0),
           fieldWidth: size.width*0.085,
-          fieldHeight: size.height*0.04,
+          fieldHeight: size.height*0.06,
           selectedColor:kPrimaryColor.withOpacity(0.2),
           shape: PinCodeFieldShape.box,
           activeColor:kPrimaryColor,

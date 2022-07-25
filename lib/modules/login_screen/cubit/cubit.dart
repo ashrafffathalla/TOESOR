@@ -23,12 +23,15 @@ LoginModel? loginModel;
         }
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
-     // print('Sucersss');
+      var name = loginModel!.user!.NickName;
+      print(loginModel!.user!.NickName);
+      print(loginModel!.user!.UserPic);
        emit(SuccessLoginState(loginModel!));
     }).catchError((error) {
       emit(ErrorLoginState(error));
      // print(error.toString());
     });
 }
+
 
 }

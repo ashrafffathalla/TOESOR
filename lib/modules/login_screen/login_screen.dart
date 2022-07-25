@@ -39,17 +39,21 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SuccessLoginState){
            if(state.loginModel.code=='422'){
+             print(state.loginModel.code.toString());
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
                 message: 'Password Errata',
                 title: 'Errore',
                 type: ContentType.failure,
+                //geniusdeveloper2000@gmail.com
+                //MAster2020@@
               ),
 
             );
           }
            if(state.loginModel.code=='432'){
+             print(state.loginModel.code.toString());
              ScaffoldMessenger.of(context)
                  .showSnackBar(
                customSnackBar(
@@ -71,8 +75,8 @@ class LoginScreen extends StatelessWidget {
               ScaffoldMessenger.of(context)
                   .showSnackBar(
                 customSnackBar(
-                  message: 'Welcome Back',
-                  title: 'Success!',
+                  message: '',
+                  title: 'Successo',
                   type: ContentType.success,
                 ),
 
@@ -189,9 +193,9 @@ class LoginScreen extends StatelessWidget {
                                   type: TextInputType.emailAddress,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your email address';
+                                      return 'Inserisci il tuo indirizzo Email';
                                     }else if( !(isEmail(value.toString())))  {
-                                      return 'the email is not valid';
+                                      return 'Indirizzo Email non è valido';
                                     }
                                     return null;
                                   },
@@ -227,7 +231,7 @@ class LoginScreen extends StatelessWidget {
                                   type: TextInputType.visiblePassword,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your Password';
+                                      return 'Inserisci La tua password';
                                     }
                                     return null;
                                   },
@@ -255,6 +259,38 @@ class LoginScreen extends StatelessWidget {
                                   rounder: BorderRadius.circular(35),
                                 ),
                                 fallback: (context)=>const Center(child: CircularProgressIndicator(color: Colors.orangeAccent,)),
+                              ),
+                              SizedBox(height: size.width*0.04,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){
+                                      navigateTo(context, EnterEmailScreen());
+                                    },
+                                    child: Text(
+                                      'Recupera password',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontFamily: 'Comfortaa',
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: (){
+
+                                      navigateTo(context, SignUpScreen());
+                                    },
+                                    child: Text(
+                                      'Registrati',
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Comfortaa',
+                                        color: kPrimaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               SvgPicture.asset('assets/icons/o.svg'),
                               BlocConsumer<FacebookLoginCubit,FacebookStates>(
@@ -308,36 +344,7 @@ class LoginScreen extends StatelessWidget {
                                 },
                               ),
                               SizedBox(height: size.height*0.01,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  GestureDetector(
-                                    onTap: (){
-                                      navigateTo(context, EnterEmailScreen());
-                                    },
-                                    child: Text(
-                                      'Resetta la password',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontFamily: 'Comfortaa',
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: (){
 
-                                      navigateTo(context, SignUpScreen());
-                                    },
-                                    child: Text(
-                                      'Sign Up ?',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontFamily: 'Comfortaa',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                               SizedBox(height: size.height*0.02,),
                               Center(
                                 child: Image.asset(

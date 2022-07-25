@@ -295,7 +295,6 @@ class MapScreenCubit extends Cubit<MapScreenStates>{
     emit(AddCurrentMarkerSet());
     return markers;
   }
-
   Set<Marker> getMarkers(context) {
     if(data.isNotEmpty){
       for(int item = 0;item < data.length;item++){

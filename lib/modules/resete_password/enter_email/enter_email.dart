@@ -172,7 +172,7 @@ class EnterEmailScreen extends StatelessWidget {
                                       );
                                     }
                                   },
-                                  text: 'inviare',
+                                  text: 'Invia codice',
                                   rounder: BorderRadius.circular(35),
                                 ),
                               ),

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:toesor/models/login_model.dart';
 import 'package:toesor/modules/fb_login/cubti/cubit.dart';
 import 'package:toesor/modules/fb_login/cubti/states.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
 import 'package:toesor/modules/googel_login/cubit/states.dart';
+import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/components/navigationbar/navigation_items.dart';
@@ -138,8 +140,11 @@ class NavigationDrawerScreen extends StatelessWidget {
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.w400,
                               ),
-                            ):const Center(child: CircularProgressIndicator(color: kPrimaryColor,)),
+                            ) :const Center(
+                                child: CircularProgressIndicator(color: kPrimaryColor,)
+                            ),
                           ],
+                          //
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*0.04,),
 

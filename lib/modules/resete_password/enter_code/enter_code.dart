@@ -117,7 +117,7 @@ class EnterCodeScreen extends StatelessWidget {
                                   ),
                                   child: Row(
                                     children:  [
-                                      PinCode()
+                                      PinCode(),
                                     ],
                                   ),
                                 ),
@@ -140,7 +140,7 @@ class EnterCodeScreen extends StatelessWidget {
                                         );
                                       }
                                     },
-                                    text: 'inviare',
+                                    text: 'Verifica',
                                     rounder: BorderRadius.circular(35.sp),
                                   ),
                                 ),

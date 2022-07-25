@@ -7,6 +7,7 @@ import 'package:toesor/modules/Corneto_medievale_screen/Corneto_medievale_screen
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
+import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
 import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
@@ -67,11 +68,12 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: (BuildContext context) => MapScreenCubit()..getAllRotes()..goToMyCurrentLocation(context)..getMyCurrentLocation()
             ),
+
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(),
-            home: EnterCodeScreen(),
+            home: start,
           ),
         );
       }
