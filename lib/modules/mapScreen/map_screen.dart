@@ -8,6 +8,7 @@ import 'package:toesor/models/get_all_routes_model.dart';
 import 'package:toesor/modules/gioca_screen/gioca_screen.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
+import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import '../../shared/components/colors_dots/colors_dots_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
@@ -132,7 +133,16 @@ class MapScreen extends StatelessWidget {
                           if (MapScreenCubit.get(context).position != null) {
                             MapScreenCubit.get(context).myCurrentMarker(context);
                             //Send LATLNG With 2 Secends
-
+                            if(CacheHelper.getData(key: 'token') != null)
+                             {
+                               Timer.periodic(
+                                 const Duration(seconds: 2),
+                                     (timer) => MapScreenCubit.get(context).sendLatLong(
+                                   lat: MapScreenCubit.get(context).position!.latitude,
+                                   lon: MapScreenCubit.get(context).position!.longitude,
+                                 ),
+                               );
+                             }
                           }
                         }
 
