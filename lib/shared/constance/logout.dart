@@ -14,4 +14,6 @@ void signOut(context){
 
     }
   });
+  CacheHelper.removerData(key: 'name');
+  CacheHelper.removerData(key: 'pic');
 }

@@ -36,6 +36,14 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit,LoginStates>(
       listener: (context, state) {
         if (state is SuccessLoginState){
+          CacheHelper.saveData(
+              key: 'name',
+              value: state.loginModel.user!.NickName
+          );
+          CacheHelper.saveData(
+              key: 'pic',
+              value: state.loginModel.user!.UserPic,
+          );
          if(state.loginModel.code=='422'){
            print(state.loginModel.code.toString());
           ScaffoldMessenger.of(context)
@@ -311,6 +319,14 @@ class LoginScreen extends StatelessWidget {
                                       firstName: facebookCubit.firstName.toString(),
                                       lastName: facebookCubit.lastName.toString(),
                                       picture: facebookCubit.userOpj["picture"]["data"]["url"]).then((value) {
+                                    CacheHelper.saveData(
+                                        key: 'pic',
+                                        value: facebookCubit.userOpj["picture"]["data"]["url"]
+                                    );
+                                    CacheHelper.saveData(
+                                        key: 'name',
+                                        value: facebookCubit.userOpj["name"]
+                                    );
                                         navigateAndFinish(context, MapScreen());
                                   });
                                 }
@@ -336,6 +352,14 @@ class LoginScreen extends StatelessWidget {
                                       firstName: GoogleCubit.get(context).firstName.toString(),
                                       lastName: GoogleCubit.get(context).lastName.toString(),
                                       picture: GoogleCubit.get(context).userOpj!.photoUrl.toString()).then((value) {
+                                        CacheHelper.saveData(
+                                            key: 'pic',
+                                            value: GoogleCubit.get(context).userOpj!.photoUrl.toString()
+                                        );
+                                        CacheHelper.saveData(
+                                            key: 'name',
+                                            value: GoogleCubit.get(context).userOpj!.displayName.toString()
+                                        );
                                     navigateAndFinish(context, MapScreen());
                                   });
                                 }

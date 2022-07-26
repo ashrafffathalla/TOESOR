@@ -12,6 +12,7 @@ import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/components/navigationbar/navigation_items.dart';
+import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/style/colors.dart';
 
 class NavigationDrawerScreen extends StatelessWidget {
@@ -20,11 +21,11 @@ class NavigationDrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return  Container(
-      width: size.width*0.85,
+    return Container(
+      width: size.width * 0.85,
       child: Drawer(
         child: Material(
-          color:Colors.white,
+          color: Colors.white,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -32,48 +33,32 @@ class NavigationDrawerScreen extends StatelessWidget {
                 Container(
                   color: const Color(0xffEEDEBA),
                   child: Padding(
-                    padding:  EdgeInsets.only(
-                      left:MediaQuery.of(context).size.width*0.03,
-                      top: MediaQuery.of(context).size.height*0.01,
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.03,
+                      top: MediaQuery.of(context).size.height * 0.01,
                     ),
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            BlocConsumer<FacebookLoginCubit,FacebookStates>(
-                              listener:(context, state) {},
-                              builder: (context, state) {
-                                FacebookLoginCubit cubit = FacebookLoginCubit.get(context);
-                                return cubit.userOpj.isNotEmpty?
-                                  CircleAvatar(
-                                  backgroundColor: Colors.brown,
-                                  radius: 40.sp,
-                                  child: ClipRRect(
-                                    child:Image.network(cubit.userOpj["picture"]["data"]["url"],
+                            CircleAvatar(
+                                backgroundColor: Colors.brown,
+                                radius: 40.sp,
+                                child: ClipRRect(
+                                  child: Image.network(
+                                    CacheHelper.getData(key: 'pic')
                                   ),
-                                )): GoogleCubit.get(context).userOpj != null ?  CircleAvatar(
-                                    backgroundColor: Colors.brown,
-                                    radius: 40.sp,
-                                    child: ClipRRect(
-                                      child:Image.network(GoogleCubit.get(context).userOpj!.photoUrl.toString(),
-                                      ),
-                                    )):LoginCubit.get(context).loginModel != null ? CircleAvatar(
-                                  radius: 40,
-                                    child:  Image.network(LoginCubit.get(context).loginModel!.user!.UserPic.toString())):const Center(
-                                  child: CircularProgressIndicator(
-                                    color: kPrimaryColor,
-                                  ),
-                                );
-                              },
-                            ),
+                                )
+                    ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
+                              width: MediaQuery.of(context).size.width * 0.03,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
                                       'percorsi giocati: ',
@@ -82,7 +67,6 @@ class NavigationDrawerScreen extends StatelessWidget {
                                         fontFamily: 'Comfortaa',
                                         fontWeight: FontWeight.w400,
                                       ),
-
                                     ),
                                     Text(
                                       '27',
@@ -95,10 +79,12 @@ class NavigationDrawerScreen extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.015,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.015,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       'miglior piazzamento: ',
@@ -122,65 +108,89 @@ class NavigationDrawerScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            GoogleCubit.get(context).userOpj !=null?
-                            Text(
-                              GoogleCubit.get(context).userOpj!.displayName.toString(),
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ):FacebookLoginCubit.get(context).userOpj.isNotEmpty?
-                            Text(
-                              FacebookLoginCubit.get(context).userOpj["name"].toString(),
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ):LoginCubit.get(context).loginModel != null ? Text(LoginCubit.get(context).loginModel!.user!.NickName.toString()): Center(
-                                child: CircularProgressIndicator(color: kPrimaryColor,)
-                            ),
+                            // GoogleCubit.get(context).userOpj != null
+                            //     ? Text(
+                            //         GoogleCubit.get(context)
+                            //             .userOpj!
+                            //             .displayName
+                            //             .toString(),
+                            //         style: TextStyle(
+                            //           fontSize: 20.sp,
+                            //           fontFamily: 'Comfortaa',
+                            //           fontWeight: FontWeight.w400,
+                            //         ),
+                            //       )
+                            //     : FacebookLoginCubit.get(context)
+                            //             .userOpj
+                            //             .isNotEmpty
+                            //         ? Text(
+                            //             FacebookLoginCubit.get(context)
+                            //                 .userOpj["name"]
+                            //                 .toString(),
+                            //             style: TextStyle(
+                            //               fontSize: 20.sp,
+                            //               fontFamily: 'Comfortaa',
+                            //               fontWeight: FontWeight.w400,
+                            //             ),
+                            //           )
+                            //         : LoginCubit.get(context).loginModel != null
+                            //             ? Text(LoginCubit.get(context)
+                            //                 .loginModel!
+                            //                 .user!
+                            //                 .NickName
+                            //                 .toString())
+                            //             : Center(
+                            //                 child: CircularProgressIndicator(
+                            //                 color: kPrimaryColor,
+                            //               )),
+                            Text(CacheHelper.getData(key: 'name').toString()),
                           ],
                           //
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.04,),
-
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.04,
+                        ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: size.height*0.03,),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
                 DrawerItems(
                     name: 'PROFILO',
                     icon: SvgPicture.asset('assets/icons/progile_circle.svg'),
-                    onPressed: ()=>onItemPressed(context, index:0)
-                ),
+                    onPressed: () => onItemPressed(context, index: 0)),
                 myDivider(context),
-                SizedBox(height: size.height*0.03,),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
                 DrawerItems(
                     name: 'GIOCA',
                     icon: SvgPicture.asset('assets/icons/location.svg'),
-                    onPressed: ()=>onItemPressed(context, index:1)
-                ),
+                    onPressed: () => onItemPressed(context, index: 1)),
                 myDivider(context),
-                SizedBox(height: size.height*0.03,),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
                 DrawerItems(
                     name: 'TUA CLASSIFICA',
                     icon: SvgPicture.asset('assets/icons/kas.svg'),
-                    onPressed: ()=>onItemPressed(context, index:2)
-                ),
+                    onPressed: () => onItemPressed(context, index: 2)),
                 myDivider(context),
-                SizedBox(height: size.height*0.03,),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
                 DrawerItems(
                     name: 'IMPOSTAZIONI',
                     icon: SvgPicture.asset('assets/icons/setting.svg'),
-                    onPressed: ()=>onItemPressed(context, index:2)
-                ),
+                    onPressed: () => onItemPressed(context, index: 2)),
                 myDivider(context),
               ],
             ),
@@ -190,20 +200,19 @@ class NavigationDrawerScreen extends StatelessWidget {
     );
   }
 
-  void onItemPressed(BuildContext context , {required int index})
-  {
+  void onItemPressed(BuildContext context, {required int index}) {
     Navigator.pop(context);
-    switch(index){
-      case 0 :
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>const ProfileScreen()));
+    switch (index) {
+      case 0:
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ProfileScreen()));
         break;
       default:
         Navigator.pop(context);
         break;
-
     }
   }
-  /*
+/*
   Widget headerWidget(context){
     return Container(
       color: const Color(0xffEEDEBA),

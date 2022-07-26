@@ -61,8 +61,6 @@ class FacebookLoginCubit extends Cubit<FacebookStates> {
       });
     }).then((value) {
       getAccessToken();
-      // firstName = userOpj['name'].toString().split(' ')[0];
-      // lastName = userOpj['name'].toString().split(' ')[1];
     }).catchError((error){
       emit(ErrorFacebookState(error.toString()));
     });

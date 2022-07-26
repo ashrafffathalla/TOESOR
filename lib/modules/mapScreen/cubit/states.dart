@@ -33,3 +33,4 @@ class ErrorSendLatLonState extends MapScreenStates{
   ErrorSendLatLonState(this.error);
 }
 class ChangeCanILogout extends MapScreenStates{}
+class SetCustomMarker extends MapScreenStates{}

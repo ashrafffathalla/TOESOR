@@ -52,9 +52,9 @@ class GoogleCubit extends Cubit<GoogleStates> {
     emit(LoadingGoogleState());
     googleSignIn.signIn().then((value) {
       changeLogin(true);
-
        getGoogleAccessToken();
       changeUserObject(value!);
+
       emit(SuccessGoogleState());
       changeGoogleFirstName(userOpj!.displayName.toString().split(' ')[0].toString());
       changeGoogleLastName(userOpj!.displayName.toString().split(' ')[1].toString());

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/models/get_all_routes_model.dart';
 import 'package:toesor/modules/gioca_screen/gioca_screen.dart';
@@ -456,7 +457,7 @@ class _MapScreenState extends State<MapScreen> {
                         Column(
                           children: [
                             Text(
-                              '3',
+                              data[index].lap!.length.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17.sp,
@@ -471,20 +472,107 @@ class _MapScreenState extends State<MapScreen> {
                                     .height * 0.02,
                               ),
                               child: Row(
-                                children: const [
-                                  ColorDot(),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
+                                children: [
+                                  if (data[index].lap!.length == 1)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[index].lap!.length == 2)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[index].lap!.length == 3)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[index].lap!.length == 4)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[index].lap!.length == 5)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),
@@ -550,18 +638,24 @@ class _MapScreenState extends State<MapScreen> {
                             navigateTo(context, GiocaScreen(
                               data: data[index],));
                           },
-                          child: Text(
-                            'SCEGLI',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Comfortaa',
+                          child: GestureDetector(
+                            onTap: (){
+                              navigateTo(context, GiocaScreen(data:data[index]));
+                            },
+                            child: Text(
+                              'SCEGLI',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Comfortaa',
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.02,)
                   ],
                 ),
               ),
@@ -590,7 +684,9 @@ class _MapScreenState extends State<MapScreen> {
                         listener: (context, state) {},
                         builder: (context, state) {
                           return Text(
-                            '${data[index].length} Km ',
+                            '${
+                            MapScreenCubit.get(context).distance(context, index, data,)
+                            } Km  ',
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w400,

@@ -32,6 +32,8 @@ void main()async {
 
   Widget ? startWidget;
   sharedToken = CacheHelper.getData(key: 'token');
+
+
   if (sharedToken != null) {
     startWidget =   MapScreen();
   } else {

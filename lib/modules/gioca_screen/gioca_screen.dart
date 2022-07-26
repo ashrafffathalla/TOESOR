@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
+import 'package:toesor/shared/constance/logout.dart';
 
 import '../../models/get_all_routes_model.dart';
 import '../../shared/components/colors_dots/colors_dots_screen.dart';
@@ -16,7 +17,7 @@ import '../../shared/style/colors.dart';
 class GiocaScreen extends StatelessWidget {
 
   DataModel data;
-   GiocaScreen({Key? key,required this.data,}) : super(key: key);
+   GiocaScreen({Key? key,required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +44,15 @@ class GiocaScreen extends StatelessWidget {
                 SizedBox(
                   width: size.width*0.05,
                 ),
-                Icon(
-                  Icons.logout,
-                  size: 33.sp,
-                  color:const Color(0xffEEDEBA),
+                InkWell(
+                  onTap: (){
+                    signOut(context);
+                  },
+                  child: Icon(
+                    Icons.logout,
+                    size: 33.sp,
+                    color:const Color(0xffEEDEBA),
+                  ),
                 ),
               ],
             ),
@@ -276,7 +282,7 @@ class GiocaScreen extends StatelessWidget {
       ),
     );
   }
-  Widget buildRowWidget(size,DataModel data)=>Row(
+  Widget buildRowWidget(size,DataModel data ,)=>Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Column(
@@ -295,14 +301,12 @@ class GiocaScreen extends StatelessWidget {
             child: Row(
               children: const [
                 ColorDot(),
+                ColorDot(),
                 ColorDot(
                   isSelected: false,
                 ),
                 ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
+
                 ),
                 ColorDot(
                   isSelected: false,
@@ -363,7 +367,7 @@ class GiocaScreen extends StatelessWidget {
       Column(
         children: [
           Text(
-            '3',
+            data.lap!.length.toString(),
             style: TextStyle(
 
                 fontSize: 17.sp,
@@ -375,20 +379,107 @@ class GiocaScreen extends StatelessWidget {
               top: size.height * 0.02,
             ),
             child: Row(
-              children: const [
-                ColorDot(),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
+              children: [
+                if (data.lap!.length == 1)
+                  Row(
+                    children: const [
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.lap!.length == 2)
+                  Row(
+                    children: const [
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.lap!.length == 3)
+                  Row(
+                    children: const [
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.lap!.length == 4)
+                  Row(
+                    children: const [
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.lap!.length == 5)
+                  Row(
+                    children: const [
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
