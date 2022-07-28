@@ -223,6 +223,9 @@ class _MapScreenState extends State<MapScreen> {
                                     .get(context)
                                     .position != null
                                     ? GoogleMap(
+                                  scrollGesturesEnabled: true,
+                                  myLocationButtonEnabled: true,
+                                  myLocationEnabled: true,
                                   mapType: MapType.terrain,
                                   markers: MapScreenCubit
                                       .get(context)
@@ -298,9 +301,11 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ],
               ),
+
             );
           },
         ),
+
       ),
     );
   }

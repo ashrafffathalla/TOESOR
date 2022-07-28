@@ -479,9 +479,13 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
            double.parse(data[index].routeLng.toString()),
            double.parse(data[index].routeLng.toString()),
          );
-    if(distanceInMeters >1000){
+    print(distanceInMeters);
+    if(distanceInMeters >=1000){
+      // بص محتاج لو اقل من 1000 متر يطلعM
+      //لو اكترمن 1000 متر يطلع KM
+      //وهكذا ف المييل
       return double.parse(distanceInMeters.toStringAsFixed(2));
-    } if(distanceInMeters <= 10000 && distanceInMeters <10000){
+    } else if(distanceInMeters < 1000){
       double result = distanceInMeters;
       return double.parse(result.toStringAsFixed(2));
     }if(distanceInMeters >= (1000000*10*100) && distanceInMeters < (1000000*10*100*100)){ // less than 100 billion
