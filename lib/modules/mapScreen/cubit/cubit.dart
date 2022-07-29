@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,289 +105,654 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
               double.parse(data[item].routeLng.toString())),
           markerId: MarkerId('$item'),
           onTap: () {
-            showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              builder: (BuildContext context) => Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.27,
+            // showModalBottomSheet(
+            //   backgroundColor: Colors.transparent,
+            //   builder: (BuildContext context) => Container(
+            //     width: MediaQuery.of(context).size.width * 0.9,
+            //     height: MediaQuery.of(context).size.height * 0.27,
+            //     decoration: const BoxDecoration(
+            //         color: kPrimaryColor,
+            //         borderRadius: BorderRadius.only(
+            //           topRight: Radius.circular(30),
+            //           topLeft: Radius.circular(30),
+            //         )),
+            //     child: SingleChildScrollView(
+            //       physics: const BouncingScrollPhysics(),
+            //       child: Column(
+            //         mainAxisSize: MainAxisSize.min,
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(
+            //               top: MediaQuery.of(context).size.height * 0.015,
+            //             ),
+            //             child: Row(
+            //               children: [
+            //                 SizedBox(
+            //                   width: MediaQuery.of(context).size.width * 0.07,
+            //                 ),
+            //                 Text(
+            //                   data[item].Roue_Name.toString(),
+            //                   style: TextStyle(
+            //                       fontSize: 17.sp,
+            //                       fontWeight: FontWeight.bold,
+            //                       color: Colors.white,
+            //                       fontFamily: 'Comfortaa'),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             height: MediaQuery.of(context).size.height * 0.015,
+            //           ),
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //             children: [
+            //               Column(
+            //                 children: [
+            //                   Text(
+            //                     data[item].length.toString(),
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 17.sp,
+            //                         fontWeight: FontWeight.bold,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                   Padding(
+            //                     padding: EdgeInsets.only(
+            //                       top:
+            //                           MediaQuery.of(context).size.height * 0.02,
+            //                     ),
+            //                     child: Row(
+            //                       children: const [
+            //                         ColorDot(),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Text(
+            //                     'Lunghezza (km)',
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 12.sp,
+            //                         fontWeight: FontWeight.w400,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                 ],
+            //               ),
+            //               Column(
+            //                 children: [
+            //                   Text(
+            //                     data[item].duration.toString(),
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 17.sp,
+            //                         fontWeight: FontWeight.bold,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                   Padding(
+            //                     padding: EdgeInsets.only(
+            //                       top:
+            //                           MediaQuery.of(context).size.height * 0.02,
+            //                     ),
+            //                     child: Row(
+            //                       children: const [
+            //                         ColorDot(),
+            //                         ColorDot(),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                         ColorDot(
+            //                           isSelected: false,
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Text(
+            //                     'Tempo medio',
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 12.sp,
+            //                         fontWeight: FontWeight.w400,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                 ],
+            //               ),
+            //               Column(
+            //                 children: [
+            //                   Text(
+            //                     data[item].lap!.length.toString(),
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 17.sp,
+            //                         fontWeight: FontWeight.bold,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                   Padding(
+            //                     padding: EdgeInsets.only(
+            //                       top:
+            //                           MediaQuery.of(context).size.height * 0.02,
+            //                     ),
+            //                     child: Row(
+            //                       children: [
+            //                         if (data[item].lap!.length == 1)
+            //                           Row(
+            //                             children: const [
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         if (data[item].lap!.length == 2)
+            //                           Row(
+            //                             children: const [
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         if (data[item].lap!.length == 3)
+            //                           Row(
+            //                             children: const [
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         if (data[item].lap!.length == 4)
+            //                           Row(
+            //                             children: const [
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: false,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         if (data[item].lap!.length == 5)
+            //                           Row(
+            //                             children: const [
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                               ColorDot(
+            //                                 isSelected: true,
+            //                               ),
+            //                             ],
+            //                           ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Text(
+            //                     'Numero tappe',
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontSize: 12.sp,
+            //                         fontWeight: FontWeight.w400,
+            //                         fontFamily: 'Comfortaa'),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ],
+            //           ),
+            //           SizedBox(
+            //             height: MediaQuery.of(context).size.height * 0.02,
+            //           ),
+            //           Padding(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal:
+            //                     MediaQuery.of(context).size.width * 0.02),
+            //             child: Column(
+            //               children: [
+            //                 Text(
+            //                   data[item].descr.toString(),
+            //                   style: TextStyle(
+            //                     color: Colors.white,
+            //                     fontSize: 13.sp,
+            //                     fontWeight: FontWeight.bold,
+            //                     fontFamily: 'Comfortaa',
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             height: MediaQuery.of(context).size.height * 0.02,
+            //           ),
+            //           Container(
+            //             width: MediaQuery.of(context).size.width * 0.38,
+            //             height: MediaQuery.of(context).size.height * 0.05,
+            //             decoration: BoxDecoration(
+            //               color: const Color(0XFF5BA57B),
+            //               borderRadius: BorderRadius.circular(30),
+            //             ),
+            //             child: Center(
+            //               child: GestureDetector(
+            //                 onTap: () {
+            //                   navigateTo(
+            //                       context,
+            //                       GiocaScreen(
+            //                         data: data[item],
+            //                       ));
+            //                 },
+            //                 child: Text(
+            //                   'SCEGLI',
+            //                   style: TextStyle(
+            //                     color: Colors.white,
+            //                     fontSize: 18.sp,
+            //                     fontWeight: FontWeight.w400,
+            //                     fontFamily: 'Comfortaa',
+            //                   ),
+            //                 ),
+            //
+            //               ),
+            //             ),
+            //           ),
+            //           SizedBox(height: MediaQuery.of(context).size.height*0.02,)
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            //   context: context,
+            //   isScrollControlled: true,
+            //   isDismissible: true,
+            // );
+            showFlexibleBottomSheet(
+            isExpand: true,
+            bottomSheetColor: Colors.transparent,
+            decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+            ),
+            ),
+            minHeight: 0,
+            initHeight: 0.27,
+            maxHeight: 0.4,
+            context: context,
+            builder: (context, scrollController, space) => Padding(
+              padding:  EdgeInsets.symmetric(
+                horizontal: 10.sp,
+              ),
+              child: Container(
                 decoration: const BoxDecoration(
                     color: kPrimaryColor,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(30),
                       topLeft: Radius.circular(30),
                     )),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.015,
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.07,
-                            ),
-                            Text(
-                              data[item].Roue_Name.toString(),
-                              style: TextStyle(
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                          ],
-                        ),
+                child: ListView(
+                  controller: scrollController,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.015,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.015,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      child: Column(
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                data[item].length.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
-                                child: Row(
-                                  children: const [
-                                    ColorDot(),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                'Lunghezza (km)',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                            ],
+                          Container(
+                            width: 28.sp,
+                            height: 5.sp,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(20)
+                            ),
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                data[item].duration.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
-                                child: Row(
-                                  children: const [
-                                    ColorDot(),
-                                    ColorDot(),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                    ColorDot(
-                                      isSelected: false,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                'Tempo medio',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                            ],
+                          SizedBox(
+                            height: 6.sp,
                           ),
-                          Column(
+                          Row(
                             children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.07,
+                              ),
+
                               Text(
-                                data[item].lap!.length.toString(),
+                                data[item].Roue_Name.toString(),
                                 style: TextStyle(
-                                    color: Colors.white,
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
-                                child: Row(
-                                  children: [
-                                    if (data[item].lap!.length == 1)
-                                      Row(
-                                        children: const [
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                        ],
-                                      ),
-                                    if (data[item].lap!.length == 2)
-                                      Row(
-                                        children: const [
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                        ],
-                                      ),
-                                    if (data[item].lap!.length == 3)
-                                      Row(
-                                        children: const [
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                        ],
-                                      ),
-                                    if (data[item].lap!.length == 4)
-                                      Row(
-                                        children: const [
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: false,
-                                          ),
-                                        ],
-                                      ),
-                                    if (data[item].lap!.length == 5)
-                                      Row(
-                                        children: const [
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                          ColorDot(
-                                            isSelected: true,
-                                          ),
-                                        ],
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                'Numero tappe',
-                                style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
                                     fontFamily: 'Comfortaa'),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.02),
-                        child: Column(
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.015,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
                           children: [
                             Text(
-                              data[item].descr.toString(),
+                              data[item].length.toString(),
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Comfortaa',
+                                  color: Colors.white,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Comfortaa'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
                               ),
+                              child: Row(
+                                children: const [
+                                  ColorDot(),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'Lunghezza (km)',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Comfortaa'),
                             ),
                           ],
                         ),
+                        Column(
+                          children: [
+                            Text(
+                              data[item].duration.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Comfortaa'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              child: Row(
+                                children: const [
+                                  ColorDot(),
+                                  ColorDot(),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                  ColorDot(
+                                    isSelected: false,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'Tempo medio',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Comfortaa'),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              data[item].lap!.length.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Comfortaa'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              child: Row(
+                                children: [
+                                  if (data[item].lap!.length == 1)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].lap!.length == 2)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].lap!.length == 3)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].lap!.length == 4)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].lap!.length == 5)
+                                    Row(
+                                      children: const [
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'Numero tappe',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Comfortaa'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    if(space == 0.4)Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                          MediaQuery.of(context).size.width * 0.02),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 3.sp,
+                          ),
+                          Text(
+                              'DESCRIZIONE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa',
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.sp,
+                          ),
+                          Text(
+                            data[item].descr.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa',
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Container(
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 90.sp),
+                      child: Container(
                         width: MediaQuery.of(context).size.width * 0.38,
                         height: MediaQuery.of(context).size.height * 0.05,
                         decoration: BoxDecoration(
@@ -415,14 +781,12 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                           ),
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.02,)
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.02,)
+                  ],
                 ),
               ),
-              context: context,
-              isScrollControlled: true,
-              isDismissible: true,
+            ),
             );
           },
           infoWindow: InfoWindow(
