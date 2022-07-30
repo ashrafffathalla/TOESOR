@@ -1,3 +1,3 @@
 String ? sharedToken;
 
-String mapApiKey = "AIzaSyBojJnqbU-kQNtBtbIAX2Djlw3tB4jvH2o";
+String google_Api_key = "AIzaSyCDqEQQSdcZMawPXsxwwBt-GKcFkCcArX8";

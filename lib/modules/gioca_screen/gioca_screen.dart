@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toesor/modules/confirm_map_one_screen/confirm_map_one.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
 import 'package:toesor/shared/constance/logout.dart';
@@ -218,6 +219,8 @@ class GiocaScreen extends StatelessWidget {
                                 context,
                                 function: (){
                                   ///TODO
+                                  MapScreenCubit.get(context).markers.clear();
+                                  navigateTo(context, const ConfirmMapOne());
                                 },
                                 text: 'GIOCA',
                                 rounder: BorderRadius.circular(25),

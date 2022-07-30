@@ -121,6 +121,7 @@ class _MapScreenState extends State<MapScreen> {
               if (state.data.isNotEmpty) {
                 MapScreenCubit.get(context).getMarkers(context);
               }
+
             }
           },
           builder: (context, state) {
@@ -199,21 +200,6 @@ class _MapScreenState extends State<MapScreen> {
                                     .position != null) {
                                   MapScreenCubit.get(context).myCurrentMarker(
                                       context);
-
-                                  //Send LATLNG With 2 Secends
-                                  // MapScreenCubit
-                                  //     .get(context)
-                                  //     .canILogout ? MapScreenCubit.get(context)
-                                  //     .sendLatLong(
-                                  //   lat: MapScreenCubit
-                                  //       .get(context)
-                                  //       .position!
-                                  //       .latitude,
-                                  //   lon: MapScreenCubit
-                                  //       .get(context)
-                                  //       .position!
-                                  //       .longitude,
-                                  // ) : null;
                                 }
                               }
                             },

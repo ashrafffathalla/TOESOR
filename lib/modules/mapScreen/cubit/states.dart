@@ -23,6 +23,7 @@ class ChangePositionLocationMapScreen extends MapScreenStates{}
 class GoToMyCurrentLocationState extends MapScreenStates{}
 
 class AddMarkerToSet extends MapScreenStates{}
+class AddTapMarkerToSet extends MapScreenStates{}
 class AddCurrentMarkerSet extends MapScreenStates{}
 class CalculateDistanceState extends MapScreenStates{}
 //Send Lat LNG States
