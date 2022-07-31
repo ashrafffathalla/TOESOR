@@ -16,9 +16,9 @@ import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
 
 class GiocaScreen extends StatelessWidget {
-
+  int index;
   DataModel data;
-   GiocaScreen({Key? key,required this.data}) : super(key: key);
+   GiocaScreen({Key? key,required this.data,required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -219,8 +219,8 @@ class GiocaScreen extends StatelessWidget {
                                 context,
                                 function: (){
                                   ///TODO
-                                  MapScreenCubit.get(context).markers.clear();
-                                  navigateTo(context, const ConfirmMapOne());
+                                  //MapScreenCubit.get(context).markers.clear();
+                                  navigateTo(context,  ConfirmMapOne(index: index,));
                                 },
                                 text: 'GIOCA',
                                 rounder: BorderRadius.circular(25),

@@ -38,7 +38,18 @@ class SignUpScreen extends StatelessWidget {
               ),
 
             );
+          }else{
+            ScaffoldMessenger.of(context)
+                .showSnackBar(
+              customSnackBar(
+                message: 'Email già registrato',
+                title: 'Errore',
+                type: ContentType.failure,
+              ),
+
+            );
           }
+
         },
         builder: (context, state) {
           SignUpCubit cubit = SignUpCubit.get(context);

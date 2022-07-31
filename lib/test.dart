@@ -227,7 +227,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const ConfirmMapOne());
+                navigateTo(context, MapScreen());
               },
               child: CustomPaint(
                 child: Container(

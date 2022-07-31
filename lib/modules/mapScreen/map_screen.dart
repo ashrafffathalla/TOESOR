@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,11 +48,6 @@ class _MapScreenState extends State<MapScreen> {
       }
 
     });
-    // timer = Timer.periodic(Duration(seconds: 2), (Timer t) =>
-    // MapScreenCubit.get(context).position != null ? MapScreenCubit.get(context).sendLatLong(
-    //   lon: MapScreenCubit.get(context).position!.longitude.toDouble() ,
-    //   lat: MapScreenCubit.get(context).position!.latitude.toDouble(),
-    // ): null) ;
   }
 
   @override
@@ -68,16 +64,8 @@ class _MapScreenState extends State<MapScreen> {
     Size size = MediaQuery
         .of(context)
         .size;
-    if (MapScreenCubit
-        .get(context)
-        .position != null) {
-      print(' lat: ${MapScreenCubit
-          .get(context)
-          .position!
-          .latitude} , long: ${MapScreenCubit
-          .get(context)
-          .position!
-          .longitude}');
+    if (MapScreenCubit.get(context).position != null) {
+      print(' lat: ${MapScreenCubit.get(context).position!.latitude} , long: ${MapScreenCubit.get(context).position!.longitude}');
     }
 
     return DefaultTabController(
@@ -121,7 +109,6 @@ class _MapScreenState extends State<MapScreen> {
               if (state.data.isNotEmpty) {
                 MapScreenCubit.get(context).getMarkers(context);
               }
-
             }
           },
           builder: (context, state) {
@@ -301,58 +288,71 @@ class _MapScreenState extends State<MapScreen> {
       bool isEven) =>
       GestureDetector(
         onTap: () {
-          bottomSheet(
-            context,
-            Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.9,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.27,
-              decoration: const BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30),
-                    topLeft: Radius.circular(30),
-                  )),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
+          showFlexibleBottomSheet(
+            isExpand: true,
+            bottomSheetColor: Colors.transparent,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            minHeight: 0,
+            initHeight: 0.27,
+            maxHeight: 0.4,
+            context: context,
+            builder: (context, scrollController, space) => Padding(
+              padding:  EdgeInsets.symmetric(
+                horizontal: 10.sp,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30),
+                    )),
+                child: ListView(
+                  controller: scrollController,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.015,
+                        top: MediaQuery.of(context).size.height * 0.015,
                       ),
-                      child: Row(
+                      child: Column(
                         children: [
-                          SizedBox(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width * 0.07,
+                          Container(
+                            width: 28.sp,
+                            height: 5.sp,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(20)
+                            ),
                           ),
-                          Text(
-                            data[index].Roue_Name.toString(),
-                            style: TextStyle(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontFamily: 'Comfortaa'),
+                          SizedBox(
+                            height: 6.sp,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.07,
+                              ),
+
+                              Text(
+                                data[index].Roue_Name.toString(),
+                                style: TextStyle(
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontFamily: 'Comfortaa'),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.015,
+                      height: MediaQuery.of(context).size.height * 0.015,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -369,10 +369,8 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.02,
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
                               ),
                               child: Row(
                                 children: const [
@@ -414,10 +412,8 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.02,
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
                               ),
                               child: Row(
                                 children: const [
@@ -457,10 +453,8 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.02,
+                                top:
+                                MediaQuery.of(context).size.height * 0.02,
                               ),
                               child: Row(
                                 children: [
@@ -580,20 +574,32 @@ class _MapScreenState extends State<MapScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.02,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.02),
+                    if(space == 0.4)Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                          MediaQuery.of(context).size.width * 0.02),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: 3.sp,
+                          ),
                           Text(
-                            'DESCRIZIONE \n${data[index].descr.toString()}',
+                            'DESCRIZIONE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Comfortaa',
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.sp,
+                          ),
+                          Text(
+                            data[index].descr.toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 13.sp,
@@ -605,33 +611,26 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.02,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.38,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.05,
-                      decoration: BoxDecoration(
-                        color: const Color(0XFF5BA57B),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Center(
-                        child: InkWell(
-                          onTap: () {
-                            navigateTo(context, GiocaScreen(
-                              data: data[index],));
-                          },
+                    Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 90.sp),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        decoration: BoxDecoration(
+                          color: const Color(0XFF5BA57B),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Center(
                           child: GestureDetector(
-                            onTap: (){
-                              navigateTo(context, GiocaScreen(data:data[index]));
+                            onTap: () {
+                              navigateTo(
+                                  context,
+                                  GiocaScreen(
+                                    data: data[index],
+                                    index: index,
+                                  ));
                             },
                             child: Text(
                               'SCEGLI',
@@ -642,6 +641,7 @@ class _MapScreenState extends State<MapScreen> {
                                 fontFamily: 'Comfortaa',
                               ),
                             ),
+
                           ),
                         ),
                       ),
@@ -684,13 +684,6 @@ class _MapScreenState extends State<MapScreen> {
                                 fontFamily: 'Comfortaa'
                             ),
                           );
-                          /*
-                        '${MapScreenCubit.get(context).calculateDistance(
-                            MapScreenCubit.get(context).position!.latitude.toString(),
-                            MapScreenCubit.get(context).position!.longitude.toString(),
-                            '${data[index].routeLat}',
-                            '${data[index].routeLng}',
-                       */
                         },
                       ),
                       Flexible(
