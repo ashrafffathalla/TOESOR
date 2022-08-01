@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:toesor/modules/confirm_map_one_screen/confirm_map_one.dart';
+import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/states.dart';
 import 'package:toesor/shared/constance/logout.dart';
@@ -219,7 +220,7 @@ class GiocaScreen extends StatelessWidget {
                                 context,
                                 function: (){
                                   ///TODO
-                                  //MapScreenCubit.get(context).markers.clear();
+                                  ConfirmaMapScreenCubit.get(context).polylineCoordinates.clear();
                                   navigateTo(context,  ConfirmMapOne(index: index,));
                                 },
                                 text: 'GIOCA',
@@ -255,7 +256,7 @@ class GiocaScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "DESCRIZIONE \n luogo di un tempo ormai perso, dal cui punto, puoi scorgere un cielo terso, misteriosa è la sua storia che la città divide, ad una persona è intitolata che mai la vide Una donna di Chiesa assai forte e coraggiosa cha a fianco di Gregorio VII lottò impetuosa",
+                                    "DESCRIZIONE \n \n ${data.descr}",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16.sp,

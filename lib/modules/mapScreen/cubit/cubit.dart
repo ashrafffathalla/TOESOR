@@ -190,8 +190,7 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                                 children: const [
                                   ColorDot(),
                                   ColorDot(
-                                    isSelected: false,
-                                  ),
+                                    isSelected: false,),
                                   ColorDot(
                                     isSelected: false,
                                   ),
@@ -521,16 +520,23 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
            double.parse(data[index].routeLng.toString()),
          );
     print(distanceInMeters);
-    if(distanceInMeters >=1000){
+    double distanceInKiloMeters = distanceInMeters / 1000;
+    if(distanceInMeters <= 1000){
       return double.parse(distanceInMeters.toStringAsFixed(2));
-    } else if(distanceInMeters < 1000){
-      double result = distanceInMeters;
-      return double.parse(result.toStringAsFixed(2));
-    }if(distanceInMeters >= (1000000*10*100) && distanceInMeters < (1000000*10*100*100)){ // less than 100 billion
-      double result = distanceInMeters/(1000000*10*100);
-      return double.parse(result.toStringAsFixed(2));
+    } else if(distanceInMeters > 1000){
+      double roundDistanceInKM = double.parse((distanceInKiloMeters).toStringAsFixed(2));
+      return roundDistanceInKM;
     }
+
     emit(CalculateDistanceState());
     return distanceInMeters;
+    // double distanceInMeters = 144851.67191816124;
+    // double distanceInKiloMeters = distanceInMeters / 1000;
+    // double roundDistanceInKM =
+    // double.parse((distanceInKiloMeters).toStringAsFixed(2));
+    //
+    // print(distanceInMeters);
+    // print(distanceInKiloMeters);
+    // print(roundDistanceInKM);
   }
 }

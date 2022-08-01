@@ -26,12 +26,10 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
   }
   ///GETPolyPoints
   List<LatLng> polylineCoordinates=[];
-  int? items;
   void getPolyPoints(BuildContext context)async{
     PolylinePoints polyPoints = PolylinePoints();
     PolylineResult ? result;
     for(int i = 0 ; i < MapScreenCubit.get(context).data.length;i++){
-
       for(int j = 0; j< MapScreenCubit.get(context).data[i].lap!.length;j++){
          result = await polyPoints.getRouteBetweenCoordinates(
             google_Api_key,
@@ -45,6 +43,7 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
               double.parse(MapScreenCubit.get(context).data[i].lap![j].tappaLng.toString(),
               ),
             ),
+           travelMode: TravelMode.walking,
         );
       }
     }
@@ -104,7 +103,7 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
               double.parse(MapScreenCubit.get(context).data[markerIndex].lap![item].tappaLng.toString())),
           markerId: MarkerId('$item'),
           onTap: () {
-            getPolyPoints(context);
+            //getPolyPoints(context);
             showFlexibleBottomSheet(
               isExpand: true,
               bottomSheetColor: Colors.transparent,

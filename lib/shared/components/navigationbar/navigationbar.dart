@@ -41,15 +41,23 @@ class NavigationDrawerScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.brown,
-                                radius: 40.sp,
-                                child: ClipRRect(
-                                  child: Image.network(
-                                    CacheHelper.getData(key: 'pic')
-                                  ),
-                                )
-                    ),
+                        Container(
+                        width: 73.sp,
+                        height:73.sp,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(CacheHelper.getData(key: 'pic'))
+                          )
+                          ),
+                        ),
+                    //         CircleAvatar(
+                    //             backgroundColor: Colors.brown,
+                    //             radius: 40.sp,
+                    //             child: Image.network(
+                    //               CacheHelper.getData(key: 'pic')
+                    //             ),
+                    // ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.03,
                             ),
@@ -114,42 +122,14 @@ class NavigationDrawerScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            // GoogleCubit.get(context).userOpj != null
-                            //     ? Text(
-                            //         GoogleCubit.get(context)
-                            //             .userOpj!
-                            //             .displayName
-                            //             .toString(),
-                            //         style: TextStyle(
-                            //           fontSize: 20.sp,
-                            //           fontFamily: 'Comfortaa',
-                            //           fontWeight: FontWeight.w400,
-                            //         ),
-                            //       )
-                            //     : FacebookLoginCubit.get(context)
-                            //             .userOpj
-                            //             .isNotEmpty
-                            //         ? Text(
-                            //             FacebookLoginCubit.get(context)
-                            //                 .userOpj["name"]
-                            //                 .toString(),
-                            //             style: TextStyle(
-                            //               fontSize: 20.sp,
-                            //               fontFamily: 'Comfortaa',
-                            //               fontWeight: FontWeight.w400,
-                            //             ),
-                            //           )
-                            //         : LoginCubit.get(context).loginModel != null
-                            //             ? Text(LoginCubit.get(context)
-                            //                 .loginModel!
-                            //                 .user!
-                            //                 .NickName
-                            //                 .toString())
-                            //             : Center(
-                            //                 child: CircularProgressIndicator(
-                            //                 color: kPrimaryColor,
-                            //               )),
-                            Text(CacheHelper.getData(key: 'name').toString()),
+                            Text(
+                                CacheHelper.getData(key: 'name').toString(),
+                            style: TextStyle(
+                              fontSize: 17.sp,
+                              fontFamily: 'Comfortaa',
+                              fontWeight: FontWeight.w600,
+                            ),
+                            ),
                           ],
                           //
                         ),

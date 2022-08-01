@@ -23,9 +23,9 @@ class ConfirmMapOne extends StatelessWidget {
       listener: (context,state){
         if (state is ChangePositionLocationConfirmaMapScreen) {
           ConfirmaMapScreenCubit.get(context).getTapMarkers(context,index);
-          // ConfirmaMapScreenCubit.get(context).getPolyPoints(
-          //   context,
-          // );
+          ConfirmaMapScreenCubit.get(context).getPolyPoints(
+            context,
+          );
 
           if (ConfirmaMapScreenCubit.get(context).position != null) {
             ConfirmaMapScreenCubit.get(context).myCurrentMarker(context);
@@ -35,13 +35,6 @@ class ConfirmMapOne extends StatelessWidget {
       },
       builder: (context,state){
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: (){
-              ConfirmaMapScreenCubit.get(context).getPolyPoints(
-                context,
-              );
-            }
-          ),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: kAppbarColor,
@@ -81,12 +74,20 @@ class ConfirmMapOne extends StatelessWidget {
                   zoomGesturesEnabled: true,
                   zoomControlsEnabled: true,
                   //onCameraMove: ,
+                  // compassEnabled: true,
+                  // indoorViewEnabled: true,
+                  // rotateGesturesEnabled: true,
+                  // tiltGesturesEnabled: true,
                   polylines: {
                     Polyline(
                       polylineId:const PolylineId ("route"),
                       points: ConfirmaMapScreenCubit.get(context).polylineCoordinates,
                       color: kPrimaryColor,
-                      width: 4,
+                      width: 10,
+                      patterns: [
+                        PatternItem.dot,
+                        PatternItem.gap(20)
+                      ]
                     ),
                   },
                   markers: ConfirmaMapScreenCubit

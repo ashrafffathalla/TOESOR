@@ -2,24 +2,26 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
-import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
-import 'package:toesor/modules/resete_password/enter_email/cubit/states.dart';
-import 'package:toesor/shared/style/colors.dart';
-import '../../../shared/components/components.dart';
-import '../../../shared/components/custom_snackpar.dart';
+import 'package:toesor/modules/change_login_password/cubit/cubit.dart';
+import 'package:toesor/modules/change_login_password/cubit/states.dart';
+import 'package:toesor/shared/components/components.dart';
 
-class EnterEmailScreen extends StatelessWidget {
-  EnterEmailScreen({Key? key}) : super(key: key);
-  var emailController = TextEditingController();
+import '../../shared/components/custom_snackpar.dart';
+import '../../shared/style/colors.dart';
+
+class EditPasswordScreen extends StatelessWidget {
+  var editPasswordController = TextEditingController();
+  var confirmEditPasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  EditPasswordScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocConsumer<EnterEmailCubit,EnterEmailStates>(
+    return BlocConsumer<EditPasswordCubit,EditPasswordStates>(
       listener: (context, state) {
-        if(state is SuccessEnterEmailState){
-          if(state.enterEmailModel.code == 200){
+        if(state is SuccessEditPasswordState){
+          if(state.editPasswordModel.statusCode == 204){
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
@@ -28,9 +30,10 @@ class EnterEmailScreen extends StatelessWidget {
                 type: ContentType.success,
               ),
             );
-            navigateAndFinish(context, EnterCodeScreen());
-            EnterEmailCubit.get(context).email = emailController.text.toString();
-            emailController.clear();
+            //navigateAndFinish(context, EnterCodeScreen());
+            //EditPasswordCubit.get(context).email = emailController.text.toString();
+            editPasswordController.clear();
+            confirmEditPasswordController.clear();
           }else{
             ScaffoldMessenger.of(context)
                 .showSnackBar(
@@ -44,7 +47,7 @@ class EnterEmailScreen extends StatelessWidget {
         }
       },
       builder:(context,state){
-        EnterEmailCubit cubit = EnterEmailCubit.get(context);
+        EditPasswordCubit cubit = EditPasswordCubit.get(context);
         return Form(
           key: formKey,
           child: Scaffold(
@@ -100,7 +103,7 @@ class EnterEmailScreen extends StatelessWidget {
                               ),
                               Center(
                                 child: Text(
-                                  'Inserisci il tuo indirizzo email',
+                                  'Edit your Password',
                                   style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: 16.sp,
@@ -115,14 +118,14 @@ class EnterEmailScreen extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding:  EdgeInsets.symmetric(
-                                      horizontal: size.width*0.02),                                    child: Text(
-                                      ' E-mail :',
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                        horizontal: size.width*0.02),                                    child: Text(
+                                    ' Password :',
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontFamily: 'Comfortaa',
+                                      fontWeight: FontWeight.w500,
                                     ),
+                                  ),
                                   ),
                                 ],
                               ),
@@ -131,7 +134,7 @@ class EnterEmailScreen extends StatelessWidget {
                               ),
                               Padding(
                                 padding:  EdgeInsets.symmetric(
-                                  horizontal: size.width*0.02
+                                    horizontal: size.width*0.02
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -140,11 +143,38 @@ class EnterEmailScreen extends StatelessWidget {
                                   ),
                                   child: defaultFormField(
                                     context,
-                                    controller: emailController,
+                                    controller: editPasswordController,
                                     type: TextInputType.text,
                                     validate: (value){
                                       if (value!.isEmpty) {
-                                        return 'Inserisci il tuo indirizzo email';
+                                        return 'Inserisci il tuo indirizzo password';
+                                      }
+                                      return null;
+                                    },
+                                    label: '',
+
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height*0.025,
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.symmetric(
+                                    horizontal: size.width*0.02
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color:const Color(0xffFAF5EA),
+                                      borderRadius: BorderRadius.circular(35)
+                                  ),
+                                  child: defaultFormField(
+                                    context,
+                                    controller: confirmEditPasswordController,
+                                    type: TextInputType.text,
+                                    validate: (value){
+                                      if (value!.isEmpty) {
+                                        return 'Pleas enter your Confirm Password';
                                       }
                                       return null;
                                     },
@@ -165,12 +195,23 @@ class EnterEmailScreen extends StatelessWidget {
                                   context,
                                   function: (){
                                     if(formKey.currentState!.validate()){
-                                      cubit.enterEmail(
-                                          email: emailController.text.toString(),
-                                      );
+                                  if(editPasswordController.text == confirmEditPasswordController.text) {
+                                    cubit.editPassword(
+                                      password: editPasswordController.text.toString(),
+                                    );
+                                  }else{
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      customSnackBar(
+                                        message: 'The password is not matching',
+                                        title: 'Error!',
+                                        type: ContentType.warning,
+                                      ),
+                                    );
+                                  }
                                     }
                                   },
-                                  text: 'Invia codice',
+                                  text: 'Change',
                                   rounder: BorderRadius.circular(35),
                                 ),
                               ),
@@ -194,14 +235,4 @@ class EnterEmailScreen extends StatelessWidget {
       },
     );
   }
-  bool isEmail(String em) {
-
-    String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
-    RegExp regExp =  RegExp(p);
-
-    return regExp.hasMatch(em);
-  }
-
-
 }

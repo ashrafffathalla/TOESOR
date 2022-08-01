@@ -190,11 +190,9 @@ class ResetPasswordScreen extends StatelessWidget {
                                       if(passwordController.text == confirmPasswordController.text){
                                         cubit.resetPassword(
                                          email:
-                                         //'geniusdeveloper2000@gmail.com' ,
                                          EnterEmailCubit.get(context).email.toString(),
                                          password: passwordController.text.toString(),
                                          token:
-                                         //'174971',
                                          EnterEmailCubit.get(context).code.toString(),
                                        );
                                       } else {

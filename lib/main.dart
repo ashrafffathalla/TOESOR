@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/modules/Corneto_medievale_screen/Corneto_medievale_screen.dart';
+import 'package:toesor/modules/change_login_password/cubit/cubit.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
@@ -76,6 +77,8 @@ class MyApp extends StatelessWidget {
                 create: (BuildContext context) => LoginCubit()
             ),BlocProvider(
                 create: (BuildContext context) => ConfirmaMapScreenCubit()
+            ),BlocProvider(
+                create: (BuildContext context) => EditPasswordCubit()
             )
 
 

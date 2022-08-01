@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toesor/modules/change_login_password/change_login_password_screen.dart';
 import 'package:toesor/shared/constance/logout.dart';
 import 'package:toesor/shared/style/colors.dart';
 import '../../shared/components/components.dart';
@@ -146,6 +147,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         text: 'CONTINUA',
                         rounder: BorderRadius.circular(25),
                         background: const Color(0xff5BA57B),
+                      ),
+                      SizedBox(
+                        height: size.height*0.05,
+                      ),
+                      TextButton(
+                        onPressed: (){
+                          navigateTo(context, EditPasswordScreen());
+                        },
+                        child:Text(
+                        'Edit Password',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.sp
+                        ),
+                      )
                       ),
                     ],
                   ),
