@@ -14,3 +14,5 @@ class SetCustomMarkerConfirmaMapScreenState extends ConfirmaMapScreenStates{}
 
 class AddTapMarkerToSet extends ConfirmaMapScreenStates{}
 
+class SelectIndexState extends ConfirmaMapScreenStates{}
+

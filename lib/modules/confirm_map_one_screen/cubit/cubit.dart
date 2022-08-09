@@ -8,6 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/states.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
+import 'package:toesor/modules/vaucher_screen/cubit/cubit.dart';
+import 'package:toesor/modules/vaucher_screen/vaucher_screen.dart';
+import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/style/colors.dart';
 import '../../../shared/constance/constant.dart';
 import '../../../shared/network/remote/location_helper.dart';
@@ -35,7 +38,6 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
             google_Api_key,
             PointLatLng(
                 position!.latitude, position!.longitude
-              //30.033333,31.233334
             ),
             PointLatLng(
               //30.352540,31.601750
@@ -94,112 +96,23 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
   }
 
   ///GetTapMarkers
+  int ? index;
+  void selectIndex(int i) {
+    index = i;
+    print('index from selected index');
+    print(index);
+    emit(SelectIndexState());
+  }
   Future<Set<Marker>> getTapMarkers(context,int markerIndex) async {
     print(MapScreenCubit.get(context).data.length);
     if (MapScreenCubit.get(context).data.isNotEmpty) {
-      for (int item = 0; item < MapScreenCubit.get(context).data[markerIndex].lap!.length; item++) {
+      for ( int item = 0; item < MapScreenCubit.get(context).data[markerIndex].lap!.length; item++) {
         markers.add(Marker(
           position: LatLng(double.parse(MapScreenCubit.get(context).data[markerIndex].lap![item].tappaLat.toString()),
               double.parse(MapScreenCubit.get(context).data[markerIndex].lap![item].tappaLng.toString())),
           markerId: MarkerId('$item'),
           onTap: () {
-            //getPolyPoints(context);
-            showFlexibleBottomSheet(
-              isExpand: true,
-              bottomSheetColor: Colors.transparent,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              minHeight: 0,
-              initHeight: 0.13,
-              maxHeight: 0.17,
-              context: context,
-              builder: (context, scrollController, space) => Padding(
-                padding:  EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                ),
-                child: Container(
-                  decoration: const BoxDecoration(
-                      color: kPopColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        topLeft: Radius.circular(30),
-                      )),
-                  child: ListView(
-                    controller: scrollController,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.015,
-                        ),
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Padding(
-                                padding:  EdgeInsets.symmetric(
-                                    horizontal: 10.sp,
-                                    vertical: 10.sp
-                                ),
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "Conferma di essere \n arrivato a destinazione",
-                                        style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Comfortaa',
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.sp,
-                                    ),
-                                    Padding(
-                                      padding:  EdgeInsets.symmetric(
-                                          horizontal: 90.sp
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color:const Color(0XFF5BA57B),
-                                          borderRadius: BorderRadius.circular(30),
-                                        ),
-                                        child: Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'CONFERMA',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily: 'Comfortaa',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 6.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-              ),
-            );
+            selectIndex(markerIndex);
           },
           infoWindow: InfoWindow(
             title: MapScreenCubit.get(context).data[markerIndex].lap![item].nameTappa.toString(),

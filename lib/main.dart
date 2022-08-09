@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toesor/models/edit_profile_model.dart';
 import 'package:toesor/modules/Corneto_medievale_screen/Corneto_medievale_screen.dart';
 import 'package:toesor/modules/change_login_password/cubit/cubit.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
@@ -11,11 +12,16 @@ import 'package:toesor/modules/googel_login/cubit/cubit.dart';
 import 'package:toesor/modules/googel_login/googel_login_screen.dart';
 import 'package:toesor/modules/login_screen/cubit/cubit.dart';
 import 'package:toesor/modules/login_screen/login_screen.dart';
+import 'package:toesor/modules/profile_screen/cubit/cubit.dart';
 import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
 import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
+import 'package:toesor/modules/time_screen/time_screen.dart';
+import 'package:toesor/modules/vaucher_screen/cubit/cubit.dart';
+import 'package:toesor/modules/vaucher_screen/vaucher_screen.dart';
 import 'package:toesor/shared/constance/constant.dart';
 import 'package:toesor/shared/network/local/sharedprefrance.dart';
 import 'package:toesor/shared/network/remote/dio_helper.dart';
+import 'package:toesor/test.dart';
 import 'bottomSheet.dart';
 import 'modules/confirm_map_one_screen/confirm_map_one.dart';
 import 'modules/fb_login/cubti/cubit.dart';
@@ -79,9 +85,11 @@ class MyApp extends StatelessWidget {
                 create: (BuildContext context) => ConfirmaMapScreenCubit()
             ),BlocProvider(
                 create: (BuildContext context) => EditPasswordCubit()
-            )
-
-
+            ),BlocProvider(
+                create: (BuildContext context) => EditProfileCubit()
+            ),BlocProvider(
+                create: (BuildContext context) => AllSponsorCubit(),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

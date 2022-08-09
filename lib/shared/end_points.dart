@@ -10,4 +10,7 @@ const GOOGLE_LOGIN='api/SocialLogin/Googlelogin';
 const GET_ALLROUTE='api/Route/AllRoute';
 const SEND_LATLONG='api/GeoUsers/StartGeolocation';
 const LOGIN_RESETPASSWORD='api/APP/EditAppPass';
+const EDIT_PROFILE='api/APP/ProfileUpdate';
+const SINGLE_ROUTE='api/Route';
+const SPONSOR_CATEGORY='api/SponsorsCategory/AllSponsorsCategories';
 

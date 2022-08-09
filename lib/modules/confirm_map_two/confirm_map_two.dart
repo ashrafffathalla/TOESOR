@@ -11,7 +11,6 @@ class ConfirmMapTwo extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kAppbarColor,

@@ -60,6 +60,7 @@ class _MapScreenState extends State<MapScreen> {
     MapScreenCubit.get(context).getMyCurrentLocation();
     MapScreenCubit.get(context).goToMyCurrentLocation(context);
     MapScreenCubit.get(context).getAllRotes();
+
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery
         .of(context)
@@ -238,6 +239,7 @@ class _MapScreenState extends State<MapScreen> {
                         BlocConsumer<MapScreenCubit, MapScreenStates>(
                           listener: (context, state) {
                             if (state is LoadingTabTwoMapScreenState) {
+                              MapScreenCubit.get(context).markers.clear();
                               const Center(
                                 child: CircularProgressIndicator(
                                   color: kPrimaryColor,
@@ -615,23 +617,23 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                     Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 90.sp),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.38,
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        decoration: BoxDecoration(
-                          color: const Color(0XFF5BA57B),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateTo(
-                                  context,
-                                  GiocaScreen(
-                                    data: data[index],
-                                    index: index,
-                                  ));
-                            },
+                      child: GestureDetector(
+                        onTap: (){
+                          navigateTo(
+                              context,
+                              GiocaScreen(
+                                data: data[index],
+                                index: index,
+                              ));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.38,
+                          height: MediaQuery.of(context).size.height * 0.05,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF5BA57B),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(
                             child: Text(
                               'SCEGLI',
                               style: TextStyle(
@@ -641,7 +643,6 @@ class _MapScreenState extends State<MapScreen> {
                                 fontFamily: 'Comfortaa',
                               ),
                             ),
-
                           ),
                         ),
                       ),
@@ -674,15 +675,29 @@ class _MapScreenState extends State<MapScreen> {
                       BlocConsumer<MapScreenCubit, MapScreenStates>(
                         listener: (context, state) {},
                         builder: (context, state) {
-                          return Text(
-                            '${
-                            MapScreenCubit.get(context).distance(context, index, data,)
-                            } Km  ',
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Comfortaa'
-                            ),
+                          MapScreenCubit.get(context).distance(context, index, data,);
+
+                          return Row(
+                            children: [
+                              Text(
+                                // '${MapScreenCubit.get(context).distanceInMeters} Km ',
+                                 '${MapScreenCubit.get(context).roundDistanceInKM}',
+                                style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Comfortaa'
+                                ),
+                              ),
+                              Text(
+                          MapScreenCubit.get(context).roundDistanceInKM ! < 1000?
+                                ' Mt ':' KM ',
+                                style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Comfortaa'
+                                ),
+                              ),
+                            ],
                           );
                         },
                       ),

@@ -428,23 +428,23 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                     ),
                     Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 90.sp),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.38,
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        decoration: BoxDecoration(
-                          color: const Color(0XFF5BA57B),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateTo(
-                                  context,
-                                  GiocaScreen(
-                                    data: data[item],
-                                    index: item,
-                                  ));
-                            },
+                      child: GestureDetector(
+                        onTap: (){
+                          navigateTo(
+                              context,
+                              GiocaScreen(
+                                data: data[item],
+                                index: item,
+                              ));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.38,
+                          height: MediaQuery.of(context).size.height * 0.05,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF5BA57B),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(
                             child: Text(
                               'SCEGLI',
                               style: TextStyle(
@@ -454,7 +454,6 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                                 fontFamily: 'Comfortaa',
                               ),
                             ),
-
                           ),
                         ),
                       ),
@@ -510,9 +509,10 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
   }
 
   ///
-
+double? distanceInMeters;
+double? roundDistanceInKM;
   double distance(context,index,List<DataModel> data, ) {
-    double distanceInMeters =
+    distanceInMeters =
          Geolocator.distanceBetween(
              MapScreenCubit.get(context).position!.latitude,
              MapScreenCubit.get(context).position!.longitude,
@@ -520,23 +520,17 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
            double.parse(data[index].routeLng.toString()),
          );
     print(distanceInMeters);
-    double distanceInKiloMeters = distanceInMeters / 1000;
-    if(distanceInMeters <= 1000){
-      return double.parse(distanceInMeters.toStringAsFixed(2));
-    } else if(distanceInMeters > 1000){
-      double roundDistanceInKM = double.parse((distanceInKiloMeters).toStringAsFixed(2));
-      return roundDistanceInKM;
+    double distanceInKiloMeters = distanceInMeters! / 1000;
+    if(distanceInMeters! <= 1000){
+      return double.parse(distanceInMeters!.toStringAsFixed(1)
+      );
+    } else if(distanceInMeters! > 1000){
+       roundDistanceInKM = double.parse((distanceInKiloMeters).toStringAsFixed(1));
+      return roundDistanceInKM!;
     }
 
     emit(CalculateDistanceState());
-    return distanceInMeters;
-    // double distanceInMeters = 144851.67191816124;
-    // double distanceInKiloMeters = distanceInMeters / 1000;
-    // double roundDistanceInKM =
-    // double.parse((distanceInKiloMeters).toStringAsFixed(2));
-    //
-    // print(distanceInMeters);
-    // print(distanceInKiloMeters);
-    // print(roundDistanceInKM);
+    return distanceInMeters!;
+
   }
 }
