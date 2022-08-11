@@ -1,559 +1,711 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:toesor/modules/login_screen/login_screen.dart';
+import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/map_screen.dart';
+import 'package:toesor/modules/time_screen/cubit/cubit.dart';
+import 'package:toesor/modules/time_screen/cubit/states.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
-
-class TimeScreen extends StatefulWidget {
-  const TimeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TimeScreen> createState() => _TestState();
-}
-
-class _TestState extends State<TimeScreen> {
+import '../confirm_map_one_screen/cubit/cubit.dart';
+class TimeScreen extends StatelessWidget {
+  int index;
+  TimeScreen({Key? key,required this.index}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  static const countDowenDuration = Duration(minutes: 1000);
-  Duration duration = const Duration();
-  Timer? timer;
-  bool isCountDown = false;
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    startTimer();
-    reset();
-  }
-
-  void reset() {
-    if (isCountDown) {
-      setState(() => duration = countDowenDuration);
-    } else {
-      setState(() {
-        duration = Duration();
-      });
-    }
-  }
-
-  void addTime() {
-    final addSeconds = isCountDown ? -1 : 1;
-    setState(() {
-      final second = duration.inSeconds + addSeconds;
-      if (second < 1) {
-        timer?.cancel();
-      } else {
-        duration = Duration(seconds: second);
-      }
-      duration = Duration(seconds: second);
-    });
-  }
-
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
-  }
+  var rispostaController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    TimeScreenCubit.get(context).getQuizInTimeScreen(Route_ID: index+1);
+    // TimeScreenCubit.get(context).startTimer();
+    // TimeScreenCubit.get(context).reset();
+    print('**************************');
+    print('index from timer screen $index');
+    print('********************');
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop:()async{
         showDialog(
-            context: context,
-            builder: (context)=>Dialog(
-              backgroundColor: kPopColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40.0),
-              ),
-              child: Container(
-                height: size.height/2.1,
-                width: size.width*0.9,
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding:  EdgeInsets.only(
-                          right: size.width*0.03,
-                          top: size.height*0.01,
-                          bottom: size.height*0.02,
-                        ),
-                        child: Image.asset('assets/images/dialog.png'),
+          context: context,
+          builder: (context)=>Dialog(
+            backgroundColor: kPopColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+            child: Container(
+              height: size.height/2.1,
+              width: size.width*0.9,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.only(
+                        right: size.width*0.03,
+                        top: size.height*0.01,
+                        bottom: size.height*0.02,
                       ),
-                      Text(
-                        "se esci prima di terminare\n il prcorso, perderai tutti\ni tuoi progressi  ",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Comfortaa',
+                      child: Image.asset('assets/images/dialog.png'),
+                    ),
+                    Text(
+                      "se esci prima di terminare\n il prcorso, perderai tutti\ni tuoi progressi  ",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Comfortaa',
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height*0.03,
+                    ),
+                    /// Resta AND ESCI
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          child: Container(
+                            width: size.width*0.3,
+                            height: size.height*0.044,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'RESTA',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Comfortaa',
+                                  fontSize: 21.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
                         ),
+                        GestureDetector(
+                          onTap: (){
+                            MapScreenCubit.get(context).markers.clear();
+                            navigateAndFinish(context, MapScreen());
+                          },
+                          child: Container(
+                            width: size.width*0.3,
+                            height: size.height*0.044,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'ESCI',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Comfortaa',
+                                  fontSize: 21.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        return false;
+      },
+      child: BlocConsumer<TimeScreenCubit,TimeScreenStates>(
+        listener: (context, state) {
+          // if(state is SuccessTimeScreenState){
+          //   TimeScreenCubit.get(context).startTimer();
+          // }
+        },
+        builder: (context, state) {
+          return state is LoadingTimeScreenState ? const Center(child: CircularProgressIndicator()): Scaffold(
+            backgroundColor: kPrimaryColor,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: kAppbarColor,
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: size.width * 0.01),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/info.svg',
+                        height: size.height * 0.03,
                       ),
                       SizedBox(
-                        height: size.height*0.03,
+                        width: size.width * 0.05,
                       ),
-                      /// Resta AND ESCI
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
+                      Icon(
+                        Icons.headset,
+                        size: 33.sp,
+                        color: const Color(0xffEEDEBA),
+                      ),
+                      SizedBox(
+                        width: size.width * 0.05,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Dialog(
+                            backgroundColor: kPopColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40.0),
+                            ),
                             child: Container(
-                              width: size.width*0.3,
-                              height: size.height*0.044,
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'RESTA',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Comfortaa',
-                                    fontSize: 21.sp,
-                                  ),
+                              height: size.height/2.1,
+                              width: size.width*0.9,
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding:  EdgeInsets.only(
+                                        right: size.width*0.03,
+                                        top: size.height*0.01,
+                                        bottom: size.height*0.02,
+                                      ),
+                                      child: Image.asset('assets/images/dialog.png'),
+                                    ),
+                                    Text(
+                                      "se esci prima di terminare\n il prcorso, perderai tutti\ni tuoi progressi  ",
+                                      style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Comfortaa',
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height*0.03,
+                                    ),
+                                    /// Resta AND ESCI
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        GestureDetector(
+                                          child: Container(
+                                            width: size.width*0.3,
+                                            height: size.height*0.044,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.circular(30),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'RESTA',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'Comfortaa',
+                                                  fontSize: 21.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: (){
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        GestureDetector(
+                                          onTap: (){
+                                            signOut(context);
+                                          },
+                                          child: Container(
+                                            width: size.width*0.3,
+                                            height: size.height*0.044,
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius: BorderRadius.circular(30),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'ESCI',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'Comfortaa',
+                                                  fontSize: 21.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            onTap: (){
-                              Navigator.pop(context);
-                            },
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              navigateAndFinish(context, MapScreen());
-                            },
-                            child: Container(
-                              width: size.width*0.3,
-                              height: size.height*0.044,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'ESCI',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Comfortaa',
-                                    fontSize: 21.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
+                        child: Icon(
+                          Icons.logout,
+                          size: 33.sp,
+                          color: const Color(0xffEEDEBA),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ),
-        );
-        return false;
-      },
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: kAppbarColor,
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: size.width * 0.01),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/info.svg',
-                    height: size.height * 0.03,
-                  ),
-                  SizedBox(
-                    width: size.width * 0.05,
-                  ),
-                  Icon(
-                    Icons.headset,
-                    size: 33.sp,
-                    color: const Color(0xffEEDEBA),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.05,
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Dialog(
-                        backgroundColor: kPopColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        ),
-                        child: Container(
-                          height: size.height/2.1,
-                          width: size.width*0.9,
-                          child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding:  EdgeInsets.only(
-                                    right: size.width*0.03,
-                                    top: size.height*0.01,
-                                    bottom: size.height*0.02,
-                                  ),
-                                  child: Image.asset('assets/images/dialog.png'),
-                                ),
-                                Text(
-                                  "se esci prima di terminare\n il prcorso, perderai tutti\ni tuoi progressi  ",
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Comfortaa',
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: size.height*0.03,
-                                ),
-                                /// Resta AND ESCI
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    GestureDetector(
-                                      child: Container(
-                                        width: size.width*0.3,
-                                        height: size.height*0.044,
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius: BorderRadius.circular(30),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'RESTA',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Comfortaa',
-                                              fontSize: 21.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      onTap: (){
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    GestureDetector(
-                                      onTap: (){
-                                        signOut(context);
-                                      },
-                                      child: Container(
-                                        width: size.width*0.3,
-                                        height: size.height*0.044,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.circular(30),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'ESCI',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Comfortaa',
-                                              fontSize: 21.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Icon(
-                      Icons.logout,
-                      size: 33.sp,
-                      color: const Color(0xffEEDEBA),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          leading: GestureDetector(
-            onTap: () => scaffoldKey.currentState!.openDrawer(),
-            child: Icon(
-              Icons.menu,
-              size: 33.sp,
-              color: const Color(0xffEEDEBA),
-            ),
-          ),
-        ),
-        body: Scaffold(
-          backgroundColor: Colors.transparent,
-          drawer: const NavigationDrawerScreen(),
-          key: scaffoldKey,
-          body: Stack(
-            children: [
-              Positioned(
-                child: SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/images/background.png',
-                    fit: BoxFit.cover,
-                  ),
+              ],
+              leading: GestureDetector(
+                onTap: () => scaffoldKey.currentState!.openDrawer(),
+                child: Icon(
+                  Icons.menu,
+                  size: 33.sp,
+                  color: const Color(0xffEEDEBA),
                 ),
               ),
-              Positioned(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width*0.0),
-                    child: SingleChildScrollView(
-                      physics:const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: size.height*0.03,
-                          ),
-                          ///ROW TIMe
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            ),
+            body: TimeScreenCubit.get(context).lap.isNotEmpty ?Form(
+              key: formKey,
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                drawer: const NavigationDrawerScreen(),
+                key: scaffoldKey,
+                body: Stack(
+                  children: [
+                    Positioned(
+                      child: SizedBox(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/background.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: size.width*0.0),
+                        child: SingleChildScrollView(
+                          physics:const BouncingScrollPhysics(),
+                          child: Column(
                             children: [
-                              buildTime(),
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              ///ROW TIMe
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  buildTime(context),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.3,
+                                    height: MediaQuery.of(context).size.height*0.061,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(30)
+                                    ),
+                                    child:Column(
+                                      children: [
+                                        Text(
+                                          'tappa',
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            fontFamily: 'Comfortaa',
+                                          ),
+                                        ),
+                                        Text(
+                                          '1/4',
+                                          style: TextStyle(
+                                            fontSize: 19.sp,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Comfortaa',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              ///start Container Images
+                              SizedBox(
+                                height: size.height*0.05,
+                              ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.3,
-                                height: MediaQuery.of(context).size.height*0.061,
+                                width: size.width*0.9,
+                                height: size.height*0.4,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30)
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
-                                child:Column(
-                                  children: [
-                                    Text(
-                                        'tappa',
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                        fontFamily: 'Comfortaa',
-                                      ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width*0.03
+                                  ),
+                                  child: SingleChildScrollView(
+                                    physics:BouncingScrollPhysics(),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: size.height*0.01,
+                                        ),
+                                        Text(
+                                          TimeScreenCubit.get(context).lap[index].quiz![index].placeName.toString(),
+                                          style: TextStyle(
+                                              fontSize: 22.sp,
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.w500
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: size.height*0.005,
+                                        ),
+                                        TimeScreenCubit.get(context).lap[index].quiz![index].media.toString().isNotEmpty?
+                                        Image.network(
+                                          TimeScreenCubit.get(context).lap[index].quiz![index].media.toString(),
+                                          fit: BoxFit.cover,
+                                        ):const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: size.height*0.02,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              TimeScreenCubit.get(context).lap[index].quiz![index].question.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'Comfortaa',
+                                                  fontWeight: FontWeight.w500
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                        '1/4',
-                                      style: TextStyle(
-                                        fontSize: 19.sp,
+                                  ),
+                                ),
+                              ),
+                              ///END Container Images
+                              ///Start Bottoms
+                              SizedBox(
+                                height: size.height*0.05,
+                              ),
+                              Container(
+                                width: size.width*0.9,
+                                height: size.height*0.06,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                child: TextFormField(
+                                  controller: rispostaController,
+                                  keyboardType: TextInputType.text,
+                                  validator: (value){
+                                    if (value!.isEmpty) {
+                                      return 'Inserisci la risposta';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: size.width*0.05,
+
+                                      ),
+                                      hintText: 'Risposta...',
+                                      helperStyle: TextStyle(
+                                        fontSize: 21.sp,
+                                        fontFamily: 'Comfortaa',
                                         fontWeight: FontWeight.w500,
-                                        fontFamily: 'Comfortaa',
-                                      ),
-                                    ),
-                                  ],
+
+                                      )
+                                  ),
+
                                 ),
                               ),
-                            ],
-                          ),
-                          ///start Container Images
-                          SizedBox(
-                            height: size.height*0.05,
-                          ),
-                          Container(
-                            width: size.width*0.9,
-                            height: size.height*0.4,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width*0.03
+                              SizedBox(
+                                height: size.height*0.015,
                               ),
-                              child: SingleChildScrollView(
-                                physics:BouncingScrollPhysics(),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: size.height*0.01,
-                                    ),
-                                    Text(
-                                        'LUOGO INDOVINELLO',
+                              GestureDetector(
+                                onTap: (){
+                                  if(formKey.currentState!.validate()){
+                                    if(rispostaController.text == TimeScreenCubit.get(context)
+                                        .lap[index].quiz![index].answer.toString()) {
+                                      TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
+                                          route_id: TimeScreenCubit.get(context).lap[index]
+                                          .routeID!.toString(),
+                                          Tap_id: TimeScreenCubit.get(context).lap[index]
+                                              .iDTappeCaccia!.toString(),
+                                          Time: '$hours''$minutes''$seconds',
+                                      );
+                                      print('Risposta Corretta');
+                                    }else{
+                                      print('Risposta Errata');
+                                    }
+                                  }
+                                },
+                                child: Container(
+                                  width: 170.sp,
+                                  height: 35.sp,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green[400],
+                                    borderRadius: BorderRadius.circular(35.sp),
+                                  ),
+                                  child: Center(
+                                    child:Text(
+                                      'Conferma Risposta',
                                       style: TextStyle(
-                                        fontSize: 22.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w500
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: size.height*0.02,
-                                    ),
-                                    Image.asset(
-                                        'assets/images/roma.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                    SizedBox(
-                                      height: size.height*0.02,
-                                    ),
-                                    Text(
-                                      'trova il tritone',
-                                      style: TextStyle(
-                                          fontSize: 19.sp,
-                                          fontFamily: 'Comfortaa',
+                                          fontSize: 16.sp,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.w500
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          ///END Container Images
-                          ///Start Bottoms
-                          SizedBox(
-                            height: size.height*0.05,
-                          ),
-                          Container(
-                            width: size.width*0.9,
-                            height: size.height*0.06,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30)
-                            ),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: size.width*0.05,
-
-                                ),
-                                hintText: 'Risposta...',
-                                helperStyle: TextStyle(
-                                  fontSize: 21.sp,
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.w500,
-
-                                )
-                              ),
-
-                            ),
-                          ),
-                          SizedBox(
-                            height: size.height*0.015,
-                          ),
-                          Container(
-                            width: 170.sp,
-                            height: 35.sp,
-                            decoration: BoxDecoration(
-                              color: Colors.green[400],
-                              borderRadius: BorderRadius.circular(35.sp),
-                            ),
-                            child: Center(
-                              child:Text(
-                                'Conferma Risposta',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: size.height*0.015,
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              setState(() {
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: kPopColor,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              width: size.width*0.9,
-                              height: size.height*0.06,
-                              child:Center(
-                                child: Text(
-                                  'Aiuto 1 + 10 minuti',
-                                    style: TextStyle(
-                                      fontFamily: 'Comfortaa',
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: size.height*0.03,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: kPopColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            width: size.width*0.9,
-                            height: size.height*0.06,
-                            child:Center(
-                              child: Text(
-                                'Aiuto 2 + 20 minuti',
-                                  style: TextStyle(
-                                    color: Color(0xffDFCFAC),
-                                    fontFamily: 'Comfortaa',
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w500,
+                              SizedBox(
+                                height: size.height*0.015,
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  if(TimeScreenCubit.get(context).isButtonOneActive){
+                                    showDialog(
+                                    context: context,
+                                    builder: (context)=>Dialog(
+                                      backgroundColor: kPopColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40.0),
+                                      ),
+                                      child: Container(
+                                        height: size.height/3.5,
+                                        width: size.width*0.8,
+                                        child: SingleChildScrollView(
+                                          physics: BouncingScrollPhysics(),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                child: Text(
+                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index].tipTitle.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 20.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height*0.03,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                    TimeScreenCubit.get(context).oneAiuto();
+                                  }else{
+                                    null;
+                                  }
+                                  TimeScreenCubit.get(context).changeButtonActive();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: kPopColor,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: size.width*0.9,
+                                  height: size.height*0.06,
+                                  child:Center(
+                                    child: Text(
+                                      'Aiuto 1 + 10 minuti',
+                                      style: TextStyle(
+                                        color:TimeScreenCubit.get(context).isButtonOneActive?Colors.black
+                                            :const Color(0xffDFCFAC),
+                                        fontFamily: 'Comfortaa',
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: size.height*0.03,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: kPopColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            width: size.width*0.9,
-                            height: size.height*0.06,
-                            child:Center(
-                              child: Text(
-                                'Soluzione + 30 minuti',
-                                  style: TextStyle(
-                                    color: Color(0xffDFCFAC),
-                                    fontFamily: 'Comfortaa',
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w500,
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  if (TimeScreenCubit.get(context).isButtonTwoActive) {
+                                    showDialog(
+                                    context: context,
+                                    builder: (context)=>Dialog(
+                                      backgroundColor: kPopColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40.0),
+                                      ),
+                                      child: Container(
+                                        height: size.height/3.5,
+                                        width: size.width*0.8,
+                                        child: SingleChildScrollView(
+                                          physics: BouncingScrollPhysics(),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                child: Text(
+                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+1].tipTitle.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 20.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height*0.03,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                    TimeScreenCubit.get(context).TwoAiuto();
+                                  }else{
+                                    null;
+                                  }
+                                  TimeScreenCubit.get(context).changeButtonTwoActive();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: kPopColor,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: size.width*0.9,
+                                  height: size.height*0.06,
+                                  child:Center(
+                                    child: Text(
+                                      'Aiuto 2 + 20 minuti',
+                                      style: TextStyle(
+                                        color:TimeScreenCubit.get(context).isButtonTwoActive?Colors.black
+                                            :const Color(0xffDFCFAC),
+                                        fontFamily: 'Comfortaa',
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              SizedBox(
+                                height: size.height*0.03,
+                              ),
+                              if (TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+2].tipTitle.toString().isNotEmpty) GestureDetector(
+                                onTap: (){
+                                  if(TimeScreenCubit.get(context).isButtonThreeActive) {
+                                    showDialog(
+                                    context: context,
+                                    builder: (context)=>Dialog(
+                                      backgroundColor: kPopColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40.0),
+                                      ),
+                                      child: Container(
+                                        height: size.height/3.5,
+                                        width: size.width*0.8,
+                                        child: SingleChildScrollView(
+                                          physics: BouncingScrollPhysics(),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                child: Text(
+                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+2].tipTitle.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 20.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height*0.03,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                    TimeScreenCubit.get(context).ThreeAiuto();
+                                  }else{
+                                    null;
+                                  }
+                                  TimeScreenCubit.get(context).changeButtonThreeActive();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: kPopColor,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: size.width*0.9,
+                                  height: size.height*0.06,
+                                  child:Center(
+                                    child: Text(
+                                      'Soluzione + 30 minuti',
+                                      style: TextStyle(
+                                        color:TimeScreenCubit.get(context).isButtonThreeActive?Colors.black
+                                            :const Color(0xffDFCFAC),
+                                        fontFamily: 'Comfortaa',
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ) else Container(
+                                width: 10.sp,
+                                height: 10.sp,
+                                color: Colors.transparent,
+                              ),
+                              SizedBox(
+                                height: size.height*0.03,
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            height: size.height*0.03,
-                          )
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ) :const Center(child: CircularProgressIndicator(color: Colors.black,)),
+
+          );
+        },
+
       ),
     );
   }
 
   ///START TIME
-  buildTime() {
+  dynamic ? hours;
+  dynamic ? minutes;
+  dynamic ? seconds;
+  buildTime(context) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = twoDigits(duration.inHours);
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-   // final extraMinutes = twoDigits(duration.inMinutes.remainder(600));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    hours  = twoDigits(TimeScreenCubit.get(context).duration.inHours);
+     minutes = twoDigits(TimeScreenCubit.get(context).duration.inMinutes.remainder(60));
+    // final extraMinutes = twoDigits(duration.inMinutes.remainder(600));
+    seconds = twoDigits(TimeScreenCubit.get(context).duration.inSeconds.remainder(60));
     return Container(
       width: MediaQuery.of(context).size.width*0.6,
       height: MediaQuery.of(context).size.height*0.061,

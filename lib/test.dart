@@ -338,7 +338,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const TimeScreen());
+                navigateTo(context,MapScreen());
               },
               child: Container(
                 color: Colors.red,

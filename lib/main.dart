@@ -15,6 +15,7 @@ import 'package:toesor/modules/login_screen/login_screen.dart';
 import 'package:toesor/modules/profile_screen/cubit/cubit.dart';
 import 'package:toesor/modules/resete_password/enter_code/enter_code.dart';
 import 'package:toesor/modules/resete_password/enter_email/cubit/cubit.dart';
+import 'package:toesor/modules/time_screen/cubit/cubit.dart';
 import 'package:toesor/modules/time_screen/time_screen.dart';
 import 'package:toesor/modules/vaucher_screen/cubit/cubit.dart';
 import 'package:toesor/modules/vaucher_screen/vaucher_screen.dart';
@@ -89,6 +90,9 @@ class MyApp extends StatelessWidget {
                 create: (BuildContext context) => EditProfileCubit()
             ),BlocProvider(
                 create: (BuildContext context) => AllSponsorCubit(),
+            ),
+            BlocProvider(
+              create: (BuildContext context) => TimeScreenCubit(),
             ),
           ],
           child: MaterialApp(

@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:toesor/modules/change_login_password/change_login_password_screen.dart';
 import 'package:toesor/modules/profile_screen/cubit/cubit.dart';
 import 'package:toesor/modules/profile_screen/cubit/states.dart';
@@ -19,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool hasImage = false;
   File? image;
+
 
   final nameController=TextEditingController();
   @override
@@ -188,12 +191,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-
+  File ? localImage;
   Future getImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
       final imageTemporary = File(image.path);
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
+    final  fileName = basename(image.path);
+    final File localImage =  image.path as File ;
       setState(() {
         this.image = imageTemporary;
         hasImage = true;

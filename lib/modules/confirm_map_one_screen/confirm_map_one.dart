@@ -10,7 +10,6 @@ import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
-import '../vaucher_screen/vaucher_screen.dart';
 
 class ConfirmMapOne extends StatelessWidget {
   int index;
@@ -19,6 +18,7 @@ class ConfirmMapOne extends StatelessWidget {
   Widget build(BuildContext context) {
     ConfirmaMapScreenCubit.get(context).getMyCurrentLocation();
     ConfirmaMapScreenCubit.get(context).goToMyCurrentLocation(context);
+    //ConfirmaMapScreenCubit.get(context).selectIndex(index);
 
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -199,12 +199,30 @@ class ConfirmMapOne extends StatelessWidget {
                                                               ),
                                                               GestureDetector(
                                                                 onTap: (){
-                                                                  navigateTo(
-                                                                      context,
-                                                                      TimeScreen(),
-                                                                  );
+                                                                  navigateTo(context, TimeScreen(
+                                                                    index :index.toInt(),
+                                                                  ));
+                                                                  print(index.toString());
                                                                 },
-                                                                  child: confirmaBtn(size),
+                                                                  child: Container(
+                                                                    width: size.width * 0.38,
+                                                                    height: size.height * 0.05,
+                                                                    decoration: BoxDecoration(
+                                                                      color:const Color(0XFF5BA57B),
+                                                                      borderRadius: BorderRadius.circular(30),
+                                                                    ),
+                                                                    child: Center(
+                                                                      child: Text(
+                                                                        'CONFERMA',
+                                                                        style: TextStyle(
+                                                                          color: Colors.white,
+                                                                          fontSize: 20.sp,
+                                                                          fontWeight: FontWeight.w400,
+                                                                          fontFamily: 'Comfortaa',
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                               ),
                                                             ],
                                                           ),

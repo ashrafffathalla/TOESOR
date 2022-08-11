@@ -146,21 +146,23 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                           SizedBox(
                             height: 6.sp,
                           ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.07,
-                              ),
-
-                              Text(
-                                data[item].Roue_Name.toString(),
-                                style: TextStyle(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                            ],
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 7.sp),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                Text(
+                                  data[item].Roue_Name.toString(),
+                                  style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontFamily: 'Comfortaa'),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

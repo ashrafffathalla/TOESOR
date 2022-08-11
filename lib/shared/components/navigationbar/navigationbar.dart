@@ -159,18 +159,18 @@ class NavigationDrawerScreen extends StatelessWidget {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                DrawerItems(
-                    name: 'TUA CLASSIFICA',
-                    icon: SvgPicture.asset('assets/icons/kas.svg'),
-                    onPressed: () => onItemPressed(context, index: 2)),
+                // DrawerItems(
+                //     name: 'TUA CLASSIFICA',
+                //     icon: SvgPicture.asset('assets/icons/kas.svg'),
+                //     onPressed: () => onItemPressed(context, index: 2)),
                 myDivider(context),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                DrawerItems(
-                    name: 'IMPOSTAZIONI',
-                    icon: SvgPicture.asset('assets/icons/setting.svg'),
-                    onPressed: () => onItemPressed(context, index: 2)),
+                // DrawerItems(
+                //     name: 'IMPOSTAZIONI',
+                //     icon: SvgPicture.asset('assets/icons/setting.svg'),
+                //     onPressed: () => onItemPressed(context, index: 2)),
                 myDivider(context),
               ],
             ),

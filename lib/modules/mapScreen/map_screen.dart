@@ -334,21 +334,23 @@ class _MapScreenState extends State<MapScreen> {
                           SizedBox(
                             height: 6.sp,
                           ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.07,
-                              ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.07,
+                                ),
 
-                              Text(
-                                data[index].Roue_Name.toString(),
-                                style: TextStyle(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontFamily: 'Comfortaa'),
-                              ),
-                            ],
+                                Text(
+                                  data[index].Roue_Name.toString(),
+                                  style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontFamily: 'Comfortaa'),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -690,7 +692,7 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                               Text(
                           MapScreenCubit.get(context).roundDistanceInKM ! < 1000?
-                                ' Mt ':' KM ',
+                                ' mt - ':' km - ',
                                 style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w400,

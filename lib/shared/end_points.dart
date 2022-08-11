@@ -13,4 +13,5 @@ const LOGIN_RESETPASSWORD='api/APP/EditAppPass';
 const EDIT_PROFILE='api/APP/ProfileUpdate';
 const SINGLE_ROUTE='api/Route';
 const SPONSOR_CATEGORY='api/SponsorsCategory/AllSponsorsCategories';
+const POST_TIME='api/ClassificaTappa/Save';
 

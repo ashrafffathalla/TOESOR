@@ -11,8 +11,7 @@ class SingleRouteModel {
   SingleRouteModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    details =
-    json['Details'] != null ?  Details.fromJson(json['Details']) : null;
+    details = json['Details'] != null ?  Details.fromJson(json['Details']) : null;
     if (json['lap'] != null) {
       lap = List<Lap>.from(json["lap"].map((item) => Lap.fromJson(item)));
     }

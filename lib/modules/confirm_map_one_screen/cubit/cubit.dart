@@ -1,17 +1,11 @@
 import 'dart:async';
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/states.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
-import 'package:toesor/modules/vaucher_screen/cubit/cubit.dart';
-import 'package:toesor/modules/vaucher_screen/vaucher_screen.dart';
-import 'package:toesor/shared/components/components.dart';
-import 'package:toesor/shared/style/colors.dart';
 import '../../../shared/constance/constant.dart';
 import '../../../shared/network/remote/location_helper.dart';
 
@@ -28,6 +22,15 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
     });
   }
   ///GETPolyPoints
+
+  int? indexTimeScreen;
+  void selectIndexTimeScreen(int i) {
+    indexTimeScreen = i;
+    print('index from selected index');
+    print(indexTimeScreen);
+    emit(SelectIndexState());
+  }
+
   List<LatLng> polylineCoordinates=[];
   void getPolyPoints(BuildContext context)async{
     PolylinePoints polyPoints = PolylinePoints();
@@ -45,8 +48,10 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
               double.parse(MapScreenCubit.get(context).data[i].lap![j].tappaLng.toString(),
               ),
             ),
+
            travelMode: TravelMode.walking,
         );
+         selectIndexTimeScreen(j);
       }
     }
 
@@ -96,13 +101,14 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
   }
 
   ///GetTapMarkers
-  int ? index;
+  int? index;
   void selectIndex(int i) {
     index = i;
     print('index from selected index');
     print(index);
     emit(SelectIndexState());
   }
+
   Future<Set<Marker>> getTapMarkers(context,int markerIndex) async {
     print(MapScreenCubit.get(context).data.length);
     if (MapScreenCubit.get(context).data.isNotEmpty) {
