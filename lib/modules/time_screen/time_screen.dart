@@ -11,20 +11,36 @@ import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
 import '../confirm_map_one_screen/cubit/cubit.dart';
-class TimeScreen extends StatelessWidget {
+class TimeScreen extends StatefulWidget {
   int index;
   TimeScreen({Key? key,required this.index}) : super(key: key);
+
+  @override
+  State<TimeScreen> createState() => _TimeScreenState();
+}
+
+class _TimeScreenState extends State<TimeScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   var rispostaController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    TimeScreenCubit.get(context).startTimer();
+    TimeScreenCubit.get(context).getQuizInTimeScreen(Route_ID: widget.index+1);
+    print('$hours'':''$minutes'':''$seconds');
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    TimeScreenCubit.get(context).getQuizInTimeScreen(Route_ID: index+1);
-    // TimeScreenCubit.get(context).startTimer();
-    // TimeScreenCubit.get(context).reset();
+
+    //TimeScreenCubit.get(context).reset();
     print('**************************');
-    print('index from timer screen $index');
+    print('index from timer screen ${widget.index}');
     print('********************');
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
@@ -125,9 +141,10 @@ class TimeScreen extends StatelessWidget {
       },
       child: BlocConsumer<TimeScreenCubit,TimeScreenStates>(
         listener: (context, state) {
-          // if(state is SuccessTimeScreenState){
-          //   TimeScreenCubit.get(context).startTimer();
-          // }
+          // if(state is SuccessTimeScreenState)
+          //   {
+          //     TimeScreenCubit.get(context).startTimer();
+          //   }
         },
         builder: (context, state) {
           return state is LoadingTimeScreenState ? const Center(child: CircularProgressIndicator()): Scaffold(
@@ -350,7 +367,7 @@ class TimeScreen extends StatelessWidget {
                                           height: size.height*0.01,
                                         ),
                                         Text(
-                                          TimeScreenCubit.get(context).lap[index].quiz![index].placeName.toString(),
+                                          TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].placeName.toString(),
                                           style: TextStyle(
                                               fontSize: 22.sp,
                                               fontFamily: 'Comfortaa',
@@ -360,9 +377,9 @@ class TimeScreen extends StatelessWidget {
                                         SizedBox(
                                           height: size.height*0.005,
                                         ),
-                                        TimeScreenCubit.get(context).lap[index].quiz![index].media.toString().isNotEmpty?
+                                        TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString().isNotEmpty?
                                         Image.network(
-                                          TimeScreenCubit.get(context).lap[index].quiz![index].media.toString(),
+                                          TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString(),
                                           fit: BoxFit.cover,
                                         ):const Center(
                                           child: CircularProgressIndicator(
@@ -375,7 +392,7 @@ class TimeScreen extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              TimeScreenCubit.get(context).lap[index].quiz![index].question.toString(),
+                                              TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].question.toString(),
                                               style: TextStyle(
                                                   fontSize: 16.sp,
                                                   fontFamily: 'Comfortaa',
@@ -402,6 +419,9 @@ class TimeScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(30)
                                 ),
                                 child: TextFormField(
+                                  // onChanged: (value){
+                                  //   print('$hours'':''$minutes'':''$seconds');
+                                  // },
                                   controller: rispostaController,
                                   keyboardType: TextInputType.text,
                                   validator: (value){
@@ -418,17 +438,14 @@ class TimeScreen extends StatelessWidget {
                                       disabledBorder: InputBorder.none,
                                       contentPadding: EdgeInsets.symmetric(
                                         horizontal: size.width*0.05,
-
                                       ),
                                       hintText: 'Risposta...',
                                       helperStyle: TextStyle(
                                         fontSize: 21.sp,
                                         fontFamily: 'Comfortaa',
                                         fontWeight: FontWeight.w500,
-
                                       )
                                   ),
-
                                 ),
                               ),
                               SizedBox(
@@ -438,13 +455,14 @@ class TimeScreen extends StatelessWidget {
                                 onTap: (){
                                   if(formKey.currentState!.validate()){
                                     if(rispostaController.text == TimeScreenCubit.get(context)
-                                        .lap[index].quiz![index].answer.toString()) {
+                                        .lap[widget.index].quiz![widget.index].answer.toString()) {
                                       TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
-                                          route_id: TimeScreenCubit.get(context).lap[index]
+                                          route_id: TimeScreenCubit.get(context).lap[widget.index]
                                           .routeID!.toString(),
-                                          Tap_id: TimeScreenCubit.get(context).lap[index]
+                                          Tap_id: TimeScreenCubit.get(context).lap[widget.index]
                                               .iDTappeCaccia!.toString(),
-                                          Time: '$hours''$minutes''$seconds',
+                                          Time:  '$hours'':''$minutes'':''$seconds',
+
                                       );
                                       print('Risposta Corretta');
                                     }else{
@@ -494,7 +512,7 @@ class TimeScreen extends StatelessWidget {
                                               Padding(
                                                 padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
                                                 child: Text(
-                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index].tipTitle.toString(),
+                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index].tipTitle.toString(),
                                                   style: TextStyle(
                                                     fontSize: 20.sp,
                                                     fontWeight: FontWeight.w400,
@@ -561,7 +579,7 @@ class TimeScreen extends StatelessWidget {
                                               Padding(
                                                 padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
                                                 child: Text(
-                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+1].tipTitle.toString(),
+                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+1].tipTitle.toString(),
                                                   style: TextStyle(
                                                     fontSize: 20.sp,
                                                     fontWeight: FontWeight.w400,
@@ -608,7 +626,7 @@ class TimeScreen extends StatelessWidget {
                               SizedBox(
                                 height: size.height*0.03,
                               ),
-                              if (TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+2].tipTitle.toString().isNotEmpty) GestureDetector(
+                              if (TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString().isNotEmpty) GestureDetector(
                                 onTap: (){
                                   if(TimeScreenCubit.get(context).isButtonThreeActive) {
                                     showDialog(
@@ -628,7 +646,7 @@ class TimeScreen extends StatelessWidget {
                                               Padding(
                                                 padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
                                                 child: Text(
-                                                  TimeScreenCubit.get(context).lap[index].quiz![index].quizTips![index+2].tipTitle.toString(),
+                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString(),
                                                   style: TextStyle(
                                                     fontSize: 20.sp,
                                                     fontWeight: FontWeight.w400,
@@ -698,8 +716,11 @@ class TimeScreen extends StatelessWidget {
 
   ///START TIME
   dynamic ? hours;
+
   dynamic ? minutes;
+
   dynamic ? seconds;
+
   buildTime(context) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     hours  = twoDigits(TimeScreenCubit.get(context).duration.inHours);

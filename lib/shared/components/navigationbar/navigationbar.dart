@@ -143,12 +143,12 @@ class NavigationDrawerScreen extends StatelessWidget {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                DrawerItems(
+                if(CacheHelper.getData(key: 'typeOfLogin') == true) DrawerItems(
                     name: 'PROFILO',
                     icon: SvgPicture.asset('assets/icons/progile_circle.svg'),
                     onPressed: () => onItemPressed(context, index: 0)),
-                myDivider(context),
-                SizedBox(
+                if(CacheHelper.getData(key: 'typeOfLogin') == true)myDivider(context),
+                if(CacheHelper.getData(key: 'typeOfLogin') == true)SizedBox(
                   height: size.height * 0.03,
                 ),
                 DrawerItems(
@@ -163,7 +163,7 @@ class NavigationDrawerScreen extends StatelessWidget {
                 //     name: 'TUA CLASSIFICA',
                 //     icon: SvgPicture.asset('assets/icons/kas.svg'),
                 //     onPressed: () => onItemPressed(context, index: 2)),
-                myDivider(context),
+                //myDivider(context),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
@@ -171,7 +171,7 @@ class NavigationDrawerScreen extends StatelessWidget {
                 //     name: 'IMPOSTAZIONI',
                 //     icon: SvgPicture.asset('assets/icons/setting.svg'),
                 //     onPressed: () => onItemPressed(context, index: 2)),
-                myDivider(context),
+                //myDivider(context),
               ],
             ),
           ),

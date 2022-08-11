@@ -41,6 +41,10 @@ class LoginScreen extends StatelessWidget {
               value: state.loginModel.user!.NickName
           );
           CacheHelper.saveData(
+              key: 'typeOfLogin',
+              value: true
+          );
+          CacheHelper.saveData(
               key: 'pic',
               value: state.loginModel.user!.UserPic,
           );
@@ -324,6 +328,10 @@ class LoginScreen extends StatelessWidget {
                                         value: facebookCubit.userOpj["picture"]["data"]["url"]
                                     );
                                     CacheHelper.saveData(
+                                        key: 'typeOfLogin',
+                                        value: false
+                                    );
+                                    CacheHelper.saveData(
                                         key: 'name',
                                         value: facebookCubit.userOpj["name"]
                                     );
@@ -359,6 +367,10 @@ class LoginScreen extends StatelessWidget {
                                         CacheHelper.saveData(
                                             key: 'name',
                                             value: GoogleCubit.get(context).userOpj!.displayName.toString()
+                                        );
+                                        CacheHelper.saveData(
+                                            key: 'typeOfLogin',
+                                            value: false
                                         );
                                     navigateAndFinish(context, MapScreen());
                                   });
