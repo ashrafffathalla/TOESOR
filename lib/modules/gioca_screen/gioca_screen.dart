@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toesor/modules/classifica_screen/classifica_screen.dart';
 import 'package:toesor/modules/confirm_map_one_screen/confirm_map_one.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
@@ -132,12 +133,14 @@ class GiocaScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  Text(
-                                    ' Cornento medievale',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.bold,
+                                  Flexible(
+                                    child: Text(
+                                      data.Roue_Name.toString(),
+                                      style: TextStyle(
+                                        fontSize: 17.sp,
+                                        fontFamily: 'Comfortaa',
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -180,21 +183,28 @@ class GiocaScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                    width:size.width*0.3,
-                                    height: size.height*0.045,
-                                    decoration: BoxDecoration(
-                                      color:const Color(0xffB68B6E),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'CLASSIFICA',
-                                        style:  TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Comfortaa',
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold,
+                                  InkWell(
+                                    onTap: (){
+                                      navigateTo(context, ClassificaScreen(
+                                        index: index,
+                                      ));
+                                    },
+                                    child: Container(
+                                      width:size.width*0.3,
+                                      height: size.height*0.045,
+                                      decoration: BoxDecoration(
+                                        color:const Color(0xffB68B6E),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'CLASSIFICA',
+                                          style:  TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Comfortaa',
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),

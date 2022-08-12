@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toesor/modules/classifica_screen/classifica_screen.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/map_screen.dart';
 import 'package:toesor/modules/time_screen/cubit/cubit.dart';
@@ -140,12 +141,7 @@ class _TimeScreenState extends State<TimeScreen> {
         return false;
       },
       child: BlocConsumer<TimeScreenCubit,TimeScreenStates>(
-        listener: (context, state) {
-          // if(state is SuccessTimeScreenState)
-          //   {
-          //     TimeScreenCubit.get(context).startTimer();
-          //   }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return state is LoadingTimeScreenState ? const Center(child: CircularProgressIndicator()): Scaffold(
             backgroundColor: kPrimaryColor,
@@ -462,8 +458,8 @@ class _TimeScreenState extends State<TimeScreen> {
                                           Tap_id: TimeScreenCubit.get(context).lap[widget.index]
                                               .iDTappeCaccia!.toString(),
                                           Time:  '$hours'':''$minutes'':''$seconds',
-
                                       );
+
                                       print('Risposta Corretta');
                                     }else{
                                       print('Risposta Errata');

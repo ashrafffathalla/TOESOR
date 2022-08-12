@@ -317,7 +317,7 @@ class _TestState extends State<Test> {
             ),
             InkWell(
               onTap: (){
-                navigateTo(context,const ClassificaScreen());
+
               },
               child: Container(
                 color: Colors.red,

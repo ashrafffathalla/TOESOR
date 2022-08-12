@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toesor/models/edit_profile_model.dart';
 import 'package:toesor/modules/Corneto_medievale_screen/Corneto_medievale_screen.dart';
 import 'package:toesor/modules/change_login_password/cubit/cubit.dart';
+import 'package:toesor/modules/classifica_screen/cubit/cubit.dart';
 import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
 import 'package:toesor/modules/fb_login/fb_login_screen.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
@@ -93,6 +94,8 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (BuildContext context) => TimeScreenCubit(),
+            ),BlocProvider(
+              create: (BuildContext context) => ClasificaCubit(),
             ),
           ],
           child: MaterialApp(

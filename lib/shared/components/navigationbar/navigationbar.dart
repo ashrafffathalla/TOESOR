@@ -51,13 +51,7 @@ class NavigationDrawerScreen extends StatelessWidget {
                           )
                           ),
                         ),
-                    //         CircleAvatar(
-                    //             backgroundColor: Colors.brown,
-                    //             radius: 40.sp,
-                    //             child: Image.network(
-                    //               CacheHelper.getData(key: 'pic')
-                    //             ),
-                    // ),
+
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.03,
                             ),
