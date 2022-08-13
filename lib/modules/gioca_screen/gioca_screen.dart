@@ -125,14 +125,14 @@ class GiocaScreen extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Text(
-                                    'Tarquinia -',
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   'Tarquinia -',
+                                  //   style: TextStyle(
+                                  //     fontSize: 16.sp,
+                                  //     fontFamily: 'Comfortaa',
+                                  //     fontWeight: FontWeight.w400,
+                                  //   ),
+                                  // ),
                                   Flexible(
                                     child: Text(
                                       data.Roue_Name.toString(),

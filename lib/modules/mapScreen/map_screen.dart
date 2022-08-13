@@ -290,371 +290,371 @@ class _MapScreenState extends State<MapScreen> {
       bool isEven) =>
       GestureDetector(
         onTap: () {
-          showFlexibleBottomSheet(
-            isExpand: true,
-            bottomSheetColor: Colors.transparent,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            minHeight: 0,
-            initHeight: 0.27,
-            maxHeight: 0.4,
-            context: context,
-            builder: (context, scrollController, space) => Padding(
-              padding:  EdgeInsets.symmetric(
-                horizontal: 10.sp,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30),
-                      topLeft: Radius.circular(30),
-                    )),
-                child: ListView(
-                  controller: scrollController,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.015,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 28.sp,
-                            height: 5.sp,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                          ),
-                          SizedBox(
-                            height: 6.sp,
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.07,
-                                ),
-
-                                Text(
-                                  data[index].Roue_Name.toString(),
-                                  style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontFamily: 'Comfortaa'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.015,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              data[index].length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top:
-                                MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              child: Row(
-                                children: const [
-                                  ColorDot(),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'Lunghezza (km)',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              data[index].duration.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top:
-                                MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              child: Row(
-                                children: const [
-                                  ColorDot(),
-                                  ColorDot(),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'Tempo medio',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              data[index].lap!.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top:
-                                MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  if (data[index].lap!.length == 1)
-                                    Row(
-                                      children: const [
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[index].lap!.length == 2)
-                                    Row(
-                                      children: const [
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[index].lap!.length == 3)
-                                    Row(
-                                      children: const [
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[index].lap!.length == 4)
-                                    Row(
-                                      children: const [
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: false,
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[index].lap!.length == 5)
-                                    Row(
-                                      children: const [
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                        ColorDot(
-                                          isSelected: true,
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'Numero tappe',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Comfortaa'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
-                    ),
-                    if(space == 0.4)Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                          MediaQuery.of(context).size.width * 0.02),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 3.sp,
-                          ),
-                          Text(
-                            'DESCRIZIONE',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Comfortaa',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.sp,
-                          ),
-                          Text(
-                            data[index].descr.toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Comfortaa',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
-                    ),
-                    Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 90.sp),
-                      child: GestureDetector(
-                        onTap: (){
-                          navigateTo(
-                              context,
-                              GiocaScreen(
-                                data: data[index],
-                                index: index,
-                              ));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.38,
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          decoration: BoxDecoration(
-                            color: const Color(0XFF5BA57B),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'SCEGLI',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Comfortaa',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.02,)
-                  ],
-                ),
-              ),
-            ),
-          );
+          // showFlexibleBottomSheet(
+          //   isExpand: true,
+          //   bottomSheetColor: Colors.transparent,
+          //   decoration: const BoxDecoration(
+          //     borderRadius: BorderRadius.only(
+          //       topLeft: Radius.circular(20),
+          //       topRight: Radius.circular(20),
+          //     ),
+          //   ),
+          //   minHeight: 0,
+          //   initHeight: 0.27,
+          //   maxHeight: 0.4,
+          //   context: context,
+          //   builder: (context, scrollController, space) => Padding(
+          //     padding:  EdgeInsets.symmetric(
+          //       horizontal: 10.sp,
+          //     ),
+          //     child: Container(
+          //       decoration: const BoxDecoration(
+          //           color: kPrimaryColor,
+          //           borderRadius: BorderRadius.only(
+          //             topRight: Radius.circular(30),
+          //             topLeft: Radius.circular(30),
+          //           )),
+          //       child: ListView(
+          //         controller: scrollController,
+          //         children: [
+          //           Padding(
+          //             padding: EdgeInsets.only(
+          //               top: MediaQuery.of(context).size.height * 0.015,
+          //             ),
+          //             child: Column(
+          //               children: [
+          //                 Container(
+          //                   width: 28.sp,
+          //                   height: 5.sp,
+          //                   decoration: BoxDecoration(
+          //                       color: Colors.grey[300],
+          //                       borderRadius: BorderRadius.circular(20)
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 6.sp,
+          //                 ),
+          //                 Expanded(
+          //                   child: Row(
+          //                     children: [
+          //                       SizedBox(
+          //                         width: MediaQuery.of(context).size.width * 0.07,
+          //                       ),
+          //
+          //                       Text(
+          //                         data[index].Roue_Name.toString(),
+          //                         style: TextStyle(
+          //                             fontSize: 17.sp,
+          //                             fontWeight: FontWeight.bold,
+          //                             color: Colors.white,
+          //                             fontFamily: 'Comfortaa'),
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //           SizedBox(
+          //             height: MediaQuery.of(context).size.height * 0.015,
+          //           ),
+          //           Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //             children: [
+          //               Column(
+          //                 children: [
+          //                   Text(
+          //                     data[index].length.toString(),
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 17.sp,
+          //                         fontWeight: FontWeight.bold,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                   Padding(
+          //                     padding: EdgeInsets.only(
+          //                       top:
+          //                       MediaQuery.of(context).size.height * 0.02,
+          //                     ),
+          //                     child: Row(
+          //                       children: const [
+          //                         ColorDot(),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   Text(
+          //                     'Lunghezza (km)',
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 12.sp,
+          //                         fontWeight: FontWeight.w400,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                 ],
+          //               ),
+          //               Column(
+          //                 children: [
+          //                   Text(
+          //                     data[index].duration.toString(),
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 17.sp,
+          //                         fontWeight: FontWeight.bold,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                   Padding(
+          //                     padding: EdgeInsets.only(
+          //                       top:
+          //                       MediaQuery.of(context).size.height * 0.02,
+          //                     ),
+          //                     child: Row(
+          //                       children: const [
+          //                         ColorDot(),
+          //                         ColorDot(),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                         ColorDot(
+          //                           isSelected: false,
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   Text(
+          //                     'Tempo medio',
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 12.sp,
+          //                         fontWeight: FontWeight.w400,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                 ],
+          //               ),
+          //               Column(
+          //                 children: [
+          //                   Text(
+          //                     data[index].lap!.length.toString(),
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 17.sp,
+          //                         fontWeight: FontWeight.bold,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                   Padding(
+          //                     padding: EdgeInsets.only(
+          //                       top:
+          //                       MediaQuery.of(context).size.height * 0.02,
+          //                     ),
+          //                     child: Row(
+          //                       children: [
+          //                         if (data[index].lap!.length == 1)
+          //                           Row(
+          //                             children: const [
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                             ],
+          //                           ),
+          //                         if (data[index].lap!.length == 2)
+          //                           Row(
+          //                             children: const [
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                             ],
+          //                           ),
+          //                         if (data[index].lap!.length == 3)
+          //                           Row(
+          //                             children: const [
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                             ],
+          //                           ),
+          //                         if (data[index].lap!.length == 4)
+          //                           Row(
+          //                             children: const [
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: false,
+          //                               ),
+          //                             ],
+          //                           ),
+          //                         if (data[index].lap!.length == 5)
+          //                           Row(
+          //                             children: const [
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                               ColorDot(
+          //                                 isSelected: true,
+          //                               ),
+          //                             ],
+          //                           ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   Text(
+          //                     'Numero tappe',
+          //                     style: TextStyle(
+          //                         color: Colors.white,
+          //                         fontSize: 12.sp,
+          //                         fontWeight: FontWeight.w400,
+          //                         fontFamily: 'Comfortaa'),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ],
+          //           ),
+          //           SizedBox(
+          //             height: MediaQuery.of(context).size.height * 0.02,
+          //           ),
+          //           if(space == 0.4)Padding(
+          //             padding: EdgeInsets.symmetric(
+          //                 horizontal:
+          //                 MediaQuery.of(context).size.width * 0.02),
+          //             child: Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 SizedBox(
+          //                   height: 3.sp,
+          //                 ),
+          //                 Text(
+          //                   'DESCRIZIONE',
+          //                   style: TextStyle(
+          //                     color: Colors.white,
+          //                     fontSize: 14.sp,
+          //                     fontWeight: FontWeight.bold,
+          //                     fontFamily: 'Comfortaa',
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 5.sp,
+          //                 ),
+          //                 Text(
+          //                   data[index].descr.toString(),
+          //                   style: TextStyle(
+          //                     color: Colors.white,
+          //                     fontSize: 13.sp,
+          //                     fontWeight: FontWeight.bold,
+          //                     fontFamily: 'Comfortaa',
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //           SizedBox(
+          //             height: MediaQuery.of(context).size.height * 0.02,
+          //           ),
+          //           Padding(
+          //             padding:  EdgeInsets.symmetric(horizontal: 90.sp),
+          //             child: GestureDetector(
+          //               onTap: (){
+          //                 navigateTo(
+          //                     context,
+          //                     GiocaScreen(
+          //                       data: data[index],
+          //                       index: index,
+          //                     ));
+          //               },
+          //               child: Container(
+          //                 width: MediaQuery.of(context).size.width * 0.38,
+          //                 height: MediaQuery.of(context).size.height * 0.05,
+          //                 decoration: BoxDecoration(
+          //                   color: const Color(0XFF5BA57B),
+          //                   borderRadius: BorderRadius.circular(30),
+          //                 ),
+          //                 child: Center(
+          //                   child: Text(
+          //                     'SCEGLI',
+          //                     style: TextStyle(
+          //                       color: Colors.white,
+          //                       fontSize: 18.sp,
+          //                       fontWeight: FontWeight.w400,
+          //                       fontFamily: 'Comfortaa',
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //           SizedBox(height: MediaQuery.of(context).size.height*0.02,)
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // );
         },
         child: Container(
           color: isEven ? Colors.white : const Color(0xffD8C194),

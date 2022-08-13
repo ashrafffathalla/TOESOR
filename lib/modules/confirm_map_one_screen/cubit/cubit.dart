@@ -14,7 +14,6 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
 
   static ConfirmaMapScreenCubit get(context) => BlocProvider.of(context);
 
-
   Position? position;
   Future<void> getMyCurrentLocation() async {
     position = await LocationHelper.getCurrentLocation().whenComplete(() {
@@ -48,7 +47,6 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
               double.parse(MapScreenCubit.get(context).data[i].lap![j].tappaLng.toString(),
               ),
             ),
-
            travelMode: TravelMode.walking,
         );
          selectIndexTimeScreen(j);
@@ -110,12 +108,13 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
   }
 
   Future<Set<Marker>> getTapMarkers(context,int markerIndex) async {
-    print(MapScreenCubit.get(context).data.length);
     if (MapScreenCubit.get(context).data.isNotEmpty) {
       for ( int item = 0; item < MapScreenCubit.get(context).data[markerIndex].lap!.length; item++) {
         markers.add(Marker(
-          position: LatLng(double.parse(MapScreenCubit.get(context).data[markerIndex].lap![item].tappaLat.toString()),
-              double.parse(MapScreenCubit.get(context).data[markerIndex].lap![item].tappaLng.toString())),
+          position: LatLng(double.parse(MapScreenCubit.get(context)
+              .data[markerIndex].lap![item].tappaLat.toString()),
+              double.parse(MapScreenCubit.get(context)
+                  .data[markerIndex].lap![item].tappaLng.toString())),
           markerId: MarkerId('$item'),
           onTap: () {
             selectIndex(markerIndex);
@@ -124,7 +123,7 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
             title: MapScreenCubit.get(context).data[markerIndex].lap![item].nameTappa.toString(),
           ),
           icon:await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(50, 50)), 'assets/images/marker.png'
+              const ImageConfiguration(size: Size(50, 50)), 'assets/images/marker.png',
           ),
         ));
       }

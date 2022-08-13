@@ -7,6 +7,7 @@ import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/map_screen.dart';
 import 'package:toesor/modules/time_screen/cubit/cubit.dart';
 import 'package:toesor/modules/time_screen/cubit/states.dart';
+import 'package:toesor/modules/vaucher_screen/vaucher_screen.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
@@ -31,7 +32,7 @@ class _TimeScreenState extends State<TimeScreen> {
     super.initState();
     TimeScreenCubit.get(context).startTimer();
     TimeScreenCubit.get(context).getQuizInTimeScreen(Route_ID: widget.index+1);
-    print('$hours'':''$minutes'':''$seconds');
+    //MapScreenCubit.get(context).data[widget.index].routeID!.toInt()
   }
 
 
@@ -459,10 +460,12 @@ class _TimeScreenState extends State<TimeScreen> {
                                               .iDTappeCaccia!.toString(),
                                           Time:  '$hours'':''$minutes'':''$seconds',
                                       );
-
                                       print('Risposta Corretta');
                                     }else{
                                       print('Risposta Errata');
+                                    }
+                                    if(TimeScreenCubit.get(context).lap[widget.index].nextTapID==null){
+                                      navigateTo(context, VaucherScreen(index: widget.index));
                                     }
                                   }
                                 },

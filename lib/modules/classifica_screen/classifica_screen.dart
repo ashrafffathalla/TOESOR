@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:toesor/modules/classifica_screen/cubit/cubit.dart';
 import 'package:toesor/modules/classifica_screen/cubit/states.dart';
+import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/shared/components/components.dart';
 
 import '../../models/clasifica_model.dart';
@@ -13,21 +14,20 @@ import '../../shared/style/colors.dart';
 
 class ClassificaScreen extends StatelessWidget {
   int index;
-   ClassificaScreen({Key? key,required this.index}) : super(key: key);
+   ClassificaScreen({Key? key,required this.index,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
-    ClasificaCubit.get(context).getClasifica(Route_ID: index+1);
+    ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
     return BlocConsumer<ClasificaCubit, ClasificaStates>(
       listener: (context, state) {
 
       },
       builder: (context, state) {
         return Scaffold(
-          drawer: const NavigationDrawerScreen(),
-          key: scaffoldKey,
+
           appBar: AppBar(
             elevation: 0,
             backgroundColor: kAppbarColor,
@@ -54,55 +54,59 @@ class ClassificaScreen extends StatelessWidget {
               ),
             ),
           ),
-          body: ClasificaCubit.get(context).clasifica.isNotEmpty?Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: size.height*0.045,
-                color:const Color(0XFF6A331D),
-                child: Center(
-                  child: Text(
-                    'CLASSIFICA',
-                    style: TextStyle(
-                      fontSize: 25.sp,
-                      color: Colors.white,
-                      fontWeight:FontWeight.w400,
-                      fontFamily: 'Comfortaa',
+          body: ClasificaCubit.get(context).clasifica.isNotEmpty?Scaffold(
+            drawer: const NavigationDrawerScreen(),
+            key: scaffoldKey,
+            body: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: size.height*0.045,
+                  color:const Color(0XFF6A331D),
+                  child: Center(
+                    child: Text(
+                      'CLASSIFICA',
+                      style: TextStyle(
+                        fontSize: 25.sp,
+                        color: Colors.white,
+                        fontWeight:FontWeight.w400,
+                        fontFamily: 'Comfortaa',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: size.height*0.04,
-                color:const Color(0XFF905340),
-                child: Center(
-                  child: Text(
-                    'Tarquinia - Corneto medievale',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.white,
-                      fontWeight:FontWeight.w500,
-                      fontFamily: 'Comfortaa',
+                Container(
+                  width: double.infinity,
+                  height: size.height*0.04,
+                  color:const Color(0XFF905340),
+                  child: Center(
+                    child: Text(
+                      MapScreenCubit.get(context).data[index].Roue_Name.toString(),
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Colors.white,
+                        fontWeight:FontWeight.w500,
+                        fontFamily: 'Comfortaa',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ///ListView
-              Expanded(
-                child: ListView.separated(
-                  physics:const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) => buildClassificaList(
-                      context,size,index,ClasificaCubit.get(context).clasifica,
+                ///ListView
+                Expanded(
+                  child: ListView.separated(
+                    physics:const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) => buildClassificaList(
+                        context,size,index,ClasificaCubit.get(context).clasifica,
+                    ),
+                    separatorBuilder: (context, index) =>const SizedBox(),
+                    itemCount: ClasificaCubit.get(context).clasifica.length,
                   ),
-                  separatorBuilder: (context, index) =>const SizedBox(),
-                  itemCount: ClasificaCubit.get(context).clasifica.length,
-                ),
-              )
+                )
 
-            ],
+              ],
+            ),
           ):const Center(
             child: CircularProgressIndicator(
               color: kPrimaryColor,
