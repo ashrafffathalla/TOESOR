@@ -31,7 +31,6 @@ class AllSponsorCubit extends Cubit<GetAllSponsorStates> {
       singleRouteModel = SingleRouteModel.fromJson(value.data);
        sponsor = List<Sponsor>.from(
            value.data['sponsor'].map((item) => Sponsor.fromJson(item)));
-
        sponsorCategories = List<SponsorCategories>.from(
            value.data['sponsor_categories'].map((item) => SponsorCategories.fromJson(item)));
 

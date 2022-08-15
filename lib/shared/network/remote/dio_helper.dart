@@ -42,4 +42,16 @@ class DioHelper {
       data: data,
     );
   }
+  static Future<Response> deleteData(
+
+      {
+        required String methodUrl,
+        Map<String, dynamic> ? query,
+      }) async {
+
+    dio.options.headers = {
+      "Authorization": 'Bearer $sharedToken',
+    };
+    return await dio.delete(methodUrl, queryParameters: query);
+  }
 }

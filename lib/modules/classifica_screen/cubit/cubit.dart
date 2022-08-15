@@ -9,6 +9,10 @@ class ClasificaCubit extends Cubit<ClasificaStates> {
   static ClasificaCubit get(context) => BlocProvider.of(context);
 
   List<Classifica> clasifica = <Classifica>[];
+  List<BestPlayer> bestPlayer = <BestPlayer>[];
+  List<TuoTempoTuoLivello> tuoTempo = <TuoTempoTuoLivello>[];
+  ClasificaModel ? clasificaModel;
+
 
   Future<void> getClasifica({
     required int Route_ID,
@@ -18,12 +22,20 @@ class ClasificaCubit extends Cubit<ClasificaStates> {
     await DioHelper.getData(
       methodUrl: '$CLASIFICA/$Route_ID',
     ).then((value){
-      print(value.data.toString());
       clasifica = List<Classifica>.from(
           value.data['Classifica'].map((item) => Classifica.fromJson(item)));
-      print(clasifica.length);
+
+      bestPlayer = List<BestPlayer>.from(
+          value.data['Best_Player'].map((item) => BestPlayer.fromJson(item)));
+
+      tuoTempo = List<TuoTempoTuoLivello>.from(
+          value.data['TuoTempo_TuoLivello'].map((item) => TuoTempoTuoLivello.fromJson(item)));
+      clasificaModel =ClasificaModel.fromJson(value.data);
+      print(bestPlayer[0].userNickNamePlayer.toString());
+      print(tuoTempo[0].userLevelTempo.toString());
       print('********************* CLASIFICA ***************');
       emit(SuccessClasificaScreenState(clasifica));
+
     }).catchError((error){
       print(error.toString());
       emit(ErrorClasificaScreenState(error.toString()));

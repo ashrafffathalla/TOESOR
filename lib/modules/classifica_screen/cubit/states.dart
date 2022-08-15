@@ -8,7 +8,6 @@ class LoadingClasificaScreenState extends ClasificaStates {}
 
 class SuccessClasificaScreenState extends ClasificaStates {
   final List<Classifica> calsifica;
-
   SuccessClasificaScreenState(this.calsifica);
 }
 

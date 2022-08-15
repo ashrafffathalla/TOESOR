@@ -49,3 +49,16 @@ class ErrorPostTimeState extends TimeScreenStates{
 
 }
 //End POST TIME AND ROUTE_ID AND TAP_ID States
+
+//DELETE TIME DATA STATES
+class LoadingDeleteTimeScreenState extends TimeScreenStates {}
+
+class SuccessDeleteTimeScreenState extends TimeScreenStates {
+
+}
+
+class ErrorDeleteTimeScreenState extends TimeScreenStates {
+  final String? error;
+
+  ErrorDeleteTimeScreenState(this.error);
+}

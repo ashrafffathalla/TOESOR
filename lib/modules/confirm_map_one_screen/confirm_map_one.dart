@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +17,8 @@ class ConfirmMapOne extends StatelessWidget {
   Widget build(BuildContext context) {
     ConfirmaMapScreenCubit.get(context).getMyCurrentLocation();
     ConfirmaMapScreenCubit.get(context).goToMyCurrentLocation(context);
+    ConfirmaMapScreenCubit.get(context).polylineCoordinates.clear();
+    ConfirmaMapScreenCubit.get(context).markers.clear();
     //ConfirmaMapScreenCubit.get(context).selectIndex(index);
 
 

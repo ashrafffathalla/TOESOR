@@ -7,6 +7,7 @@ import 'package:toesor/modules/classifica_screen/cubit/cubit.dart';
 import 'package:toesor/modules/classifica_screen/cubit/states.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/shared/components/components.dart';
+import 'package:toesor/shared/constance/logout.dart';
 
 import '../../models/clasifica_model.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
@@ -36,10 +37,15 @@ class ClassificaScreen extends StatelessWidget {
                 padding: EdgeInsets.only(right: size.width * 0.01),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.logout,
-                      size: 33.sp,
-                      color: const Color(0xffEEDEBA),
+                    GestureDetector(
+                       onTap:(){
+                         signOut(context);
+                       },
+                      child: Icon(
+                        Icons.logout,
+                        size: 33.sp,
+                        color: const Color(0xffEEDEBA),
+                      ),
                     ),
                   ],
                 ),
@@ -130,11 +136,11 @@ class ClassificaScreen extends StatelessWidget {
               height: size.width*0.2,
               child:  Center(
                 child: Text(
-                  ClasificaCubit.get(context).clasifica[index].userId.toString(),
+                  ClasificaCubit.get(context).clasifica[index].userLevel.toString(),
                   style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Comfortaa'
+                      fontFamily: 'Comfortaa',
                   ),
                 ),
               ),
@@ -149,7 +155,7 @@ class ClassificaScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Comfortaa'
+                      fontFamily: 'Comfortaa',
                   ),
                 ),
               ),
@@ -160,13 +166,13 @@ class ClassificaScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: size.width*0.02,),
                   Container(
-                    width: size.width*0.15,
-                    height: size.height*0.15,
+                    width: size.width*0.13,
+                    height: size.height*0.13,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(clasifica[index].userPic.toString()),
-                        )
+                        ),
                     ),
                   ),
                   SizedBox(width: size.width*0.05,),
@@ -175,7 +181,7 @@ class ClassificaScreen extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 19.sp,
                         fontWeight: FontWeight.w400,
-                        fontFamily: 'Comfortaa'
+                        fontFamily: 'Comfortaa',
                     ),
                   ),
                 ],

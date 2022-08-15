@@ -16,6 +16,8 @@ import '../../shared/components/colors_dots/colors_dots_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
+import '../classifica_screen/cubit/cubit.dart';
+import '../classifica_screen/cubit/states.dart';
 
 class GiocaScreen extends StatelessWidget {
   int index;
@@ -25,6 +27,7 @@ class GiocaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+    ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +80,7 @@ class GiocaScreen extends StatelessWidget {
         builder: (context, state) {
           MapScreenCubit cubit = MapScreenCubit.get(context);
           return ConditionalBuilder(
-            condition: cubit.data !=null,
+            condition: cubit.data !=null ,
             builder: (context)=>Scaffold(
               drawer: const NavigationDrawerScreen(),
               key: scaffoldKey,
@@ -162,27 +165,49 @@ class GiocaScreen extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Miglior tempo : 34 min',
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Comfortaa',
-                                        ),
-                                      ),
-                                      Text(
-                                        'ilBatmon il 17/04/22',
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Comfortaa',
-                                        ),
-                                      ),
-                                    ],
+                                  BlocConsumer<ClasificaCubit,ClasificaStates>(
+                                    listener: (context, state) {
+
+                                    },
+                                    builder: (context, state){
+
+                                      return  state is! LoadingClasificaScreenState? Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Miglior tempo : ',
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Comfortaa',
+                                                ),
+                                              ),
+
+                                              Text(
+                                                ClasificaCubit.get(context).bestPlayer[0].tempoClassificaPlayer.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Comfortaa',
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Text(
+                                            ClasificaCubit.get(context).bestPlayer[0].userNickNamePlayer.toString(),
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Comfortaa',
+                                            ),
+                                          ),
+                                        ],
+                                      ):Container();
+                                    },
                                   ),
+                                  ClasificaCubit.get(context).clasifica.isNotEmpty?
                                   InkWell(
                                     onTap: (){
                                       navigateTo(context, ClassificaScreen(
@@ -208,7 +233,7 @@ class GiocaScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ):Container(),
                                 ],
                               ),
                               SizedBox(

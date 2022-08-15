@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:toesor/modules/classifica_screen/classifica_screen.dart';
+import 'package:toesor/modules/confirm_map_one_screen/confirm_map_one.dart';
+import 'package:toesor/modules/confirm_map_one_screen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/cubit/cubit.dart';
 import 'package:toesor/modules/mapScreen/map_screen.dart';
 import 'package:toesor/modules/time_screen/cubit/cubit.dart';
@@ -12,7 +13,6 @@ import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
-import '../confirm_map_one_screen/cubit/cubit.dart';
 class TimeScreen extends StatefulWidget {
   int index;
   TimeScreen({Key? key,required this.index}) : super(key: key);
@@ -58,7 +58,7 @@ class _TimeScreenState extends State<TimeScreen> {
               height: size.height/2.1,
               width: size.width*0.9,
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics:const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Padding(
@@ -109,6 +109,10 @@ class _TimeScreenState extends State<TimeScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
+                            //DELETE API
+                            // setState((){
+                            //   TimeScreenCubit.get(context).startTimer();dispose();
+                            // });
                             MapScreenCubit.get(context).markers.clear();
                             navigateAndFinish(context, MapScreen());
                           },
@@ -320,6 +324,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                         borderRadius: BorderRadius.circular(30)
                                     ),
                                     child:Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'tappa',
@@ -328,12 +333,38 @@ class _TimeScreenState extends State<TimeScreen> {
                                             fontFamily: 'Comfortaa',
                                           ),
                                         ),
-                                        Text(
-                                          '1/4',
-                                          style: TextStyle(
-                                            fontSize: 19.sp,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Comfortaa',
+                                        Padding(
+                                          padding:  EdgeInsets.only(
+                                            left: size.width*0.1,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                               '2',
+                                                //AllSponsorCubit.get(context).singleRouteModel!.numeroTappaAttuale.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 19.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'Comfortaa',
+                                                ),
+                                              ),
+                                              Text(
+                                                '/',
+                                                style: TextStyle(
+                                                  fontSize: 19.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'Comfortaa',
+                                                ),
+                                              ),
+                                              Text(
+                                                MapScreenCubit.get(context).data[widget.index].lap!.length.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 19.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'Comfortaa',
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -386,7 +417,8 @@ class _TimeScreenState extends State<TimeScreen> {
                                         SizedBox(
                                           height: size.height*0.02,
                                         ),
-                                        Row(
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].question.toString(),
@@ -412,18 +444,16 @@ class _TimeScreenState extends State<TimeScreen> {
                                 width: size.width*0.9,
                                 height: size.height*0.06,
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color:Colors.white,
                                     borderRadius: BorderRadius.circular(30)
                                 ),
                                 child: TextFormField(
-                                  // onChanged: (value){
-                                  //   print('$hours'':''$minutes'':''$seconds');
-                                  // },
                                   controller: rispostaController,
                                   keyboardType: TextInputType.text,
                                   validator: (value){
-                                    if (value!.isEmpty) {
-                                      return 'Inserisci la risposta';
+                                    if (value!.isEmpty || rispostaController.text != TimeScreenCubit.get(context)
+                                        .lap[widget.index].quiz![widget.index].answer.toString() ) {
+                                      return 'Inserisci la Risposta Corretta';
                                     }
                                     return null;
                                   },
@@ -452,7 +482,10 @@ class _TimeScreenState extends State<TimeScreen> {
                                 onTap: (){
                                   if(formKey.currentState!.validate()){
                                     if(rispostaController.text == TimeScreenCubit.get(context)
-                                        .lap[widget.index].quiz![widget.index].answer.toString()) {
+                                        .lap[widget.index].quiz![widget.index].answer.toString() &&
+                                        TimeScreenCubit.get(context).lap[widget.index].nextTapID!=null
+                                    )
+                                    {
                                       TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
                                           route_id: TimeScreenCubit.get(context).lap[widget.index]
                                           .routeID!.toString(),
@@ -460,13 +493,24 @@ class _TimeScreenState extends State<TimeScreen> {
                                               .iDTappeCaccia!.toString(),
                                           Time:  '$hours'':''$minutes'':''$seconds',
                                       );
+
+                                      navigateTo(context, ConfirmMapOne(index: widget.index));
+                                      ConfirmaMapScreenCubit.get(context).polylineCoordinates.clear();
+                                      ConfirmaMapScreenCubit.get(context).markers.clear();
+
                                       print('Risposta Corretta');
-                                    }else{
-                                      print('Risposta Errata');
+                                    }else {
+                                      TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
+                                        route_id: TimeScreenCubit.get(context).lap[widget.index]
+                                            .routeID!.toString(),
+                                        Tap_id: TimeScreenCubit.get(context).lap[widget.index]
+                                            .iDTappeCaccia!.toString(),
+                                        Time:  '$hours'':''$minutes'':''$seconds',
+                                      );
+                                      navigateAndFinish(context, VaucherScreen(index: widget.index));
                                     }
-                                    if(TimeScreenCubit.get(context).lap[widget.index].nextTapID==null){
-                                      navigateTo(context, VaucherScreen(index: widget.index));
-                                    }
+
+
                                   }
                                 },
                                 child: Container(

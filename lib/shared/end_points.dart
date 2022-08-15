@@ -15,4 +15,5 @@ const SINGLE_ROUTE='api/Route';
 const SPONSOR_CATEGORY='api/SponsorsCategory/AllSponsorsCategories';
 const POST_TIME='api/ClassificaTappa/Save';
 const CLASIFICA='api/ClassificaRoute';
+const DELETECLASIFICA='api/Classifica';
 

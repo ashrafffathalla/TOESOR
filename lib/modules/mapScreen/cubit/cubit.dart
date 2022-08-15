@@ -16,6 +16,7 @@ import 'package:toesor/shared/end_points.dart';
 import '../../../shared/network/remote/dio_helper.dart';
 import '../../../shared/network/remote/location_helper.dart';
 import '../../../shared/style/colors.dart';
+import '../../classifica_screen/cubit/cubit.dart';
 
 class MapScreenCubit extends Cubit<MapScreenStates> {
   MapScreenCubit() : super(InitialMapScreenState());
@@ -189,18 +190,23 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                                 MediaQuery.of(context).size.height * 0.02,
                               ),
                               child: Row(
-                                children: const [
-                                  ColorDot(),
-                                  ColorDot(
-                                    isSelected: false,),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
+                                children: [
+                                  if (data[item].length == '6.2')
+                                  Row(
+                                    children: const [
+                                      ColorDot(),
+                                      ColorDot(
+                                        isSelected: true,),
+                                      ColorDot(
+                                        isSelected: true,
+                                      ),
+                                      ColorDot(
+                                        isSelected: true,
+                                      ),
+                                      ColorDot(
+                                        isSelected: false,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -434,7 +440,7 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                         onTap: (){
                           navigateTo(
                               context,
-                              GiocaScreen(
+                            GiocaScreen(
                                 data: data[item],
                                 index: item,
                               ));

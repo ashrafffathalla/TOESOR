@@ -8,6 +8,7 @@ class SingleRouteModel {
   List<SponsorCategories>? sponsor_categories;
 
 
+
   SingleRouteModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
@@ -21,6 +22,7 @@ class SingleRouteModel {
     if (json['sponsor_categories'] != null) {
       sponsor_categories = List<SponsorCategories>.from(json["sponsor_categories"].map((item) => SponsorCategories.fromJson(item)));
     }
+
   }
 
 }

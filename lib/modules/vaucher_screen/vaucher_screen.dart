@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart';
 import 'package:toesor/models/sponsor_category_model.dart';
+import 'package:toesor/modules/classifica_screen/cubit/cubit.dart';
+import 'package:toesor/modules/classifica_screen/cubit/states.dart';
 import 'package:toesor/modules/vaucher_number_screen/vaucher_mumber.dart';
 import 'package:toesor/modules/vaucher_screen/cubit/cubit.dart';
 import 'package:toesor/modules/vaucher_screen/cubit/states.dart';
@@ -13,6 +15,8 @@ import 'package:toesor/shared/constance/logout.dart';
 import '../../models/single_route_model.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
+import '../classifica_screen/classifica_screen.dart';
+import '../mapScreen/cubit/cubit.dart';
 
 
 class VaucherScreen extends StatelessWidget {
@@ -24,15 +28,14 @@ class VaucherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AllSponsorCubit.get(context).getAllSponsor(Route_ID: index+1);
+    //ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
+    ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
 
     print('**************************');
     print('index from voucher screen $index');
     print('********************');
     return BlocConsumer<AllSponsorCubit,GetAllSponsorStates>(
       listener: (context, state) {
-        // if(state is SuccessGetAllSponsorState){
-        //   AllSponsorCubit.get(context).getAllSponsorCategory();
-        // }
       },
       builder: (context, state) {
         AllSponsorCubit cubit = AllSponsorCubit.get(context);
@@ -129,26 +132,40 @@ class VaucherScreen extends StatelessWidget {
                                   SizedBox(
                                     height: size.height * 0.02,
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'il tuo tempo è:',
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 22.sp,
+                                  BlocConsumer<ClasificaCubit,ClasificaStates>(
+                                    listener: (context, state) {
+
+                                    },
+                                    builder: (context, state) {
+                                      return state is SuccessClasificaScreenState? Row(
+                                        children: [
+                                          Text(
+                                            'il tuo tempo è: ',
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                          Text(
+                                            ClasificaCubit.get(context).tuoTempo[0].tempoClassificaTempo.toString(),
+                                            // ClasificaCubit.get(context).tuoTempoTuoLivello[0]
+                                            //     .userLevel.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              color: const Color(0xff6A331D),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ):const Center(
+                                        child: CircularProgressIndicator(
+                                          color: kPrimaryColor,
                                         ),
-                                      ),
-                                      Text(
-                                        '00:34:45',
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          color: const Color(0xff6A331D),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 22.sp,
-                                        ),
-                                      ),
-                                    ],
+                                      );
+                                    },
+
                                   ),
                                   SizedBox(
                                     height: size.height * 0.02,
@@ -160,42 +177,71 @@ class VaucherScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        'sei arrivato',
+                                        'sei arrivato : ',
                                         style: TextStyle(
                                           fontFamily: 'Comfortaa',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 22.sp,
                                         ),
                                       ),
-                                      Text(
-                                        '7° su 97',
-                                        style: TextStyle(
-                                          fontFamily: 'Comfortaa',
-                                          color: const Color(0xff6A331D),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 22.sp,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '${ClasificaCubit.get(context).tuoTempo[0].userLevelTempo}°',
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              color: const Color(0xff6A331D),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                          Text(
+                                            ' su ',
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              color: const Color(0xff6A331D),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                          Text(
+                                            ClasificaCubit.get(context).clasificaModel!.totaleClassifica.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Comfortaa',
+                                              color: const Color(0xff6A331D),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 22.sp,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
                                   SizedBox(
                                     height: size.height * 0.02,
                                   ),
-                                  Container(
-                                    width: size.width * 0.3,
-                                    height: size.height * 0.045,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffB68B6E),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'CLASSIFICA',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Comfortaa',
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
+                                  InkWell(
+                                    onTap: (){
+                                      navigateTo(context, ClassificaScreen(
+                                        index: index,
+                                      ));
+                                    },
+                                    child: Container(
+                                      width: size.width * 0.3,
+                                      height: size.height * 0.045,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffB68B6E),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'CLASSIFICA',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Comfortaa',
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -297,8 +343,6 @@ class VaucherScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-
-                              SizedBox(height: size.height*0.02,),
                             ],
                           ),
                         ),
@@ -339,7 +383,7 @@ class VaucherScreen extends StatelessWidget {
                           horizontal:15.sp
                         ),
                         child: Text(
-                          "Are you sure select this VAUCHER",
+                          "Sei sicuro di voler scegliere questo Vaucher ?",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w400,
@@ -364,7 +408,7 @@ class VaucherScreen extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'RESTA',
+                                  'Si',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Comfortaa',
@@ -388,7 +432,7 @@ class VaucherScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'ESCI',
+                                'NO',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Comfortaa',
@@ -446,11 +490,6 @@ class VaucherScreen extends StatelessWidget {
                                fit: BoxFit.cover,
                           ),
                         )),
-                      // Image.asset(
-                      //   'assets/images/pizza.png',
-                      //   width: size.width * 0.47,
-                      //   fit: BoxFit.cover,
-                      // ),
                     ],
                   ),
                 ),
@@ -467,7 +506,7 @@ class VaucherScreen extends StatelessWidget {
           SizedBox(width: size.width*0.02,),
           Container(
             width: size.width * 0.47,
-            height: 167.sp,
+            height: 50.sp,
             decoration: BoxDecoration(
               color: const Color(0xff6A331D),
               borderRadius: BorderRadius.circular(20),

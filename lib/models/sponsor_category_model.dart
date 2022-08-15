@@ -2,6 +2,7 @@ class SponsorCategoryModel {
   bool? success;
   String? message;
   List<Data>? data;
+  int? numeroTappaAttuale;
 
   SponsorCategoryModel({this.success, this.message, this.data});
 
@@ -14,6 +15,7 @@ class SponsorCategoryModel {
         data!.add( Data.fromJson(v));
       });
     }
+    numeroTappaAttuale = json['NumeroTappaAttuale'];
   }
 
 
