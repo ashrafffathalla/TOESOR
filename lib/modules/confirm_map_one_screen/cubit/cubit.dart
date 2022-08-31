@@ -13,7 +13,6 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
   ConfirmaMapScreenCubit() :  super(InitialConfirmaMapScreenStates());
 
   static ConfirmaMapScreenCubit get(context) => BlocProvider.of(context);
-
   Position? position;
   Future<void> getMyCurrentLocation() async {
     position = await LocationHelper.getCurrentLocation().whenComplete(() {
@@ -29,7 +28,7 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
     print(indexTimeScreen);
     emit(SelectIndexState());
   }
-
+int indexSelect = 1;
   List<LatLng> polylineCoordinates=[];
   void getPolyPoints(BuildContext context)async{
     PolylinePoints polyPoints = PolylinePoints();
@@ -84,7 +83,7 @@ class ConfirmaMapScreenCubit extends Cubit<ConfirmaMapScreenStates>{
           ConfirmaMapScreenCubit.get(context).position!.longitude),
       markerId: const MarkerId('1000'),
       infoWindow: const InfoWindow(title: "La tua posizione attuale"),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
     ));
     emit(AddCurrentMarkerSetConfirmaMapScreenState());
     return markers;

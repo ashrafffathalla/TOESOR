@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import '../../constance/constant.dart';
 
 class DioHelper {
-
   static late Dio dio;
 
   static init() {
@@ -11,17 +10,14 @@ class DioHelper {
       BaseOptions(
         baseUrl: 'https://tre-sor.it/WS/',
         receiveDataWhenStatusError: true,
-
       ),
     );
   }
-  static Future<Response> getData(
 
-      {
-        required String methodUrl,
-        Map<String, dynamic> ? query,
-      }) async {
-
+  static Future<Response> getData({
+    required String methodUrl,
+    Map<String, dynamic>? query,
+  }) async {
     dio.options.headers = {
       //"Content-Type":"application/json",
       "Authorization": 'Bearer $sharedToken',
@@ -30,11 +26,9 @@ class DioHelper {
   }
 
   static Future<Response> postData(
-      {
-        required String methodUrl,
-        required Map<String, dynamic>  data}) async {
+      {required String methodUrl, required Map<String, dynamic> data}) async {
     dio.options.headers = {
-      //"Content-Type":"application/json",
+      "Content-Type": "application/json",
       "Authorization": 'Bearer $sharedToken',
     };
     return await dio.post(
@@ -42,13 +36,23 @@ class DioHelper {
       data: data,
     );
   }
-  static Future<Response> deleteData(
 
-      {
-        required String methodUrl,
-        Map<String, dynamic> ? query,
-      }) async {
+  static Future<Response> postDataImage(
+      {required String methodUrl, required Map<String, dynamic> data}) async {
+    dio.options.headers = {
+      "Content-Type": "multipart/form-data",
+      "Authorization": 'Bearer $sharedToken',
+    };
+    return await dio.post(
+      methodUrl,
+      data: data,
+    );
+  }
 
+  static Future<Response> deleteData({
+    required String methodUrl,
+    Map<String, dynamic>? query,
+  }) async {
     dio.options.headers = {
       "Authorization": 'Bearer $sharedToken',
     };

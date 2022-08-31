@@ -26,7 +26,6 @@ Widget defaultFormField(
   final VoidCallback? onSubmit,
 }) =>
     TextFormField(
-
       style: const TextStyle(color: Colors.black),
       controller: controller,
       cursorColor: Colors.black,

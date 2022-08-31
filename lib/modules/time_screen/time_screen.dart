@@ -110,9 +110,7 @@ class _TimeScreenState extends State<TimeScreen> {
                         GestureDetector(
                           onTap: (){
                             //DELETE API
-                            // setState((){
-                            //   TimeScreenCubit.get(context).startTimer();dispose();
-                            // });
+                            TimeScreenCubit.get(context).deleteDataOfTimeScreen(Route_ID:MapScreenCubit.get(context).data[widget.index].routeID!.toInt());
                             MapScreenCubit.get(context).markers.clear();
                             navigateAndFinish(context, MapScreen());
                           },
@@ -148,7 +146,7 @@ class _TimeScreenState extends State<TimeScreen> {
       child: BlocConsumer<TimeScreenCubit,TimeScreenStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          return state is LoadingTimeScreenState ? const Center(child: CircularProgressIndicator()): Scaffold(
+          return state is LoadingTimeScreenState ? const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,color:kPrimaryColor,)): Scaffold(
             backgroundColor: kPrimaryColor,
             appBar: AppBar(
               elevation: 0,
@@ -340,8 +338,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                           child: Row(
                                             children: [
                                               Text(
-                                               '2',
-                                                //AllSponsorCubit.get(context).singleRouteModel!.numeroTappaAttuale.toString(),
+                                                TimeScreenCubit.get(context).numeroTappa[0].totalTaps.toString(),
                                                 style: TextStyle(
                                                   fontSize: 19.sp,
                                                   fontWeight: FontWeight.w500,
@@ -378,7 +375,7 @@ class _TimeScreenState extends State<TimeScreen> {
                               ),
                               Container(
                                 width: size.width*0.9,
-                                height: size.height*0.4,
+                                height: size.height*0.43,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -388,7 +385,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                       horizontal: size.width*0.03
                                   ),
                                   child: SingleChildScrollView(
-                                    physics:BouncingScrollPhysics(),
+                                    physics:const BouncingScrollPhysics(),
                                     child: Column(
                                       children: [
                                         SizedBox(
@@ -430,6 +427,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                             ),
                                           ],
                                         ),
+                                        //SizedBox(height: size.height*0.025,),
                                       ],
                                     ),
                                   ),
@@ -473,7 +471,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                         fontWeight: FontWeight.w500,
                                       )
                                   ),
-                                ),
+                                )
                               ),
                               SizedBox(
                                 height: size.height*0.015,
@@ -493,11 +491,8 @@ class _TimeScreenState extends State<TimeScreen> {
                                               .iDTappeCaccia!.toString(),
                                           Time:  '$hours'':''$minutes'':''$seconds',
                                       );
-
                                       navigateTo(context, ConfirmMapOne(index: widget.index));
-                                      ConfirmaMapScreenCubit.get(context).polylineCoordinates.clear();
-                                      ConfirmaMapScreenCubit.get(context).markers.clear();
-
+                                      ConfirmaMapScreenCubit.get(context).polylineCoordinates = [];
                                       print('Risposta Corretta');
                                     }else {
                                       TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
@@ -507,6 +502,7 @@ class _TimeScreenState extends State<TimeScreen> {
                                             .iDTappeCaccia!.toString(),
                                         Time:  '$hours'':''$minutes'':''$seconds',
                                       );
+
                                       navigateAndFinish(context, VaucherScreen(index: widget.index));
                                     }
 

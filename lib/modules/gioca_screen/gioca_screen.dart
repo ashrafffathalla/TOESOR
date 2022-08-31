@@ -171,7 +171,7 @@ class GiocaScreen extends StatelessWidget {
                                     },
                                     builder: (context, state){
 
-                                      return  state is! LoadingClasificaScreenState? Column(
+                                      return  ClasificaCubit.get(context).bestPlayer.isNotEmpty? Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
@@ -338,18 +338,113 @@ class GiocaScreen extends StatelessWidget {
               top: size.height * 0.02,
             ),
             child: Row(
-              children: const [
-                ColorDot(),
-                ColorDot(),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
+              children: [
+                if (data.length == '1' || data.length == '2')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: false,),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.length == '3' || data.length == '4')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: true,),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.length == '5'|| data.length == '6')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.length == '7'|| data.length == '8')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.length == '9'|| data.length == '10')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                    ],
+                  ),
+                if (data.length == '11'|| data.length == '12'
+                    || data.length == '13'|| data.length == '14'
+                    || data.length == '15'
+                )
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot(
+                        isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                    ],
+                  ),
 
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
               ],
             ),
           ),
@@ -366,9 +461,8 @@ class GiocaScreen extends StatelessWidget {
       Column(
         children: [
           Text(
-            data.duration.toString(),
+            '${data.duration} min',
             style: TextStyle(
-
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa'),
@@ -378,18 +472,88 @@ class GiocaScreen extends StatelessWidget {
               top: size.height * 0.02,
             ),
             child: Row(
-              children: const [
-                ColorDot(),
-                ColorDot(),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
-                ColorDot(
-                  isSelected: false,
-                ),
+              children: [
+                if (data.duration == '30')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot( isSelected: false,),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.duration == '60')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot( isSelected: true,),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.duration == '90')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot( isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.duration == '120')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot( isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                if (data.duration == '150')
+                  Row(
+                    children: const [
+                      ColorDot(),
+                      ColorDot( isSelected: true,),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                      ColorDot(
+                        isSelected: true,
+                      ),
+                    ],
+                  ),
+
               ],
             ),
           ),

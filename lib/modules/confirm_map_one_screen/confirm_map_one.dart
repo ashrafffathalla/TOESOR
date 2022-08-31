@@ -9,6 +9,7 @@ import 'package:toesor/shared/constance/logout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/navigationbar/navigationbar.dart';
 import '../../shared/style/colors.dart';
+import '../mapScreen/cubit/cubit.dart';
 
 class ConfirmMapOne extends StatelessWidget {
   int index;
@@ -17,10 +18,8 @@ class ConfirmMapOne extends StatelessWidget {
   Widget build(BuildContext context) {
     ConfirmaMapScreenCubit.get(context).getMyCurrentLocation();
     ConfirmaMapScreenCubit.get(context).goToMyCurrentLocation(context);
-    ConfirmaMapScreenCubit.get(context).polylineCoordinates.clear();
     ConfirmaMapScreenCubit.get(context).markers.clear();
-    //ConfirmaMapScreenCubit.get(context).selectIndex(index);
-
+    ConfirmaMapScreenCubit.get(context).polylineCoordinates = [];
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     Size size = MediaQuery.of(context).size;
@@ -28,7 +27,8 @@ class ConfirmMapOne extends StatelessWidget {
       listener: (context,state){
         if (state is ChangePositionLocationConfirmaMapScreen) {
           ConfirmaMapScreenCubit.get(context).getTapMarkers(context,index);
-          ConfirmaMapScreenCubit.get(context).getPolyPoints(context);
+         ConfirmaMapScreenCubit.get(context).getPolyPoints(context);
+          //ConfirmaMapScreenCubit.get(context).getPolyPoints(context);
           if (ConfirmaMapScreenCubit.get(context).position != null) {
             ConfirmaMapScreenCubit.get(context).myCurrentMarker(context);
           }
@@ -173,7 +173,7 @@ class ConfirmMapOne extends StatelessWidget {
                                                         borderRadius: BorderRadius.circular(20.0),
                                                       ),
                                                       child: Container(
-                                                        height: size.height/2.1,
+
                                                         width: size.width*0.9,
                                                         child: SingleChildScrollView(
                                                           physics:const BouncingScrollPhysics(),
@@ -200,7 +200,7 @@ class ConfirmMapOne extends StatelessWidget {
                                                               ),
                                                               GestureDetector(
                                                                 onTap: (){
-                                                                  navigateTo(context, TimeScreen(
+                                                                  navigateAndFinish(context, TimeScreen(
                                                                     index :index.toInt(),
                                                                   ));
                                                                   print(index.toString());
@@ -224,6 +224,9 @@ class ConfirmMapOne extends StatelessWidget {
                                                                       ),
                                                                     ),
                                                                   ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: size.height*0.025,
                                                               ),
                                                             ],
                                                           ),
@@ -260,7 +263,7 @@ class ConfirmMapOne extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 6.sp,
+                                  height: 5.sp,
                                 ),
                               ],
                             ),

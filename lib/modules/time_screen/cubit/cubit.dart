@@ -4,6 +4,7 @@ import 'package:toesor/models/post_time_model.dart';
 import 'package:toesor/models/time_screen_model.dart';
 import 'package:toesor/modules/time_screen/cubit/states.dart';
 import '../../../models/sponsor_category_model.dart';
+import '../../../models/time_screen_model.dart';
 import '../../../shared/end_points.dart';
 import '../../../shared/network/remote/dio_helper.dart';
 
@@ -13,6 +14,7 @@ class TimeScreenCubit extends Cubit<TimeScreenStates> {
   static TimeScreenCubit get(context) => BlocProvider.of(context);
   List<Data> data = <Data>[];
   List<Lap> lap = <Lap>[];
+  List<NumeroTappaAttuale> numeroTappa = <NumeroTappaAttuale>[];
   TimeScreenModel? timeScreenModel;
   Future<void> getQuizInTimeScreen({
     required int Route_ID,
@@ -23,6 +25,8 @@ class TimeScreenCubit extends Cubit<TimeScreenStates> {
     ).then((value) {
       print(value.data.toString());
       lap = List<Lap>.from(value.data['lap'].map((item) => Lap.fromJson(item)));
+      numeroTappa = List<NumeroTappaAttuale>.from(value.data['NumeroTappaAttuale'].map((item) => NumeroTappaAttuale.fromJson(item)));
+      print(numeroTappa[0].totalTaps);
       print(lap.length);
       timeScreenModel = TimeScreenModel.fromJson(value.data);
       print(timeScreenModel!.numeroTappaAttuale.toString());
@@ -174,7 +178,7 @@ class TimeScreenCubit extends Cubit<TimeScreenStates> {
     required int Route_ID,
   }) async {
     emit(LoadingDeleteTimeScreenState());
-    await DioHelper.getData(
+    await DioHelper.deleteData(
       methodUrl: '$DELETECLASIFICA/$Route_ID',
     ).then((value) {
       print(value.data.toString());

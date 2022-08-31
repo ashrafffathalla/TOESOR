@@ -32,13 +32,13 @@ class SignUpScreen extends StatelessWidget {
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
-                message: 'Now You Are Login',
-                title: 'Success',
+                message: 'Account registrato con successo',
+                title: '',
                 type: ContentType.success,
               ),
-
             );
-          }else{
+            navigateAndFinish(context, LoginScreen());
+          }if(state is ErrorSignUpState){
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               customSnackBar(
@@ -46,7 +46,6 @@ class SignUpScreen extends StatelessWidget {
                 title: 'Errore',
                 type: ContentType.failure,
               ),
-
             );
           }
 
@@ -123,7 +122,7 @@ class SignUpScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    'First Name :',
+                                    'Nome :',
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontFamily: 'Comfortaa',
@@ -146,7 +145,7 @@ class SignUpScreen extends StatelessWidget {
                                   type: TextInputType.text,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your first name';
+                                      return 'Nome';
                                     }
                                     return null;
                                   },
@@ -158,7 +157,7 @@ class SignUpScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    'Last Name :',
+                                    'Cognome :',
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontFamily: 'Comfortaa',
@@ -181,7 +180,7 @@ class SignUpScreen extends StatelessWidget {
                                   type: TextInputType.text,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your last name';
+                                      return 'Cognome';
                                     }
                                     return null;
                                   },
@@ -216,9 +215,9 @@ class SignUpScreen extends StatelessWidget {
                                   type: TextInputType.emailAddress,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your email address';
+                                      return 'E-mail';
                                     }else if( !(isEmail(value.toString())))  {
-                                      return 'the email is not valid';
+                                      return "L'email non è valida";
                                     }
                                     return null;
                                   },
@@ -254,7 +253,7 @@ class SignUpScreen extends StatelessWidget {
                                   type: TextInputType.visiblePassword,
                                   validate: (value){
                                     if (value!.isEmpty) {
-                                      return 'Pleas enter your Password';
+                                      return 'per favore inserisci LA TUA password';
                                     }
                                     return null;
                                   },
@@ -293,7 +292,7 @@ class SignUpScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
-                                    'you have an account?',
+                                    'Hai un account?',
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       fontFamily: 'Comfortaa',
@@ -304,7 +303,7 @@ class SignUpScreen extends StatelessWidget {
                                       navigateAndFinish(context, LoginScreen());
                                     },
                                     child: Text(
-                                      'Login',
+                                      'Accedi',
                                       style: TextStyle(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.bold,

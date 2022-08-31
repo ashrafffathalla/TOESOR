@@ -3,7 +3,8 @@ class TimeScreenModel {
   String? message;
   Details? details;
   Lap? lap;
-  int? numeroTappaAttuale;
+  List<NumeroTappaAttuale>? numeroTappaAttuale;
+
 
 
 
@@ -12,7 +13,13 @@ class TimeScreenModel {
     message = json['message'];
     details = json['Details'] != null ?  Details.fromJson(json['Details']) : null;
     lap = json['lap'] != null ?  Lap.fromJson(json['lap']) : null;
-    numeroTappaAttuale = json['NumeroTappaAttuale'];
+
+    if (json['NumeroTappaAttuale'] != null) {
+      numeroTappaAttuale = <NumeroTappaAttuale>[];
+      json['NumeroTappaAttuale'].forEach((v) {
+        numeroTappaAttuale!.add( NumeroTappaAttuale.fromJson(v));
+      });
+    }
 
   }
 }
@@ -106,4 +113,14 @@ class QuizTips {
     iDQuiz = json['ID_Quiz'];
     tipTitle = json['Tip_Title'];
   }
+
+}
+
+class NumeroTappaAttuale {
+  int? totalTaps;
+
+  NumeroTappaAttuale.fromJson(Map<String, dynamic> json) {
+    totalTaps = json['Total_Taps'];
+  }
+
 }

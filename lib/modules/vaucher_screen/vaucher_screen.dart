@@ -137,7 +137,7 @@ class VaucherScreen extends StatelessWidget {
 
                                     },
                                     builder: (context, state) {
-                                      return state is SuccessClasificaScreenState? Row(
+                                      return ClasificaCubit.get(context).tuoTempo.isNotEmpty? Row(
                                         children: [
                                           Text(
                                             'il tuo tempo è: ',
@@ -149,8 +149,6 @@ class VaucherScreen extends StatelessWidget {
                                           ),
                                           Text(
                                             ClasificaCubit.get(context).tuoTempo[0].tempoClassificaTempo.toString(),
-                                            // ClasificaCubit.get(context).tuoTempoTuoLivello[0]
-                                            //     .userLevel.toString(),
                                             style: TextStyle(
                                               fontFamily: 'Comfortaa',
                                               color: const Color(0xff6A331D),
@@ -159,9 +157,14 @@ class VaucherScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ],
-                                      ):const Center(
-                                        child: CircularProgressIndicator(
-                                          color: kPrimaryColor,
+                                      ):Center(
+                                        child: Text(
+                                            'Non hai fatto nessun gioco',
+                                          style: TextStyle(
+                                            fontFamily: 'Comfortaa',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14.sp,
+                                          ),
                                         ),
                                       );
                                     },
@@ -186,6 +189,7 @@ class VaucherScreen extends StatelessWidget {
                                       ),
                                       Row(
                                         children: [
+                                          ClasificaCubit.get(context).tuoTempo.isNotEmpty?
                                           Text(
                                             '${ClasificaCubit.get(context).tuoTempo[0].userLevelTempo}°',
                                             style: TextStyle(
@@ -194,7 +198,7 @@ class VaucherScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w400,
                                               fontSize: 22.sp,
                                             ),
-                                          ),
+                                          ):Container(),
                                           Text(
                                             ' su ',
                                             style: TextStyle(
@@ -204,6 +208,7 @@ class VaucherScreen extends StatelessWidget {
                                               fontSize: 22.sp,
                                             ),
                                           ),
+                                          ClasificaCubit.get(context).clasificaModel!.totaleClassifica.toString().isNotEmpty?
                                           Text(
                                             ClasificaCubit.get(context).clasificaModel!.totaleClassifica.toString(),
                                             style: TextStyle(
@@ -212,7 +217,7 @@ class VaucherScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w400,
                                               fontSize: 22.sp,
                                             ),
-                                          ),
+                                          ):Container(),
                                         ],
                                       ),
                                     ],

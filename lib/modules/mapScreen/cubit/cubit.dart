@@ -191,23 +191,113 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                               ),
                               child: Row(
                                 children: [
-                                  if (data[item].length == '6.2')
-                                  Row(
-                                    children: const [
-                                      ColorDot(),
-                                      ColorDot(
-                                        isSelected: true,),
-                                      ColorDot(
-                                        isSelected: true,
-                                      ),
-                                      ColorDot(
-                                        isSelected: true,
-                                      ),
-                                      ColorDot(
-                                        isSelected: false,
-                                      ),
-                                    ],
-                                  ),
+
+                                  if (data[item].length == '1' || data[item].length == '2')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: false,),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].length == '3' || data[item].length == '4')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: true,),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].length == '5'|| data[item].length == '6')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].length == '7'|| data[item].length == '8')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].length == '9'|| data[item].length == '10')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].length == '11'|| data[item].length == '12'
+                                      || data[item].length == '13'|| data[item].length == '14'
+                                      || data[item].length == '15'|| data[item].length == '16'
+
+                                  )
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot(
+                                          isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),
@@ -224,7 +314,7 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                         Column(
                           children: [
                             Text(
-                              data[item].duration.toString(),
+                              '${data[item].duration} min',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17.sp,
@@ -237,18 +327,88 @@ class MapScreenCubit extends Cubit<MapScreenStates> {
                                 MediaQuery.of(context).size.height * 0.02,
                               ),
                               child: Row(
-                                children: const [
-                                  ColorDot(),
-                                  ColorDot(),
-                                  ColorDot(
-                                    isSelected: false,
+                                children: [
+                                  if (data[item].duration == '30')
+                                  Row(
+                                    children: const [
+                                      ColorDot(),
+                                      ColorDot( isSelected: false,),
+                                      ColorDot(
+                                        isSelected: false,
+                                      ),
+                                      ColorDot(
+                                        isSelected: false,
+                                      ),
+                                      ColorDot(
+                                        isSelected: false,
+                                      ),
+                                    ],
                                   ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
-                                  ColorDot(
-                                    isSelected: false,
-                                  ),
+                                  if (data[item].duration == '60')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot( isSelected: true,),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].duration == '90')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot( isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].duration == '120')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot( isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: false,
+                                        ),
+                                      ],
+                                    ),
+                                  if (data[item].duration == '150')
+                                    Row(
+                                      children: const [
+                                        ColorDot(),
+                                        ColorDot( isSelected: true,),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                        ColorDot(
+                                          isSelected: true,
+                                        ),
+                                      ],
+                                    ),
+
                                 ],
                               ),
                             ),
@@ -528,7 +688,7 @@ double? roundDistanceInKM;
            double.parse(data[index].routeLng.toString()),
          );
     print(distanceInMeters);
-    double distanceInKiloMeters = distanceInMeters! / 1000;
+    double distanceInKiloMeters = distanceInMeters! * 0.001;
     if(distanceInMeters! <= 1000){
       return double.parse(distanceInMeters!.toStringAsFixed(1)
       );

@@ -10,8 +10,8 @@ class LoadingEditProfileStates extends EditProfileStates{}
 
 
 class SuccessEditProfileStates extends EditProfileStates{
-  EditProfileModel editProfileModel;
- SuccessEditProfileStates(this.editProfileModel);
+ // EditProfileModel editProfileModel;
+ //SuccessEditProfileStates(this.editProfileModel);
 }
 
 class ErrorEditProfileStates extends EditProfileStates{
@@ -19,3 +19,5 @@ class ErrorEditProfileStates extends EditProfileStates{
   ErrorEditProfileStates(this.error);
 }
 class EditImageState extends EditProfileStates{}
+class ConvertStringToFile extends EditProfileStates{}
+class EditUploadImageState extends EditProfileStates{}

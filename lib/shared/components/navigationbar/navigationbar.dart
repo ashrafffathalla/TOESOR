@@ -9,6 +9,7 @@ import 'package:toesor/modules/fb_login/cubti/states.dart';
 import 'package:toesor/modules/googel_login/cubit/cubit.dart';
 import 'package:toesor/modules/googel_login/cubit/states.dart';
 import 'package:toesor/modules/login_screen/cubit/cubit.dart';
+import 'package:toesor/modules/mapScreen/map_screen.dart';
 import 'package:toesor/modules/profile_screen/profile_screen.dart';
 import 'package:toesor/shared/components/components.dart';
 import 'package:toesor/shared/components/navigationbar/navigation_items.dart';
@@ -41,6 +42,7 @@ class NavigationDrawerScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
+                    CacheHelper.getData(key: 'pic') !=null?
                         Container(
                         width: 73.sp,
                         height:73.sp,
@@ -50,7 +52,10 @@ class NavigationDrawerScreen extends StatelessWidget {
                             image: NetworkImage(CacheHelper.getData(key: 'pic'))
                           )
                           ),
-                        ),
+                        ):CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.transparent,
+                    ),
 
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.03,
@@ -58,54 +63,54 @@ class NavigationDrawerScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'percorsi giocati: ',
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    Text(
-                                      '27',
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.015,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      'miglior piazzamento: ',
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    Text(
-                                      '2',
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceAround,
+                                //   children: [
+                                //     Text(
+                                //       'percorsi giocati: ',
+                                //       style: TextStyle(
+                                //         fontSize: 15.sp,
+                                //         fontFamily: 'Comfortaa',
+                                //         fontWeight: FontWeight.w400,
+                                //       ),
+                                //     ),
+                                //     Text(
+                                //       '27',
+                                //       style: TextStyle(
+                                //         fontSize: 15.sp,
+                                //         fontFamily: 'Comfortaa',
+                                //         fontWeight: FontWeight.w400,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                // SizedBox(
+                                //   height: MediaQuery.of(context).size.height *
+                                //       0.015,
+                                // ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceEvenly,
+                                //   children: [
+                                //     Text(
+                                //       'miglior piazzamento: ',
+                                //       style: TextStyle(
+                                //         fontSize: 15.sp,
+                                //         fontFamily: 'Comfortaa',
+                                //         fontWeight: FontWeight.w400,
+                                //       ),
+                                //     ),
+                                //     Text(
+                                //       '2',
+                                //       style: TextStyle(
+                                //         fontSize: 15.sp,
+                                //         fontFamily: 'Comfortaa',
+                                //         fontWeight: FontWeight.w400,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ],
@@ -185,6 +190,7 @@ class NavigationDrawerScreen extends StatelessWidget {
         Navigator.pop(context);
         break;
     }
+
   }
 /*
   Widget headerWidget(context){
