@@ -28,7 +28,6 @@ class VaucherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AllSponsorCubit.get(context).getAllSponsor(Route_ID: index+1);
-    //ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
     ClasificaCubit.get(context).getClasifica(Route_ID: MapScreenCubit.get(context).data[index].routeID!.toInt());
 
     print('**************************');
@@ -148,8 +147,7 @@ class VaucherScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            ClasificaCubit.get(context).tuoTempo[0].tempoClassificaTempo.toString(),
-                                            style: TextStyle(
+                                            ClasificaCubit.get(context).tuoTempo[0].tempoClassificaTempo.toString(),                                            style: TextStyle(
                                               fontFamily: 'Comfortaa',
                                               color: const Color(0xff6A331D),
                                               fontWeight: FontWeight.w400,
@@ -198,7 +196,12 @@ class VaucherScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w400,
                                               fontSize: 22.sp,
                                             ),
-                                          ):Container(),
+                                          ):Text("1",style: TextStyle(
+                                        fontFamily: 'Comfortaa',
+                                        color: const Color(0xff6A331D),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 22.sp,
+                                      ),),
                                           Text(
                                             ' su ',
                                             style: TextStyle(

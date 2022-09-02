@@ -28,10 +28,9 @@ class ConfirmMapOne extends StatelessWidget {
         if (state is ChangePositionLocationConfirmaMapScreen) {
           ConfirmaMapScreenCubit.get(context).getTapMarkers(context,index);
          ConfirmaMapScreenCubit.get(context).getPolyPoints(context);
-          //ConfirmaMapScreenCubit.get(context).getPolyPoints(context);
-          if (ConfirmaMapScreenCubit.get(context).position != null) {
-            ConfirmaMapScreenCubit.get(context).myCurrentMarker(context);
-          }
+          // if (ConfirmaMapScreenCubit.get(context).position != null) {
+          //   ConfirmaMapScreenCubit.get(context).myCurrentMarker(context);
+          // }
         }
       },
       builder: (context,state){

@@ -107,11 +107,11 @@ class SignUpScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    'SIGN UP',
+                                    'CREA UN ACCOUNT',
                                     style: TextStyle(
-                                      fontSize: 20.sp,
+                                      fontSize: 18.sp,
                                       fontFamily: 'Comfortaa',
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   )
                                 ],
@@ -279,7 +279,7 @@ class SignUpScreen extends StatelessWidget {
                                       );
                                     }
                                   },
-                                  text: 'sign up',
+                                  text: 'Registrati',
                                   rounder: BorderRadius.circular(35),
                                 ),
                                 fallback: (context)=>const Center(

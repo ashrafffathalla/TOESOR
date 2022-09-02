@@ -283,465 +283,469 @@ class _TimeScreenState extends State<TimeScreen> {
             ),
             body: TimeScreenCubit.get(context).lap.isNotEmpty ?Form(
               key: formKey,
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                drawer: const NavigationDrawerScreen(),
-                key: scaffoldKey,
-                body: Stack(
-                  children: [
-                    Positioned(
-                      child: SizedBox(
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: Image.asset(
-                          'assets/images/background.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width*0.0),
-                        child: SingleChildScrollView(
-                          physics:const BouncingScrollPhysics(),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: size.height*0.03,
-                              ),
-                              ///ROW TIMe
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  buildTime(context),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width*0.3,
-                                    height: MediaQuery.of(context).size.height*0.061,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30)
-                                    ),
-                                    child:Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'tappa',
-                                          style: TextStyle(
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Comfortaa',
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:  EdgeInsets.only(
-                                            left: size.width*0.1,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                TimeScreenCubit.get(context).numeroTappa[0].totalTaps.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 19.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Comfortaa',
-                                                ),
-                                              ),
-                                              Text(
-                                                '/',
-                                                style: TextStyle(
-                                                  fontSize: 19.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Comfortaa',
-                                                ),
-                                              ),
-                                              Text(
-                                                MapScreenCubit.get(context).data[widget.index].lap!.length.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 19.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Comfortaa',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              ///start Container Images
-                              SizedBox(
-                                height: size.height*0.05,
-                              ),
-                              Container(
-                                width: size.width*0.9,
-                                height: size.height*0.43,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.width*0.03
-                                  ),
-                                  child: SingleChildScrollView(
-                                    physics:const BouncingScrollPhysics(),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: size.height*0.01,
-                                        ),
-                                        Text(
-                                          TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].placeName.toString(),
-                                          style: TextStyle(
-                                              fontSize: 22.sp,
-                                              fontFamily: 'Comfortaa',
-                                              fontWeight: FontWeight.w500
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: size.height*0.005,
-                                        ),
-                                        TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString().isNotEmpty?
-                                        Image.network(
-                                          TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString(),
-                                          fit: BoxFit.cover,
-                                        ):const Center(
-                                          child: CircularProgressIndicator(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: size.height*0.02,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].question.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontFamily: 'Comfortaa',
-                                                  fontWeight: FontWeight.w500
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        //SizedBox(height: size.height*0.025,),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              ///END Container Images
-                              ///Start Bottoms
-                              SizedBox(
-                                height: size.height*0.05,
-                              ),
-                              Container(
-                                width: size.width*0.9,
-                                height: size.height*0.06,
-                                decoration: BoxDecoration(
-                                    color:Colors.white,
-                                    borderRadius: BorderRadius.circular(30)
-                                ),
-                                child: TextFormField(
-                                  controller: rispostaController,
-                                  keyboardType: TextInputType.text,
-                                  validator: (value){
-                                    if (value!.isEmpty || rispostaController.text != TimeScreenCubit.get(context)
-                                        .lap[widget.index].quiz![widget.index].answer.toString() ) {
-                                      return 'Inserisci la Risposta Corretta';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: size.width*0.05,
-                                      ),
-                                      hintText: 'Risposta...',
-                                      helperStyle: TextStyle(
-                                        fontSize: 21.sp,
-                                        fontFamily: 'Comfortaa',
-                                        fontWeight: FontWeight.w500,
-                                      )
-                                  ),
-                                )
-                              ),
-                              SizedBox(
-                                height: size.height*0.015,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  if(formKey.currentState!.validate()){
-                                    if(rispostaController.text == TimeScreenCubit.get(context)
-                                        .lap[widget.index].quiz![widget.index].answer.toString() &&
-                                        TimeScreenCubit.get(context).lap[widget.index].nextTapID!=null
-                                    )
-                                    {
-                                      TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
-                                          route_id: TimeScreenCubit.get(context).lap[widget.index]
-                                          .routeID!.toString(),
-                                          Tap_id: TimeScreenCubit.get(context).lap[widget.index]
-                                              .iDTappeCaccia!.toString(),
-                                          Time:  '$hours'':''$minutes'':''$seconds',
-                                      );
-                                      navigateTo(context, ConfirmMapOne(index: widget.index));
-                                      ConfirmaMapScreenCubit.get(context).polylineCoordinates = [];
-                                      print('Risposta Corretta');
-                                    }else {
-                                      TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
-                                        route_id: TimeScreenCubit.get(context).lap[widget.index]
-                                            .routeID!.toString(),
-                                        Tap_id: TimeScreenCubit.get(context).lap[widget.index]
-                                            .iDTappeCaccia!.toString(),
-                                        Time:  '$hours'':''$minutes'':''$seconds',
-                                      );
-
-                                      navigateAndFinish(context, VaucherScreen(index: widget.index));
-                                    }
-
-
-                                  }
-                                },
-                                child: Container(
-                                  width: 170.sp,
-                                  height: 35.sp,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green[400],
-                                    borderRadius: BorderRadius.circular(35.sp),
-                                  ),
-                                  child: Center(
-                                    child:Text(
-                                      'Conferma Risposta',
-                                      style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height*0.015,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  if(TimeScreenCubit.get(context).isButtonOneActive){
-                                    showDialog(
-                                    context: context,
-                                    builder: (context)=>Dialog(
-                                      backgroundColor: kPopColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40.0),
-                                      ),
-                                      child: Container(
-                                        height: size.height/3.5,
-                                        width: size.width*0.8,
-                                        child: SingleChildScrollView(
-                                          physics: BouncingScrollPhysics(),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
-                                                child: Text(
-                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index].tipTitle.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Comfortaa',
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: size.height*0.03,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                    TimeScreenCubit.get(context).oneAiuto();
-                                  }else{
-                                    null;
-                                  }
-                                  TimeScreenCubit.get(context).changeButtonActive();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: kPopColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  width: size.width*0.9,
-                                  height: size.height*0.06,
-                                  child:Center(
-                                    child: Text(
-                                      'Aiuto 1 + 10 minuti',
-                                      style: TextStyle(
-                                        color:TimeScreenCubit.get(context).isButtonOneActive?Colors.black
-                                            :const Color(0xffDFCFAC),
-                                        fontFamily: 'Comfortaa',
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height*0.03,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  if (TimeScreenCubit.get(context).isButtonTwoActive) {
-                                    showDialog(
-                                    context: context,
-                                    builder: (context)=>Dialog(
-                                      backgroundColor: kPopColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40.0),
-                                      ),
-                                      child: Container(
-                                        height: size.height/3.5,
-                                        width: size.width*0.8,
-                                        child: SingleChildScrollView(
-                                          physics: BouncingScrollPhysics(),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
-                                                child: Text(
-                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+1].tipTitle.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Comfortaa',
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: size.height*0.03,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                    TimeScreenCubit.get(context).TwoAiuto();
-                                  }else{
-                                    null;
-                                  }
-                                  TimeScreenCubit.get(context).changeButtonTwoActive();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: kPopColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  width: size.width*0.9,
-                                  height: size.height*0.06,
-                                  child:Center(
-                                    child: Text(
-                                      'Aiuto 2 + 20 minuti',
-                                      style: TextStyle(
-                                        color:TimeScreenCubit.get(context).isButtonTwoActive?Colors.black
-                                            :const Color(0xffDFCFAC),
-                                        fontFamily: 'Comfortaa',
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height*0.03,
-                              ),
-                              if (TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString().isNotEmpty) GestureDetector(
-                                onTap: (){
-                                  if(TimeScreenCubit.get(context).isButtonThreeActive) {
-                                    showDialog(
-                                    context: context,
-                                    builder: (context)=>Dialog(
-                                      backgroundColor: kPopColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40.0),
-                                      ),
-                                      child: Container(
-                                        height: size.height/3.5,
-                                        width: size.width*0.8,
-                                        child: SingleChildScrollView(
-                                          physics: BouncingScrollPhysics(),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
-                                                child: Text(
-                                                  TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Comfortaa',
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: size.height*0.03,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                    TimeScreenCubit.get(context).ThreeAiuto();
-                                  }else{
-                                    null;
-                                  }
-                                  TimeScreenCubit.get(context).changeButtonThreeActive();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: kPopColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  width: size.width*0.9,
-                                  height: size.height*0.06,
-                                  child:Center(
-                                    child: Text(
-                                      'Soluzione + 30 minuti',
-                                      style: TextStyle(
-                                        color:TimeScreenCubit.get(context).isButtonThreeActive?Colors.black
-                                            :const Color(0xffDFCFAC),
-                                        fontFamily: 'Comfortaa',
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ) else Container(
-                                width: 10.sp,
-                                height: 10.sp,
-                                color: Colors.transparent,
-                              ),
-                              SizedBox(
-                                height: size.height*0.03,
-                              )
-                            ],
+              child: GestureDetector(
+                onTap:()=> FocusScope.of(context).unfocus(),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  drawer: const NavigationDrawerScreen(),
+                  key: scaffoldKey,
+                  body: Stack(
+                    children: [
+                      Positioned(
+                        child: SizedBox(
+                          height: double.infinity,
+                          width: double.infinity,
+                          child: Image.asset(
+                            'assets/images/background.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Positioned(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: size.width*0.0),
+                          child: SingleChildScrollView(
+                            physics:const BouncingScrollPhysics(),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: size.height*0.03,
+                                ),
+                                ///ROW TIMe
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    buildTime(context),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*0.3,
+                                      height: MediaQuery.of(context).size.height*0.061,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(30)
+                                      ),
+                                      child:Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'tappa',
+                                            style: TextStyle(
+                                              fontSize: 13.sp,
+                                              fontFamily: 'Comfortaa',
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:  EdgeInsets.only(
+                                              left: size.width*0.1,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  TimeScreenCubit.get(context).numeroTappa[0].totalTaps.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 19.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '/',
+                                                  style: TextStyle(
+                                                    fontSize: 19.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  MapScreenCubit.get(context).data[widget.index].lap!.length.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 19.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: 'Comfortaa',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ///start Container Images
+                                SizedBox(
+                                  height: size.height*0.05,
+                                ),
+                                Container(
+                                  width: size.width*0.9,
+                                  height: size.height*0.43,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width*0.03
+                                    ),
+                                    child: SingleChildScrollView(
+                                      physics:const BouncingScrollPhysics(),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: size.height*0.01,
+                                          ),
+                                          Text(
+                                            TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].placeName.toString(),
+                                            style: TextStyle(
+                                                fontSize: 22.sp,
+                                                fontFamily: 'Comfortaa',
+                                                fontWeight: FontWeight.w500
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: size.height*0.005,
+                                          ),
+                                          TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString().isNotEmpty?
+                                          Image.network(
+                                            TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].media.toString(),
+                                            fit: BoxFit.cover,
+                                          ):const Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: size.height*0.02,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].question.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    fontFamily: 'Comfortaa',
+                                                    fontWeight: FontWeight.w500
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          //SizedBox(height: size.height*0.025,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ///END Container Images
+                                ///Start Bottoms
+                                SizedBox(
+                                  height: size.height*0.05,
+                                ),
+                                Container(
+                                  width: size.width*0.9,
+                                  height: size.height*0.06,
+                                  decoration: BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: TextFormField(
+                                    controller: rispostaController,
+                                    keyboardType: TextInputType.text,
+                                    validator: (value){
+                                      if (value!.isEmpty || rispostaController.text != TimeScreenCubit.get(context)
+                                          .lap[widget.index].quiz![widget.index].answer.toString() ) {
+                                        return 'Inserisci la Risposta Corretta';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: size.width*0.05,
+                                        ),
+                                        hintText: 'Risposta...',
+                                        helperStyle: TextStyle(
+                                          fontSize: 21.sp,
+                                          fontFamily: 'Comfortaa',
+                                          fontWeight: FontWeight.w500,
+                                        )
+                                    ),
+                                  )
+                                ),
+                                SizedBox(
+                                  height: size.height*0.015,
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    FocusScope.of(context).unfocus();
+                                    if(formKey.currentState!.validate()){
+                                      if(rispostaController.text == TimeScreenCubit.get(context)
+                                          .lap[widget.index].quiz![widget.index].answer.toString() &&
+                                          TimeScreenCubit.get(context).lap[widget.index].nextTapID!=null
+                                      )
+                                      {
+                                        TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
+                                            route_id: TimeScreenCubit.get(context).lap[widget.index]
+                                            .routeID!.toString(),
+                                            Tap_id: TimeScreenCubit.get(context).lap[widget.index]
+                                                .iDTappeCaccia!.toString(),
+                                            Time:  '$hours'':''$minutes'':''$seconds',
+                                        );
+                                        navigateAndFinish(context, ConfirmMapOne(index: widget.index));
+                                        ConfirmaMapScreenCubit.get(context).polylineCoordinates = [];
+                                        print('Risposta Corretta');
+                                      }else {
+                                        TimeScreenCubit.get(context).saveTimeAndRouteIDAndTapId(
+                                          route_id: TimeScreenCubit.get(context).lap[widget.index]
+                                              .routeID!.toString(),
+                                          Tap_id: TimeScreenCubit.get(context).lap[widget.index]
+                                              .iDTappeCaccia!.toString(),
+                                          Time:  '$hours'':''$minutes'':''$seconds',
+                                        );
+
+                                        navigateAndFinish(context, VaucherScreen(index: widget.index));
+                                      }
+
+
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 170.sp,
+                                    height: 35.sp,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green[400],
+                                      borderRadius: BorderRadius.circular(35.sp),
+                                    ),
+                                    child: Center(
+                                      child:Text(
+                                        'Conferma Risposta',
+                                        style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: size.height*0.015,
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    if(TimeScreenCubit.get(context).isButtonOneActive){
+                                      showDialog(
+                                      context: context,
+                                      builder: (context)=>Dialog(
+                                        backgroundColor: kPopColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(40.0),
+                                        ),
+                                        child: Container(
+                                          height: size.height/3.5,
+                                          width: size.width*0.8,
+                                          child: SingleChildScrollView(
+                                            physics: BouncingScrollPhysics(),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                  child: Text(
+                                                    TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index].tipTitle.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Comfortaa',
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: size.height*0.03,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                      TimeScreenCubit.get(context).oneAiuto();
+                                    }else{
+                                      null;
+                                    }
+                                    TimeScreenCubit.get(context).changeButtonActive();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: kPopColor,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    width: size.width*0.9,
+                                    height: size.height*0.06,
+                                    child:Center(
+                                      child: Text(
+                                        'Aiuto 1 + 10 minuti',
+                                        style: TextStyle(
+                                          color:TimeScreenCubit.get(context).isButtonOneActive?Colors.black
+                                              :const Color(0xffDFCFAC),
+                                          fontFamily: 'Comfortaa',
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: size.height*0.03,
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    if (TimeScreenCubit.get(context).isButtonTwoActive) {
+                                      showDialog(
+                                      context: context,
+                                      builder: (context)=>Dialog(
+                                        backgroundColor: kPopColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(40.0),
+                                        ),
+                                        child: Container(
+                                          height: size.height/3.5,
+                                          width: size.width*0.8,
+                                          child: SingleChildScrollView(
+                                            physics: BouncingScrollPhysics(),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                  child: Text(
+                                                    TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+1].tipTitle.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Comfortaa',
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: size.height*0.03,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                      TimeScreenCubit.get(context).TwoAiuto();
+                                    }else{
+                                      null;
+                                    }
+                                    TimeScreenCubit.get(context).changeButtonTwoActive();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: kPopColor,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    width: size.width*0.9,
+                                    height: size.height*0.06,
+                                    child:Center(
+                                      child: Text(
+                                        'Aiuto 2 + 20 minuti',
+                                        style: TextStyle(
+                                          color:TimeScreenCubit.get(context).isButtonTwoActive?Colors.black
+                                              :const Color(0xffDFCFAC),
+                                          fontFamily: 'Comfortaa',
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: size.height*0.03,
+                                ),
+                                if (TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString().isNotEmpty) GestureDetector(
+                                  onTap: (){
+                                    if(TimeScreenCubit.get(context).isButtonThreeActive) {
+                                      showDialog(
+                                      context: context,
+                                      builder: (context)=>Dialog(
+                                        backgroundColor: kPopColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(40.0),
+                                        ),
+                                        child: Container(
+                                          height: size.height/3.5,
+                                          width: size.width*0.8,
+                                          child: SingleChildScrollView(
+                                            physics: BouncingScrollPhysics(),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:  EdgeInsets.symmetric(vertical: size.height*0.1),
+                                                  child: Text(
+                                                    TimeScreenCubit.get(context).lap[widget.index].quiz![widget.index].quizTips![widget.index+2].tipTitle.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Comfortaa',
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: size.height*0.03,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                      TimeScreenCubit.get(context).ThreeAiuto();
+                                    }else{
+                                      null;
+                                    }
+                                    TimeScreenCubit.get(context).changeButtonThreeActive();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: kPopColor,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    width: size.width*0.9,
+                                    height: size.height*0.06,
+                                    child:Center(
+                                      child: Text(
+                                        'Soluzione + 30 minuti',
+                                        style: TextStyle(
+                                          color:TimeScreenCubit.get(context).isButtonThreeActive?Colors.black
+                                              :const Color(0xffDFCFAC),
+                                          fontFamily: 'Comfortaa',
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ) else Container(
+                                  width: 10.sp,
+                                  height: 10.sp,
+                                  color: Colors.transparent,
+                                ),
+                                SizedBox(
+                                  height: size.height*0.03,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ) :const Center(child: CircularProgressIndicator(color: Colors.black,)),

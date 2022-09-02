@@ -7,10 +7,9 @@ import '../../../shared/network/remote/dio_helper.dart';
 class ClasificaCubit extends Cubit<ClasificaStates> {
   ClasificaCubit() : super (InitialClasificaScreenState());
   static ClasificaCubit get(context) => BlocProvider.of(context);
-
   List<Classifica> clasifica = <Classifica>[];
-  List<BestPlayer> bestPlayer = <BestPlayer>[];
   List<TuoTempoTuoLivello> tuoTempo = <TuoTempoTuoLivello>[];
+  List<BestPlayer> bestPlayer = <BestPlayer>[];
   ClasificaModel ? clasificaModel;
 
 
@@ -24,12 +23,11 @@ class ClasificaCubit extends Cubit<ClasificaStates> {
     ).then((value){
       clasifica = List<Classifica>.from(
           value.data['Classifica'].map((item) => Classifica.fromJson(item)));
+      tuoTempo = List<TuoTempoTuoLivello>.from(
+          value.data['TuoTempo_TuoLivello'].map((item) => TuoTempoTuoLivello.fromJson(item)));
 
       bestPlayer = List<BestPlayer>.from(
           value.data['Best_Player'].map((item) => BestPlayer.fromJson(item)));
-
-      tuoTempo = List<TuoTempoTuoLivello>.from(
-          value.data['TuoTempo_TuoLivello'].map((item) => TuoTempoTuoLivello.fromJson(item)));
       clasificaModel =ClasificaModel.fromJson(value.data);
       print(bestPlayer[0].userNickNamePlayer.toString());
       print(tuoTempo[0].userLevelTempo.toString());

@@ -77,17 +77,17 @@ int indexSelect = 1;
   Set<Marker> markers = {};
   ScrollController listScrollController = ScrollController();
 
-  Set<Marker> myCurrentMarker(context) {
-    markers.add(Marker(
-      position: LatLng(ConfirmaMapScreenCubit.get(context).position!.latitude,
-          ConfirmaMapScreenCubit.get(context).position!.longitude),
-      markerId: const MarkerId('1000'),
-      infoWindow: const InfoWindow(title: "La tua posizione attuale"),
-       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ));
-    emit(AddCurrentMarkerSetConfirmaMapScreenState());
-    return markers;
-  }
+  // Set<Marker> myCurrentMarker(context) {
+  //   markers.add(Marker(
+  //     position: LatLng(ConfirmaMapScreenCubit.get(context).position!.latitude,
+  //         ConfirmaMapScreenCubit.get(context).position!.longitude),
+  //     markerId: const MarkerId('1000'),
+  //     infoWindow: const InfoWindow(title: "La tua posizione attuale"),
+  //      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+  //   ));
+  //   emit(AddCurrentMarkerSetConfirmaMapScreenState());
+  //   return markers;
+  // }
   ///Custom Marker
   BitmapDescriptor? customMarker;
   Future<BitmapDescriptor?> setCustomMarker()async{
